@@ -7,6 +7,7 @@ A working guide for building with Claude Code. Start at **getting-started**, the
 | File | What it covers |
 | --- | --- |
 | [getting-started.md](getting-started.md) | How Claude Code works, the core primitives, permission modes, the `.claude/` folder |
+| [built-in-commands.md](built-in-commands.md) | Reference for every `/` command that ships with Claude Code, grouped by use |
 | [agents.md](agents.md) | Creating subagents — file format, when to use them, invocation patterns |
 | [plans.md](plans.md) | Plan mode — how it works, when to use it, writing prompts that produce good plans |
 | [panels.md](panels.md) | **Your term.** Multi-agent orchestration — coordinating several agents over one project |
