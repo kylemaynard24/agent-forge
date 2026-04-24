@@ -1,0 +1,25 @@
+# Creational patterns
+
+Creational patterns deal with **object creation** — the question of *"how do I construct this object without tightly coupling my code to a specific concrete class?"*
+
+They matter when:
+- The exact class you want depends on configuration or runtime data
+- Construction is complex (many parameters, many steps)
+- You want to control how many instances exist
+- You want to share a family of related products without knowing their concrete types
+
+## The five patterns
+
+| Pattern | In one line |
+| --- | --- |
+| [Singleton](singleton/) | One instance, globally accessible |
+| [Factory Method](factory-method/) | Subclass decides what to instantiate |
+| [Abstract Factory](abstract-factory/) | A factory that produces a family of related products |
+| [Builder](builder/) | Step-by-step construction of a complex object |
+| [Prototype](prototype/) | Clone an existing instance instead of calling `new` |
+
+## How they relate
+
+- **Factory Method** vs. **Abstract Factory** — Factory Method is about *one* product (overridden in a subclass). Abstract Factory is about *families* of products (passed in as an object of factory methods).
+- **Builder** vs. **Abstract Factory** — Both create complex objects. Builder emphasizes *the construction process* and returns a single finished object at the end. Abstract Factory emphasizes *families of products* and returns each immediately.
+- **Singleton** vs. **Prototype** — Opposites, in a sense. Singleton says "one instance forever." Prototype says "clone cheaply, have as many as you want."
