@@ -1,0 +1,16 @@
+{
+  "_note": "Merge this into .claude/settings.json (project) or ~/.claude/settings.json (user). The _note key is informational and can be removed.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash examples/hooks/guard-rm.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
