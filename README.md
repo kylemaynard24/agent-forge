@@ -7,6 +7,26 @@
 
 The repository is organized so you can move from concept -> runnable example -> practice loop instead of collecting disconnected notes. Most folders are intentionally small and self-contained so you can study one idea at a time without losing the larger map.
 
+## What this repository contains
+
+This repository is a guided curriculum, not just a folder of notes. It mixes:
+
+- **Concept explainers** so you can understand an idea in plain language
+- **Runnable demos** so the idea becomes concrete instead of abstract
+- **Homework and exercises** so you can practice instead of only recognize
+- **Reference docs and examples** so you can see how agent tooling is actually assembled
+
+At a high level, the repository is split into four big areas:
+
+| Area | What it is for |
+| --- | --- |
+| [software-engineering/](software-engineering/) | The broad software design curriculum: architecture, principles, and design patterns |
+| [agentic-workflows/](agentic-workflows/) | A staged course on how LLM agents work, how to design them, and how to operate them safely |
+| [examples/](examples/) | Working examples of Claude Code primitives such as agents, commands, skills, and hooks |
+| [docs/](docs/) | Practical reference material for Claude Code concepts and terminology |
+
+The result is a repo that teaches across multiple scales: object design, component boundaries, system architecture, and agent behavior.
+
 ## The three learning tracks
 
 Treat the repo like three parallel classes:
@@ -17,7 +37,7 @@ Treat the repo like three parallel classes:
 | **Architecture** | System boundaries, communication, data, scale, and failure | [software-engineering/](software-engineering/) and [software-engineering/SYLLABUS.md](software-engineering/SYLLABUS.md) |
 | **Agentic workflows** | How LLM agents are structured, controlled, and operated | [agentic-workflows/01-foundations/](agentic-workflows/01-foundations/) |
 
-If you want a semester-style plan across all three, use [SYLLABUS.md](SYLLABUS.md). It lays out a 6-month core path with an optional extension to 12 months.
+If you want a semester-style plan across all three, use [SYLLABUS.md](SYLLABUS.md). The same high-level path is summarized below so the top-level README can act as the front door to the whole curriculum.
 
 ## How the materials work
 
@@ -47,6 +67,64 @@ That last step matters. Most people can recognize a pattern after they have seen
 - [examples/](examples/) — working examples of agents, commands, skills, hooks, and orchestration
 - [agentic-workflows/](agentic-workflows/) — staged curriculum for understanding and building agents
 - [software-engineering/](software-engineering/) — design patterns, architecture topics, and the engineering syllabus
+
+## Call to action: study this repo like three college classes
+
+The highest-leverage way to use this repository is to treat it like a **6-12 month curriculum** with three concurrent classes:
+
+1. **Design Patterns** — learn reusable object-level solutions and how to distinguish similar patterns by intent
+2. **Architecture** — learn boundaries, communication styles, data decisions, scaling pressures, and resilience trade-offs
+3. **Agentic Workflows** — learn how agents think, act, recover, coordinate, and become safe enough for real use
+
+Run them in parallel. That is the point. You want the ideas to reinforce each other instead of living in isolated buckets.
+
+### Weekly cadence
+
+Use a steady, college-like rhythm:
+
+- **2 sessions:** Design Patterns
+- **2 sessions:** Architecture
+- **2 sessions:** Agentic Workflows
+- **1 session:** Lab / synthesis / project work
+
+That pace gives you a **serious 6-month core path** and a **deeper 12-month mastery path** if you stretch the labs, writing, and capstones.
+
+### Months 1-6: core path
+
+| Month | Design Patterns class | Architecture class | Agentic Workflows class | Lab / output |
+| --- | --- | --- | --- | --- |
+| **1** | Strategy, Observer, Adapter, Singleton | Fundamentals: separation of concerns, coupling/cohesion, abstraction/encapsulation, dependency direction, DRY/KISS/YAGNI | Foundations: what is an agent, the agentic loop, prompts as programs, context as working memory, tools as the world interface | Write one page on how separation of concerns appears in both system design and agent design |
+| **2** | Decorator, Proxy, Facade | Principles: SRP, OCP, LSP, ISP, DIP, Law of Demeter | Single-agent design: system prompt anatomy, structured output, plans and tasks, tool design principles, tool-result handling, memory patterns, error handling and recovery | Build a toy agent and annotate where its design mirrors software design principles |
+| **3** | Factory Method, Abstract Factory, Builder, Prototype | Component architecture: layered, hexagonal, clean/onion, MVC/MVP/MVVM, DDD building blocks | Claude Code primitives: subagents, slash commands, skills, hooks, MCP servers, settings and permissions | Design a small app and explain both its software architecture and its agent tooling surface |
+| **4** | State, Command, Template Method, Chain of Responsibility | System architecture: monolith, modular monolith, microservices, event-driven, pipes and filters, client-server vs peer-to-peer | Multi-agent patterns: orchestrator-worker, sequential pipeline, parallel fan-out/fan-in, hand-off vs delegation, critic-reviewer, hierarchical | Compare one single-agent solution and one multi-agent solution to the same task |
+| **5** | Iterator, Mediator, Memento, Visitor, Interpreter | Communication and data, first pass: sync REST/RPC, async messaging, pub/sub, CQRS, saga, API gateway, BFF, shared database, database per service | Reliability and ops: guardrails, evals, observability and tracing, cost and latency control, failure modes, human-in-the-loop | Draw a system diagram that includes both conventional services and agent workers |
+| **6** | Review all 23 patterns by comparison instead of memorization | Data, resilience, and cross-cutting: caching, replicas, sharding, outbox, retry/timeout, circuit breaker, bulkhead, rate limiting, load balancing, idempotency, observability, CAP/PACELC, distributed systems fallacies, trade-off analysis | Building for real: autonomy gradient, tool API design, prompt versioning and regression tests, long-running agents, capstone design an agent | Write a capstone design doc for a system that includes both software architecture and an agentic subsystem |
+
+### Months 7-12: mastery path
+
+| Month | Design Patterns class | Architecture class | Agentic Workflows class | Lab / output |
+| --- | --- | --- | --- | --- |
+| **7** | Rebuild pattern demos from memory and compare similar patterns in writing | Revisit fundamentals and principles by critiquing a real codebase | Improve a small agent you already built and tighten its prompts, tools, and outputs | Create a "mistakes I notice now" document across all three tracks |
+| **8** | Write comparison essays: Strategy vs State, Adapter vs Facade, Decorator vs Proxy, Command vs Memento, Observer vs Mediator | Revisit component and system architecture using one system you know well | Package repeated workflows into reusable commands, skills, or subagents | Produce one architecture review and one agent design review |
+| **9** | Build one project that uses 4-6 patterns naturally | Focus on communication and data trade-offs inside that project | Add agent support and decide what should stay deterministic versus agentic | Defend every major boundary in a short design review |
+| **10** | Study the rarer patterns until you can recognize them even if you rarely use them | Focus on resilience, failure modes, and cross-cutting behavior | Add evals, tracing, guardrails, and human checkpoints to the agentic parts | Run tabletop exercises on what breaks first and how you would know |
+| **11** | Teach the patterns back in your own words through summaries or mini demos | Produce a full architecture document for a medium-sized system | Produce a full operating model for an agentic system | Create a portfolio-quality write-up that combines code shape, system shape, and agent shape |
+| **12** | Final review and retention pass | Final review and retention pass | Final review and retention pass | Build and retrospect on an end-to-end capstone you can explain with confidence |
+
+### What "passing" these three classes means
+
+**Design Patterns:** you can distinguish similar patterns by intent and explain when not to use them.
+
+**Architecture:** you can describe a system in terms of boundaries, trade-offs, communication, data ownership, and failure handling.
+
+**Agentic Workflows:** you can explain how an agent behaves, what controls it, where it can fail, and what makes it trustworthy or risky.
+
+### Best next step inside the repo
+
+- Start with [software-engineering/design-patterns/README.md](software-engineering/design-patterns/README.md) for the pattern study path
+- Use [software-engineering/SYLLABUS.md](software-engineering/SYLLABUS.md) for the deeper engineering sequence
+- Start [agentic-workflows/01-foundations/what-is-an-agent/](agentic-workflows/01-foundations/what-is-an-agent/) for the agent track
+- Use [SYLLABUS.md](SYLLABUS.md) if you want the standalone version of this top-level study plan
 
 ## Running the repo
 
