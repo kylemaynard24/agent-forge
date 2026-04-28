@@ -140,6 +140,8 @@ If you're already a strong engineer: start here.
 
 You don't need to read all of these. Pick one or two and pair with your study.
 
+For the larger repo-wide bookshelf, see [`../READING-LIBRARY.md`](../READING-LIBRARY.md). That guide maps books to the engineering and agentic subjects across the entire repository.
+
 ---
 
 ## Working notes

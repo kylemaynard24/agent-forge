@@ -20,6 +20,7 @@ At the top level, this repository has five major directories and one major sylla
 | [`examples/`](examples/) | Working Claude Code examples and templates | This is the runnable lab for repo-scoped agent tooling |
 | [`.claude/`](.claude/) | Project-scoped agents, commands, and skills used by the examples | This is the repo's live Claude Code configuration surface |
 | [`SYLLABUS.md`](SYLLABUS.md) | The root learning plan across the repository | This is the "how to study this repo" document |
+| [`READING-LIBRARY.md`](READING-LIBRARY.md) | A curated bookshelf mapped to the repo's subjects | This is the "what to read alongside the curriculum" document |
 
 ## What this repository is trying to teach
 

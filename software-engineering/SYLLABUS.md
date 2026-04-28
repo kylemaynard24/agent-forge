@@ -210,6 +210,7 @@ There's no rubric, no grade. The point is that **you know what trade-offs you ma
 - **Don't aim for perfect code.** Aim for code that you understand fully, with constraints honestly satisfied.
 - **The homework constraints are the point.** Without them, you'll route around the concept.
 - **Pair the dojo with reading.** Pick a few books to layer on: *A Philosophy of Software Design* (Ousterhout), *Designing Data-Intensive Applications* (Kleppmann), *Clean Architecture* (Martin), *Domain-Driven Design* (Evans). Don't try to read all four — pick one per quarter.
+- **Use the repo reading guide when you want a fuller shelf.** See [`../READING-LIBRARY.md`](../READING-LIBRARY.md) for a subject-by-subject book map across the repo.
 - **Teach what you learn.** Write a blog post or do a brown-bag talk. Teaching exposes the holes in your understanding.
 - **Skip patterns you'll never use.** Interpreter and Flyweight rarely come up; if you've understood them once, that's plenty.
 - **Architecture is bigger than this dojo.** It includes things this dojo doesn't cover: security architecture, deployment topology, organizational design, build systems. The 50 topics here are a strong start, not the whole field.
