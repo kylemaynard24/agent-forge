@@ -111,6 +111,48 @@ That pace gives you a **serious 6-month core path** and a **deeper 12-month mast
 | **11** | Teach the patterns back in your own words through summaries or mini demos | Produce a full architecture document for a medium-sized system | Produce a full operating model for an agentic system | Create a portfolio-quality write-up that combines code shape, system shape, and agent shape |
 | **12** | Final review and retention pass | Final review and retention pass | Final review and retention pass | Build and retrospect on an end-to-end capstone you can explain with confidence |
 
+### Monthly homework: one project per class, plus one connector project
+
+If you want to attack the syllabus like a real course load, each month should produce **four artifacts**:
+
+1. a **Design Patterns project**
+2. an **Architecture project**
+3. an **Agentic Workflows project**
+4. an **Integrated project** that connects all three
+
+#### Core months (1-6)
+
+| Month | Design Patterns homework | Architecture homework | Agentic Workflows homework | Integrated homework |
+| --- | --- | --- | --- | --- |
+| **1** | Build a small **notification rules engine** using Strategy for channel selection, Observer for subscriptions, Adapter for one awkward provider, and a minimal singleton-style config entry point. | Refactor or design a small app so concerns are clearly separated into domain logic, IO, and UI/CLI edges; write a short critique of coupling and cohesion. | Build a **minimal loop agent** with 2-3 fake tools and a stub model; log every think -> act -> observe step. | Create a **personal study coach CLI** that uses your rules engine, keeps boundaries clean, and lets a tiny agent choose the next study action. |
+| **2** | Build a **wrapped API client** that uses Facade to simplify usage, Proxy for caching or authorization, and Decorator for logging/metrics. | Take a messy service and rewrite it to better honor SOLID and Law of Demeter; document one before/after dependency graph. | Build a **structured-output assistant** with a strong system prompt, explicit schema, task planning, and recovery rules for bad tool results. | Build a **code-review helper** that exposes a clean facade, routes requests through wrappers, and returns structured agent judgments plus retryable failures. |
+| **3** | Build a **project scaffolder** or object factory toolkit using Factory Method, Abstract Factory, Builder, and Prototype where each choice has a clear reason. | Design the same domain in layered, hexagonal, or clean/onion style; implement one slice end-to-end with explicit ports and adapters. | Package your agent work into Claude Code-style primitives: one command, one skill, one hook, and one specialist subagent. | Build a **ticket triage workspace** whose app architecture is hexagonal, whose creation flows use creational patterns, and whose agent surfaces are packaged as reusable primitives. |
+| **4** | Build a **workflow engine** or command processor using State, Command, Template Method, and Chain of Responsibility. | Model one system twice: once as a monolith or modular monolith, once as microservices or event-driven; explain which you would actually ship. | Build a **multi-agent orchestration demo** with one orchestrator and at least two workers using a deliberate coordination pattern. | Build a **release-management simulator** where workflow objects use behavioral patterns, system boundaries are explicit, and agents collaborate on planning, review, and rollout. |
+| **5** | Build a **document or graph explorer** that naturally uses Iterator, Mediator, Memento, Visitor, or Interpreter for traversal, coordination, snapshots, or mini-language support. | Design an **evented business flow** with sync and async boundaries, a read/write split where appropriate, and a clear data ownership story. | Add **guardrails, evals, observability, and human checkpoints** to an existing agent project; produce a short failure report. | Build an **operations desk** or **incident assistant** where services communicate through explicit patterns and agents help investigate, summarize, and route work safely. |
+| **6** | Revisit your earlier pattern projects and either consolidate them into one coherent library or rebuild one from scratch with cleaner pattern choices. | Add reliability and cross-cutting behavior: retries, idempotency, caching, tracing, and trade-off analysis for one non-trivial system. | Build a **long-running or stateful agent** with prompt versioning, tool APIs, and a clear autonomy boundary. | Build a **capstone platform** such as a support desk, task queue, or internal ops tool that includes a real software architecture plus one agentic subsystem with clear guardrails. |
+
+#### Mastery months (7-12)
+
+| Month | Design Patterns homework | Architecture homework | Agentic Workflows homework | Integrated homework |
+| --- | --- | --- | --- | --- |
+| **7** | Rebuild 3-5 earlier pattern exercises from memory and write what changed in your design instincts. | Audit a real codebase for concerns, coupling, cohesion, and dependency direction; propose a repair plan. | Take an older agent and reduce prompt ambiguity, improve tool contracts, and tighten memory usage. | Rebuild your Month 1 integrated project with better boundaries and a better agent loop; compare versions honestly. |
+| **8** | Write and code **comparison projects** for commonly confused siblings such as Strategy vs State and Decorator vs Proxy. | Redesign one known system using alternate component architectures and defend your final choice. | Turn recurring work into reusable commands, skills, subagents, or hooks and document when each should fire. | Build a **review studio** where architecture analysis, pattern recognition, and agent packaging all support the same workflow. |
+| **9** | Build one medium project using 4-6 patterns naturally and justify every one you kept or rejected. | Write a full communication and data design for that same project, including failure-handling choices. | Add agent capabilities only where they outperform deterministic code; document what stayed non-agentic and why. | Deliver a **single product** that includes code patterns, system topology, and agent automation as one coherent design instead of three stitched-on demos. |
+| **10** | Implement one rare pattern well enough to teach it, even if you would rarely choose it in production. | Run resilience drills against your system: rate limits, retries, partial outages, stale reads, degraded modes. | Add regression tests, eval suites, traces, approval gates, and escalation paths to the agentic pieces. | Run a **tabletop operations month** for your integrated system: break it, observe it, repair it, and write the postmortem. |
+| **11** | Produce teach-back artifacts: diagrams, mini demos, and explanations in your own words. | Write a portfolio-grade architecture document for a medium-sized system. | Write a portfolio-grade operating model for an agentic subsystem, including boundaries and risks. | Build a **showcase repo or portfolio case study** that explains object design, architecture, and agent design in one narrative. |
+| **12** | Do a final pattern retention pass by implementing one fresh problem with only the patterns that truly fit. | Do a final architecture retention pass by redrawing the whole system from memory and defending its trade-offs. | Do a final agent retention pass by simplifying one agent until only the necessary mechanisms remain. | Ship a final **end-to-end capstone** and include code, design docs, ops notes, and a retrospective on what you now understand that you did not in Month 1. |
+
+#### Homework rule of thumb
+
+For every monthly assignment, force yourself to answer four questions in writing:
+
+- **Why this pattern or architecture?**
+- **What simpler option did I reject?**
+- **What failure mode am I designing for?**
+- **What part should stay deterministic instead of agentic?**
+
+That reflection is what turns the projects into real coursework instead of a pile of demos.
+
 ### What "passing" these three classes means
 
 **Design Patterns:** you can distinguish similar patterns by intent and explain when not to use them.
