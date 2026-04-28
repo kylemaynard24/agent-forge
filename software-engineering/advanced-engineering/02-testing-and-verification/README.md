@@ -60,3 +60,27 @@ node path/to/demo.js
 ```
 
 Start with the earlier folders before the later ones. The ordering is intentional.
+
+## Scenario questions
+
+These questions are meant to turn **Testing and Verification** into an operational instinct. Read them like incident prompts: what are you seeing, what move should happen next, and what mistake are you trying to avoid under pressure?
+
+### Scenario 1 — "The system is noisy, stressful, and people want to skip straight to action"
+
+**Question:** You are in the middle of a real engineering problem and the room wants to jump ahead before the situation is legible. Is this topic the kind of move that should slow people down and sharpen the next step?
+
+**Answer:** Usually yes.
+
+**Explanation:** This topic matters when disciplined engineering beats improvisation. The point is not process for its own sake. The point is to reduce confusion, make the next move more informed, and avoid creating a second problem while reacting to the first.
+
+**Why not jump first to Debugging and Diagnostics or Performance and Capacity:** adjacent skills matter, but they often work best after **Testing and Verification** has made the problem clearer, safer, or more measurable.
+
+### Scenario 2 — "A team keeps confusing activity with progress"
+
+**Question:** An engineer says, "We're doing a lot already, so we must be handling this well." Does **Testing and Verification** help test whether the team is actually making the system easier to reason about?
+
+**Answer:** Yes.
+
+**Explanation:** Strong operational topics give you a quality bar for action. **Testing and Verification** is useful when you need to ask whether the current work is actually reducing uncertainty, restoring control, or increasing confidence instead of merely producing motion.
+
+**Why not treat effort as evidence:** because under pressure, busy teams can still thrash. The value of **Testing and Verification** is that it gives you a sharper standard for what "better" looks like.

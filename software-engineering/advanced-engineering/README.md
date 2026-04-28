@@ -59,3 +59,17 @@ node path/to/demo.js
 ```
 
 Any recent Node.js version works. The point of the demo is not completeness. The point is to make the shape of the engineering move obvious.
+
+## Question-driven orientation
+
+### "When should I spend time in this section?"
+
+**Answer:** Spend time here when you want to improve how to perform like a dependable engineer under real-world pressure.
+
+**Explanation:** A section guide is most useful when it helps you choose the right learning path on purpose. The point is not to read everything at once. The point is to understand what kinds of problems this section trains you to notice and solve.
+
+### "How should I study this without turning it into passive reading?"
+
+**Answer:** Read the concept, predict the demo, run it, change something small, and explain the result out loud.
+
+**Explanation:** This repo works best when each README turns into a decision habit. If you can explain when to use the idea, when not to use it, and what trade-off it introduces, the topic is starting to become real knowledge instead of reference material.

@@ -146,3 +146,27 @@ The best way to study **Cost and Latency Control** is to treat it as a control s
 - What degree of autonomy does it allow, and where does it deliberately add constraint?
 - How would I know this concept is helping in production rather than just sounding good in a diagram?
 - If I removed this mechanism, where would confusion or risk re-enter the system?
+
+## Scenario questions
+
+These questions are here to make **Cost and Latency Control** feel like an agent-design decision instead of a vocabulary word. The useful question is not just "what is it?" but "what failure, control problem, or reliability concern does it help me handle?"
+
+### Scenario 1 — "An agent works in the toy demo but becomes unreliable in repeated real use"
+
+**Question:** Should this topic become one of the first concepts you examine?
+
+**Answer:** Usually yes.
+
+**Explanation:** In agent systems, the interesting problems often appear at runtime: drift, ambiguity, bad tool choices, unsafe actions, missing visibility, or loops that degrade over time. This topic matters when it helps make the agent more legible, more bounded, or more dependable across repeated runs.
+
+**Why not jump straight to Human In the Loop or Observability and Tracing:** those may also be relevant, but this topic is the better starting point when the main issue is the specific control surface it provides in agent behavior.
+
+### Scenario 2 — "A design sounds sophisticated, but nobody can explain what risk it is reducing"
+
+**Question:** Is that a warning sign that the team may be using **Cost and Latency Control** as ceremony rather than engineering?
+
+**Answer:** Yes.
+
+**Explanation:** Good agent design concepts earn their keep by reducing a concrete category of failure, cost, or uncertainty. If no one can say what risk this topic is reducing, the design may be adding complexity without adding much control.
+
+**Why not keep the mechanism anyway:** because in agent systems, every extra moving part becomes another place for confusion, latency, or maintenance burden to accumulate.
