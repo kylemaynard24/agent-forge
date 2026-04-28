@@ -1,0 +1,39 @@
+# Homework — Law of Demeter
+
+> Tell, don't ask. Talk to immediate friends only.
+
+## Exercise: Refactor a deep chain
+
+**Scenario:** Your codebase has many lines like:
+
+```js
+order.getCustomer().getAddress().getCountry().getCode()
+order.getCart().getItems()[0].getProduct().getCategory().getName()
+user.getProfile().getSettings().getNotifications().setEmailEnabled(true)
+```
+
+Three different "telescope chains" reaching through 3–4 levels of structure. Changing any inner object breaks dozens of callers.
+
+**Build:**
+- For each chain, ask: what is the caller actually trying to *accomplish*? (Not "get the code", but "look up the country code for shipping.")
+- Add a method on the OUTER object that names the operation. e.g. `order.shippingCountry()`, `order.firstItemCategoryName()`, `user.enableEmailNotifications()`.
+- Update callers to use the named method.
+- Make the inner accessors private (or at least drop the `get*` chain).
+
+**Constraints (these enforce the concept):**
+- No caller chains more than 2 dots after the receiver.
+- The new methods are named for the *intent* (not the structure).
+- Inner objects' getters that were used only by the chains can become package-private (or removed).
+- Pure data pipelines (`list.filter().map()`) are exempt — these are not LoD chains.
+
+## Stretch
+Find one place in your refactor where applying LoD made the code WORSE (e.g., you had to add 4 delegate methods to satisfy a one-off caller). Document the trade-off honestly.
+
+## Reflection
+- "Tell, don't ask" pushes behavior onto the object that owns the data. How does this interact with SRP?
+- A pure-functional codebase (e.g., reducers operating on plain values) often has long chains and isn't violating LoD. What's the distinction?
+
+## Done when
+- [ ] No `getX().getY().getZ()` style chain remains in the call sites.
+- [ ] The new methods read like a verb the domain expert would use.
+- [ ] You can articulate when LoD goes too far.
