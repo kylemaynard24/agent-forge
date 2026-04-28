@@ -130,6 +130,58 @@ Use the repo's stage order:
 5. Reliability and ops
 6. Building for real
 
+## Phase 2 — advanced engineer track (Months 13-18, optionally stretched to 24)
+
+After the first three classes, the bottleneck changes. You no longer need only more conceptual coverage; you need stronger execution in messy, real conditions. This phase is about becoming the engineer who can diagnose, stabilize, simplify, harden, and communicate under pressure.
+
+### The six advanced classes
+
+| Month | Advanced class | What it is really training |
+| --- | --- | --- |
+| **13** | Debugging and Diagnostics | hypothesis loops, repro minimization, root-cause analysis, evidence-driven debugging |
+| **14** | Testing and Verification | choosing the right test boundary, contract thinking, integration confidence, flake diagnosis |
+| **15** | Performance and Capacity | profiling, latency budgets, bottlenecks, memory discipline, throughput trade-offs |
+| **16** | Security and Trust Boundaries | threat modeling, authn/authz, validation, secrets handling, multi-tenant safety |
+| **17** | Legacy Rescue and Refactoring | seam creation, strangler moves, safe modernization, dependency untangling |
+| **18** | Incident Response and Engineering Execution | observability, runbooks, on-call judgment, postmortems, design docs, ADRs, code review quality |
+
+These six classes are the best next additions if your goal is not just to understand good software, but to perform like a strong engineer in production environments.
+
+### Advanced monthly homework
+
+| Month | Homework project | Required written output |
+| --- | --- | --- |
+| **13** | Take a deliberately broken service or toy system, reproduce at least three bugs, isolate root cause for each, and fix the highest-leverage one first. | bug diary, root-cause notes, confidence ranking for each hypothesis |
+| **14** | Refactor a small service so it has a deliberate unit/integration/contract test strategy and one intentionally avoided test area with rationale. | testing strategy note and flake-risk analysis |
+| **15** | Profile one read-heavy path and one write-heavy path, measure them, improve the slowest path, and show before/after evidence. | performance note with measurements, assumptions, and trade-offs |
+| **16** | Perform a lightweight threat model on a small app, then harden authentication, authorization, input handling, and secrets usage. | threat model, risk list, mitigations, and residual risk summary |
+| **17** | Take an older or messy codebase and modernize one slice using seams, adapters, or a strangler-style migration path. | modernization plan, dependency map, and rollback considerations |
+| **18** | Run an incident simulation on your integrated system: detect, triage, mitigate, communicate, and publish a postmortem with follow-ups. | incident timeline, runbook updates, postmortem, and prevention plan |
+
+### The five-output rule for advanced work
+
+Every advanced project should produce all five of these:
+
+1. **working code or a meaningful system change**
+2. **tests or validation evidence**
+3. **a short design note**
+4. **a runbook or operational checklist**
+5. **a retrospective or postmortem**
+
+That five-part package trains a more complete engineering muscle than implementation alone.
+
+### If you want to stretch this phase to 24 months
+
+Use Months 19-24 as a repetition-and-depth block:
+
+- repeat the six advanced classes on larger, uglier, more realistic systems
+- revisit the same product with stricter non-functional requirements
+- add production-style constraints such as cost ceilings, latency budgets, and degraded-mode behavior
+- teach back what you learned through design docs, reviews, and postmortems
+- compare your Month 18 work to your Month 1 work and identify where your instincts changed
+
+By that point, the question is no longer "can I build this?" but "can I build, debug, operate, explain, and improve this honestly?"
+
 ## What "passing" each class should mean
 
 You are not trying to finish every file. You are trying to reach a point where you can **reason under pressure**.

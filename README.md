@@ -161,6 +161,54 @@ That reflection is what turns the projects into real coursework instead of a pil
 
 **Agentic Workflows:** you can explain how an agent behaves, what controls it, where it can fail, and what makes it trustworthy or risky.
 
+### After the first three classes: the top-5% engineer track
+
+Once the first three classes are in place, the next jump is not more vocabulary. It is better performance under pressure. That means learning the things strong engineers are unusually good at in real environments:
+
+1. finding root cause in messy systems
+2. designing effective test strategy instead of just writing tests
+3. improving performance with evidence instead of guesswork
+4. seeing security and trust boundaries early
+5. changing legacy systems without breaking them
+6. operating software during failure, not just during demos
+7. writing design docs, reviews, and postmortems that move teams forward
+
+### Advanced sequence after the first year
+
+Use this as the next phase after the three-class foundation. It can be done in **6 months aggressively** or **12 months with deeper project work**.
+
+| Month | Advanced class | What it trains |
+| --- | --- | --- |
+| **13** | Debugging and Diagnostics | Hypothesis-driven debugging, repro minimization, trace reading, root-cause discipline |
+| **14** | Testing and Verification | Test strategy, contract thinking, integration boundaries, flaky test diagnosis |
+| **15** | Performance and Capacity | Profiling, latency budgets, backpressure, memory discipline, bottleneck analysis |
+| **16** | Security and Trust Boundaries | Threat modeling, authn/authz, secrets handling, validation, multi-tenant thinking |
+| **17** | Legacy Rescue and Refactoring | Seam creation, strangler moves, safe modernization, behavior-preserving change |
+| **18** | Incident Response and Engineering Execution | Runbooks, on-call thinking, observability, postmortems, design docs, ADRs, code review quality |
+
+### Advanced homework pattern
+
+For each advanced month, produce five outputs:
+
+1. **working code or a realistic system change**
+2. **tests or validation evidence**
+3. **a short design note**
+4. **a runbook or operational checklist**
+5. **a retrospective or postmortem**
+
+That combination is what shifts this platform from "strong study repo" to "serious engineer training ground."
+
+### Suggested advanced projects
+
+| Month | Homework project |
+| --- | --- |
+| **13** | Take a deliberately broken service or toy system, reproduce three bugs, and write root-cause reports with fixes ranked by confidence |
+| **14** | Build or refactor a service so it has a deliberate unit/integration/contract test strategy, then document what you chose not to test |
+| **15** | Profile one read-heavy and one write-heavy path, then improve the slowest path with measurements before and after |
+| **16** | Perform a lightweight threat model on a small app, then harden authentication, authorization, input handling, and secrets usage |
+| **17** | Take a messy or older project and modernize one part of it using seams, adapters, or a strangler-style migration plan |
+| **18** | Run an incident simulation on your integrated system: detect, triage, mitigate, communicate, and publish a postmortem plus follow-up plan |
+
 ### Best next step inside the repo
 
 - Start with [software-engineering/design-patterns/README.md](software-engineering/design-patterns/README.md) for the pattern study path
