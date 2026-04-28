@@ -32,6 +32,7 @@ Severity, mitigation, communication, postmortems, and written engineering levera
 - [08-postmortems/](08-postmortems/) — Write incident analysis that improves systems rather than assigning blame.
 - [09-adrs-and-rfcs/](09-adrs-and-rfcs/) — Use lightweight writing to align engineering decisions before complexity compounds.
 - [10-code-review-quality/](10-code-review-quality/) — Raise team quality by making review comments precise, useful, and trade-off aware.
+- [11-design-intent-and-project-docs/](11-design-intent-and-project-docs/) — Choose the right engineering document, make design intent explicit, and write project docs people can actually use.
 
 ## What to notice as you work through it
 
