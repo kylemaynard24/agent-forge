@@ -147,6 +147,8 @@ After the first three classes, the bottleneck changes. You no longer need only m
 
 These six classes are the best next additions if your goal is not just to understand good software, but to perform like a strong engineer in production environments.
 
+The repo materials for this phase live in [software-engineering/advanced-engineering/](software-engineering/advanced-engineering/).
+
 ### Advanced monthly homework
 
 | Month | Homework project | Required written output |

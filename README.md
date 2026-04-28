@@ -209,6 +209,8 @@ That combination is what shifts this platform from "strong study repo" to "serio
 | **17** | Take a messy or older project and modernize one part of it using seams, adapters, or a strangler-style migration plan |
 | **18** | Run an incident simulation on your integrated system: detect, triage, mitigate, communicate, and publish a postmortem plus follow-up plan |
 
+The concrete materials for this advanced phase live in [software-engineering/advanced-engineering/](software-engineering/advanced-engineering/).
+
 ### Best next step inside the repo
 
 - Start with [software-engineering/design-patterns/README.md](software-engineering/design-patterns/README.md) for the pattern study path

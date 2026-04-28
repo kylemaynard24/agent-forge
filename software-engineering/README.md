@@ -5,6 +5,7 @@ A learning-oriented collection of software engineering references and runnable d
 ## Contents
 
 - [design-patterns/](design-patterns/) — the 23 Gang of Four design patterns, each with a README and a runnable JavaScript demo.
+- [advanced-engineering/](advanced-engineering/) — advanced engineer track materials for debugging, testing, performance, security, modernization, and incident response.
 
 ## How to run the demos
 
