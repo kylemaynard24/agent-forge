@@ -20,7 +20,7 @@ At a high level, the repository is split into four big areas:
 
 | Area | What it is for |
 | --- | --- |
-| [software-engineering/](software-engineering/) | The broad software design curriculum: architecture, principles, and design patterns |
+| [software-engineering/](software-engineering/) | The broad software design curriculum: beginner JavaScript, architecture, principles, design patterns, and advanced engineering skills |
 | [agentic-workflows/](agentic-workflows/) | A staged course on how LLM agents work, how to design them, and how to operate them safely |
 | [examples/](examples/) | Working examples of Claude Code primitives such as agents, commands, skills, and hooks |
 | [docs/](docs/) | Practical reference material for Claude Code concepts and terminology |
@@ -66,7 +66,7 @@ That last step matters. Most people can recognize a pattern after they have seen
 - [docs/](docs/) — practical reference material for Claude Code concepts, primitives, and terminology
 - [examples/](examples/) — working examples of agents, commands, skills, hooks, and orchestration
 - [agentic-workflows/](agentic-workflows/) — staged curriculum for understanding and building agents
-- [software-engineering/](software-engineering/) — design patterns, architecture topics, and the engineering syllabus
+- [software-engineering/](software-engineering/) — beginner JavaScript, design patterns, architecture topics, advanced engineering, and the engineering syllabus
 
 ## Call to action: study this repo like three college classes
 

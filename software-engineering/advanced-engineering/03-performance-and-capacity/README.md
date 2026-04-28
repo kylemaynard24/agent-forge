@@ -4,45 +4,61 @@
 
 ## Intent
 
-Measure real bottlenecks, then spend effort where it buys meaningful latency, throughput, or resource savings. Performance work is an evidence problem before it is an algorithm problem.
+Measurement, bottleneck analysis, tail behavior, and capacity-aware design.
 
 ## When to use
 
-- A workflow is slow and no one can agree why
-- Capacity planning is guesswork
-- Read-heavy or write-heavy paths behave differently at scale
-- Caching helps one path while hurting another
+- you want stronger engineering judgment in performance and capacity
+- the high-level ideas make sense but the real-world execution still feels slippery
+- you need repeatable habits rather than one-off heroics
+- you want to practice under realistic constraints instead of reading principles passively
 
 ## What this area trains
 
-- profiling before optimizing
-- understanding hot paths
-- reasoning about latency budgets
-- throughput versus tail latency trade-offs
-- recognizing memory and cardinality blowups
+- anchoring performance work in workload and measurement
+- separating query-time cost from build-time or memory cost
+- thinking in latency distributions instead of averages alone
+- planning for load, backpressure, and degraded behavior
 
-## Trade-offs
+## Subtopics
 
-**Pros**
-- Higher leverage than random micro-optimizations
-- Better prioritization because measurements anchor the work
-- Stronger architecture decisions around scale
+- [01-profiling/](01-profiling/) — Measure where time or memory is actually going before changing code.
+- [02-latency-budgets/](02-latency-budgets/) — Allocate response-time targets across a workflow before every dependency spends freely.
+- [03-tail-latency/](03-tail-latency/) — Care about the slow worst-case requests that users actually remember.
+- [04-caching-trade-offs/](04-caching-trade-offs/) — Speed up hot reads without lying to yourself about staleness and invalidation.
+- [05-indexing/](05-indexing/) — Trade indexing cost and storage for faster lookup on important access paths.
+- [06-query-optimization/](06-query-optimization/) — Reduce unnecessary work in the data path rather than hiding it with hardware.
+- [07-queue-backpressure/](07-queue-backpressure/) — Protect the system when producers outpace consumers.
+- [08-memory-leaks/](08-memory-leaks/) — Track references and allocations that survive longer than they should.
+- [09-load-testing/](09-load-testing/) — Probe system behavior under increasing pressure before production does it for you.
+- [10-capacity-planning/](10-capacity-planning/) — Estimate the next bottleneck before growth turns into surprise downtime.
 
-**Cons**
-- Benchmarking can lie if the workload is unrealistic
-- Optimizations often increase complexity
-- Improvements in one metric can worsen another
+## What to notice as you work through it
 
-## Rule of thumb
+- where the hot path really is
+- which metric is being improved and which is being harmed
+- whether the workload matches production reality
+- what breaks next at higher traffic or data volume
 
-Never trust a performance conclusion without workload, measurement, and comparison. "Feels faster" is not data.
+## Common mistakes
 
-## Run the demo
+- optimizing cold paths because they look ugly
+- benchmarking unrealistic toy cases and calling it done
+- improving averages while tail latency gets worse
+- ignoring memory, cardinality, or invalidation cost
+
+## How to use the materials
+
+Each subtopic folder contains:
+
+1. **README.md** — the concept and trade-offs
+2. **demo.js** — a tiny runnable illustration
+3. **homework.md** — a constrained exercise
+
+Run any demo with:
 
 ```bash
-node demo.js
+node path/to/demo.js
 ```
 
-The demo compares naive scanning with indexed lookup over the same data so the bottleneck and the measurement both stay visible.
-
-See also: [homework.md](homework.md) and [project.md](project.md)
+Start with the earlier folders before the later ones. The ordering is intentional.

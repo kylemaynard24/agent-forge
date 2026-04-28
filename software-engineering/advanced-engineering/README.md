@@ -19,6 +19,8 @@ Those three teach you how to think about systems. This section teaches you how t
 - [05-legacy-rescue-and-refactoring/](05-legacy-rescue-and-refactoring/) — seams, strangler moves, modernization without rewriting everything
 - [06-incident-response-and-engineering-execution/](06-incident-response-and-engineering-execution/) — detection, mitigation, communication, postmortems, design docs
 
+Each area now also contains a deeper subtopic ladder. Those subtopics are where the abstract skill turns into repeated practice.
+
 ## How to use this section
 
 Each area has four artifacts:

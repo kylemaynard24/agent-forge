@@ -4,45 +4,60 @@
 
 ## Intent
 
-Turn vague symptoms into narrow, testable hypotheses until you reach the real root cause. Good debugging is not "being clever in the moment." It is disciplined search under uncertainty.
+Root-cause analysis, repro minimization, signal extraction, and disciplined search.
 
 ## When to use
 
-- A bug report says "sometimes this fails" and the reproduction is weak
-- The symptom appears far away from the cause
-- Logs are noisy and the first guess is probably wrong
-- You need to fix the problem without destabilizing everything around it
+- you want stronger engineering judgment in debugging and diagnostics
+- the high-level ideas make sense but the real-world execution still feels slippery
+- you need repeatable habits rather than one-off heroics
+- you want to practice under realistic constraints instead of reading principles passively
 
 ## What this area trains
 
-- symptom sharpening
-- minimal reproductions
-- shrinking the search space
-- adding instrumentation without thrashing
-- distinguishing symptom, trigger, mechanism, and root cause
+- turning vague symptoms into sharp questions
+- shrinking the search space with evidence
+- separating trigger, symptom, mechanism, and cause
+- adding only the instrumentation that helps the next decision
 
-## Trade-offs
+## Subtopics
 
-**Pros**
-- Faster path to the actual fault
-- Fewer random edits and less superstition
-- Better incident notes and bug reports
+- [01-symptom-triage/](01-symptom-triage/) — Turn broad complaints into specific, observable failure statements.
+- [02-repro-minimization/](02-repro-minimization/) — Reduce a failing case to the smallest input and environment that still fails.
+- [03-binary-search-debugging/](03-binary-search-debugging/) — Cut the search space in half repeatedly instead of wandering through the codebase.
+- [04-log-forensics/](04-log-forensics/) — Extract signal from noisy logs and reconstruct what actually happened.
+- [05-trace-analysis/](05-trace-analysis/) — Use span timing and call trees to locate the slow or broken boundary.
+- [06-state-corruption/](06-state-corruption/) — Recognize when the current bad value was created earlier than the visible failure.
+- [07-concurrency-bugs/](07-concurrency-bugs/) — Reason about ordering, races, and shared state under parallel execution.
+- [08-config-and-env-drift/](08-config-and-env-drift/) — Notice when code is fine but runtime configuration is lying to you.
+- [09-root-cause-analysis-writing/](09-root-cause-analysis-writing/) — Write the debugging story clearly enough that others learn from it.
 
-**Cons**
-- Slower than "just try something" in the first ten minutes
-- Requires writing down hypotheses instead of free-associating
-- Can feel procedural until the habit becomes automatic
+## What to notice as you work through it
 
-## Rule of thumb
+- what the user observed versus what the system actually did
+- which hypothesis would be disproven by the next observation
+- where the smallest reliable reproduction lives
+- whether the current evidence narrows or widens the search space
 
-If you cannot say what observation would prove your current hypothesis wrong, you are not debugging yet. You are guessing.
+## Common mistakes
 
-## Run the demo
+- editing code before stabilizing the reproduction
+- conflating the visible symptom with the root cause
+- trusting one noisy log line more than a pattern of evidence
+- fixing the first plausible cause instead of the verified one
+
+## How to use the materials
+
+Each subtopic folder contains:
+
+1. **README.md** — the concept and trade-offs
+2. **demo.js** — a tiny runnable illustration
+3. **homework.md** — a constrained exercise
+
+Run any demo with:
 
 ```bash
-node demo.js
+node path/to/demo.js
 ```
 
-The demo shows a small checkout bug, then narrows it through evidence rather than by editing code until the tests go green.
-
-See also: [homework.md](homework.md) and [project.md](project.md)
+Start with the earlier folders before the later ones. The ordering is intentional.
