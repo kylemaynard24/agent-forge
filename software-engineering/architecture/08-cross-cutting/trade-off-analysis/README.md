@@ -42,3 +42,16 @@ node demo.js
 ```
 
 The demo is a small decision script. Given constraints (team size, latency target, budget, scale), it prints which patterns from the dojo are worth reaching for, and which are over-engineering at this stage. Try changing the inputs and see how the recommendations move.
+
+## Deeper intuition
+
+Cross-cutting concerns expose the pressures that ignore your clean boxes. Observability, trade-off analysis, distributed-systems fallacies, and CAP-style thinking all exist to remind you that runtime reality cuts across module boundaries and happy-path diagrams.
+
+A strong grasp of **Trade-off Analysis** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

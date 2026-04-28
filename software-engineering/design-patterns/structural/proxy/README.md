@@ -60,3 +60,16 @@ node demo.js
 ```
 
 Demonstrates a `ProxyImage` that lazily creates an expensive `RealImage` only on first `display()`. A photo gallery builds hundreds of proxies instantly; only the ones you actually view load.
+
+## Deeper intuition
+
+Structural patterns are about reshaping relationships without rewriting the underlying behavior. They earn their keep when a system needs compatibility, composition, simplification, access control, or independent variation across different dimensions of the design.
+
+When you study **Proxy**, focus less on memorizing participants and more on spotting the design pressure it resolves. Patterns become powerful when you can recognize the force first and name the pattern second. The pattern is usually just the cleanest way of making an important distinction explicit.
+
+## What to notice in real code
+
+- What is the stable interface or responsibility, and what is allowed to vary?
+- Which dependency or decision has been moved somewhere more explicit?
+- What extra indirection does this pattern add, and is the payoff worth it here?
+- Which nearby pattern would someone confuse with this one, and why is this a better fit?

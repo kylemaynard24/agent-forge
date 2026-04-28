@@ -57,3 +57,16 @@ node demo.js
 ```
 
 The demo shows that `Logger.getInstance()` always returns the same object, that its history persists across all callers, and that directly calling `new Logger()` is blocked.
+
+## Deeper intuition
+
+Creational patterns are about dependency control at the moment of construction. They matter because the way objects come into existence often leaks into the rest of the codebase, forcing callers to know concrete types, lifecycle rules, or assembly details they should not have to carry.
+
+When you study **Singleton**, focus less on memorizing participants and more on spotting the design pressure it resolves. Patterns become powerful when you can recognize the force first and name the pattern second. The pattern is usually just the cleanest way of making an important distinction explicit.
+
+## What to notice in real code
+
+- What is the stable interface or responsibility, and what is allowed to vary?
+- Which dependency or decision has been moved somewhere more explicit?
+- What extra indirection does this pattern add, and is the payoff worth it here?
+- Which nearby pattern would someone confuse with this one, and why is this a better fit?

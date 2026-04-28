@@ -93,3 +93,16 @@ The demo implements a minimal agent — 60 lines, no API key required. The "LLM"
 - The difference between an agent, a workflow, and a chatbot — phrased so you can correct the next person who confuses them.
 - A cautious read on agent hype: agents are a powerful pattern, not a default architecture.
 - A vocabulary for the rest of this dojo: when you hear "tool," "loop," "context," "goal," they should mean specific things to you.
+
+## Deeper intuition
+
+Foundations are where you build the core mental model of an agent: what it is, what makes it different from a chatbot or workflow, and which primitives matter before you worry about polish. These topics are worth over-learning because every later design choice depends on them.
+
+The best way to study **What is an agent?** is to treat it as a control surface. Ask what part of agent behavior becomes more legible, more bounded, or more reusable when you apply this idea. If a technique makes the system easier to reason about under repeated use, it is probably serving a real purpose. If it mostly adds ceremony, it may be compensating for a blurrier design problem upstream.
+
+## Questions to carry into the demo
+
+- What kind of failure or drift is this topic trying to prevent?
+- What degree of autonomy does it allow, and where does it deliberately add constraint?
+- How would I know this concept is helping in production rather than just sounding good in a diagram?
+- If I removed this mechanism, where would confusion or risk re-enter the system?

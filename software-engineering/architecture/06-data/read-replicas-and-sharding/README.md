@@ -46,3 +46,16 @@ node demo.js
 ```
 
 The demo runs a single writer with two read replicas (with simulated lag), then a sharded keyspace that hashes user IDs across two shards. We show stale reads from a replica and routing across shards.
+
+## Deeper intuition
+
+Data architecture is where software design meets physical constraints. Reads, writes, consistency, replication, and ownership all have sharp costs. These topics matter because a lot of 'architecture' becomes real only when it hits data movement and storage boundaries.
+
+A strong grasp of **Read Replicas and Sharding** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

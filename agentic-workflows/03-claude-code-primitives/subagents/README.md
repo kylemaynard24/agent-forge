@@ -166,3 +166,16 @@ cat ./demo/example-agent.md
 ```
 
 The demo is a complete `.claude/agents/<name>.md` file with frontmatter and a substantive body. You can copy it, install it, and invoke it.
+
+## Deeper intuition
+
+Primitives are the concrete handles the runtime gives you. They matter because production behavior is not shaped by prompts alone; it is shaped by where you package behavior, what gets reused, and which mechanisms stay implicit versus explicit.
+
+The best way to study **Subagents** is to treat it as a control surface. Ask what part of agent behavior becomes more legible, more bounded, or more reusable when you apply this idea. If a technique makes the system easier to reason about under repeated use, it is probably serving a real purpose. If it mostly adds ceremony, it may be compensating for a blurrier design problem upstream.
+
+## Questions to carry into the demo
+
+- What kind of failure or drift is this topic trying to prevent?
+- What degree of autonomy does it allow, and where does it deliberately add constraint?
+- How would I know this concept is helping in production rather than just sounding good in a diagram?
+- If I removed this mechanism, where would confusion or risk re-enter the system?

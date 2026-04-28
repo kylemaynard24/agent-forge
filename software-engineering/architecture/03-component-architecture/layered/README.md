@@ -37,3 +37,16 @@ node demo.js
 ```
 
 The demo shows a 3-layer todo app: a controller calls services, services call repositories, and only the repository touches the in-memory store.
+
+## Deeper intuition
+
+Component architecture is where local code structure turns into system shape. These topics teach you how to place business logic, dependencies, and interfaces so the important parts of the system can stay stable while implementation details remain replaceable.
+
+A strong grasp of **Layered Architecture** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

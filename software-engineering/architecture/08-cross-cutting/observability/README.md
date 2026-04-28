@@ -42,3 +42,16 @@ node demo.js
 ```
 
 The demo runs a tiny tracer with `startSpan`/`endSpan`, prints a tree of nested spans for a simulated request, increments a counter for handled requests, and emits one structured log line per request.
+
+## Deeper intuition
+
+Cross-cutting concerns expose the pressures that ignore your clean boxes. Observability, trade-off analysis, distributed-systems fallacies, and CAP-style thinking all exist to remind you that runtime reality cuts across module boundaries and happy-path diagrams.
+
+A strong grasp of **Observability** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

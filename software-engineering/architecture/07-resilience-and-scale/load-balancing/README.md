@@ -42,3 +42,16 @@ node demo.js
 ```
 
 The demo simulates 100 requests of varying cost across 3 backends, comparing round-robin vs. least-connections. It prints per-backend total work and the wall-clock to drain the queue under each strategy.
+
+## Deeper intuition
+
+Resilience and scale topics teach you to design for bad days instead of ideal days. The mature question is not whether something can fail, but how failure is detected, bounded, retried, absorbed, or surfaced before it becomes systemic damage.
+
+A strong grasp of **Load Balancing** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

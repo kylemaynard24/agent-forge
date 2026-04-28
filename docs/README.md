@@ -44,3 +44,18 @@ Project-level files override user-level files with the same name.
 - **Skill** → a capability the model loads *itself* when relevant
 - **Hook** → the harness reacts to an event by running a shell command
 - **Panel** → editor UI terminology (VS Code sidebar), *not* a Claude Code primitive
+
+## How to use these docs well
+
+Think of `docs/` as the reference shelf and the rest of the repo as the lab. The docs tell you what each Claude Code concept means and how the pieces fit; the examples and staged lessons show those ideas under motion. If something in `agentic-workflows/` feels fuzzy, come back here, tighten the definition, then return to the runnable material.
+
+A useful habit is to read one doc with two questions in mind: **what degree of control does this feature give me, and what new failure mode does it introduce?** That framing keeps the docs practical instead of purely descriptive.
+
+## Signals that you understand a topic here
+
+You probably understand a doc in this folder when you can:
+
+- explain where the feature belongs in the overall Claude Code mental model
+- name the main thing it makes easier
+- name the main way it can be misused
+- decide whether it should live at user scope, project scope, or not be used at all

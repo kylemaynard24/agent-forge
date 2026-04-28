@@ -26,3 +26,18 @@ They matter when:
 - **Decorator** vs. **Proxy** — Both wrap an object. Decorator adds *behavior*. Proxy controls *access* (caching, lazy loading, remote, permissions).
 - **Decorator** vs. **Composite** — Both use recursive composition. Composite treats groups and leaves the same way. Decorator adds responsibilities to a single component.
 - **Bridge** vs. **Strategy** (behavioral) — Both pass one object into another. Bridge is about parallel class hierarchies; Strategy is about algorithm swapping at runtime.
+
+## What this family trains you to notice
+
+Structural patterns are largely about **boundary shape**. They teach you how to join pieces together without forcing every consumer to understand every implementation detail. The skill here is recognizing when a system needs compatibility, composition, simplification, separation of dimensions, or a controlled stand-in for the real object.
+
+This family becomes much easier once you stop comparing wrappers by appearance alone. Several structural patterns look like "one object wraps another," but the real question is why the wrapper exists. Intent is the whole game.
+
+## A good comparison habit
+
+When studying structural patterns, keep asking:
+
+- what relationship is being reshaped
+- whether the wrapper changes interface, adds behavior, hides complexity, or controls access
+- whether composition is replacing inheritance
+- what the client is now allowed to ignore that it previously had to know

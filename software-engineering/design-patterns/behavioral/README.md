@@ -32,3 +32,18 @@ They matter when:
 - **Observer** vs. **Mediator** — Both coordinate multiple objects. Observer is broadcast (subject → many observers). Mediator is hub-and-spoke (peers → mediator → peers).
 - **Chain of Responsibility** vs. **Command** — CoR passes the request along a chain until something handles it. Command is about the request itself as a first-class object.
 - **Visitor** vs. **Iterator** — Iterator traverses; Visitor *does something at each node*. Visitor lets you add new operations without modifying node classes.
+
+## What this family trains you to notice
+
+Behavioral patterns sharpen your sense for **control flow as design**. Many messy systems are not messy because their data structures are wrong; they are messy because responsibility is scattered and the path from cause to effect is hard to follow. This family gives names to the main ways behavior can be moved, encapsulated, sequenced, broadcast, or coordinated.
+
+If you study this family well, you'll start seeing hidden behavioral decisions everywhere: giant `if/else` ladders that want Strategy, callback tangles that want Observer or Mediator, undo requirements that want Command plus Memento, and workflows that want an explicit chain instead of ad hoc branching.
+
+## A good comparison habit
+
+When two behavioral patterns look similar, ask:
+
+- who owns the next decision
+- whether behavior changes by substitution, transition, or notification
+- whether the pattern improves traceability or hides control flow
+- what the simplest non-pattern solution would have been

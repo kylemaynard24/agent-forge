@@ -64,3 +64,16 @@ Common extensions:
 - **Run formatters after edits:** use `PostToolUse` with matcher `"Edit|Write"`, no block needed.
 
 See [../../docs/hooks.md](../../docs/hooks.md) for the event catalog.
+
+## What this hook teaches beyond the script itself
+
+The conceptual lesson is that hooks are not just automation glue; they are **policy at the boundary of action**. A hook lets you insert organizational judgment exactly where raw tool power would otherwise be too permissive. In practice, that means hooks are most valuable when they encode safety, compliance, guardrails, or post-action hygiene that should be applied consistently rather than remembered ad hoc.
+
+This is also why hook design should stay narrow. A small, legible policy is easier to trust than a clever hook that silently rewrites behavior in ten different cases.
+
+## Questions to ask when adapting this pattern
+
+- What event is the right enforcement point: before the action, after it, or at conversation stop?
+- Should this policy block, warn, or annotate?
+- Is the rule simple enough that a teammate could predict when it will fire?
+- If the hook fails, is the failure mode acceptably safe?

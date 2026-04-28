@@ -41,3 +41,16 @@ node demo.js
 ```
 
 The demo wraps a function that succeeds only 30% of the time in a retry-with-jitter + timeout helper, and shows that calls converge to success within the retry budget while bounded calls never hang forever.
+
+## Deeper intuition
+
+Resilience and scale topics teach you to design for bad days instead of ideal days. The mature question is not whether something can fail, but how failure is detected, bounded, retried, absorbed, or surfaced before it becomes systemic damage.
+
+A strong grasp of **Retry and Timeout** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

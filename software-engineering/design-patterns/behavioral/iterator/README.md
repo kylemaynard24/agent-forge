@@ -65,3 +65,16 @@ node demo.js
 ```
 
 Demonstrates a binary search tree that supports **three** traversal orders (in-order, pre-order, post-order) through separate iterators. Each is a generator; `for...of` does the rest.
+
+## Deeper intuition
+
+Behavioral patterns are about where decisions live and how control flows between objects. They become useful when logic is correct in isolation but hard to follow as a system because too many objects know too much about each other or because behavior varies in ways that are currently trapped in conditionals.
+
+When you study **Iterator**, focus less on memorizing participants and more on spotting the design pressure it resolves. Patterns become powerful when you can recognize the force first and name the pattern second. The pattern is usually just the cleanest way of making an important distinction explicit.
+
+## What to notice in real code
+
+- What is the stable interface or responsibility, and what is allowed to vary?
+- Which dependency or decision has been moved somewhere more explicit?
+- What extra indirection does this pattern add, and is the payoff worth it here?
+- Which nearby pattern would someone confuse with this one, and why is this a better fit?

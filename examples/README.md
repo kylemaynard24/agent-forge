@@ -88,3 +88,19 @@ ln -s "$(pwd)/.claude/commands/review-crew.md" ~/.claude/commands/review-crew.md
 - Plan templates → [plans/plan-prompts.md](plans/plan-prompts.md)
 - Annotated plan example → [plans/annotated-plan.md](plans/annotated-plan.md)
 - Hooks demo → [hooks/README.md](hooks/README.md)
+
+## What these examples are really teaching
+
+The examples are valuable because they separate **mechanics** from **production judgment**. A tiny command, skill, or agent file is enough to show the shape of the primitive. Your job as a learner is to notice the deeper question underneath each example: what work should be encoded in a reusable artifact, what should stay conversational, and when does a helper become complex enough to deserve its own boundary?
+
+In other words, don't just ask "does this run?" Ask "what problem does this artifact solve repeatedly enough to justify existing?"
+
+## A good practice loop for this folder
+
+For each example, try three passes:
+
+1. Run it unchanged so the baseline behavior is obvious.
+2. Modify one rule, one prompt section, or one orchestration choice and predict the impact.
+3. Write down where the example would break if you scaled it to a real team or a messier repository.
+
+That third pass is where understanding usually clicks.

@@ -35,3 +35,16 @@ node demo.js
 ```
 
 The demo defines a tiny in-process event bus. An `OrderPlaced` event triggers two unrelated subscribers (email + inventory) — neither knows about the other.
+
+## Deeper intuition
+
+System architecture topics change the unit of thinking from classes to deployable pieces and interaction styles. The important question is no longer just 'is this code clean?' but 'what does this topology make easy, expensive, risky, or organizationally awkward?'
+
+A strong grasp of **Event-Driven Architecture** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?

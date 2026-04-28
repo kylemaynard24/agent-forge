@@ -180,3 +180,16 @@ The GoF book is written in C++ and Smalltalk. In JavaScript:
 - **Strategy / Command / Observer** — first-class functions make these lighter than in class-heavy languages.
 
 The demos use ES6 classes to match the book's shape. In real code you'd often write these more concisely with functions or modules — but the pattern *shape* reads more clearly with classes.
+
+## How to know a pattern has "clicked"
+
+A pattern has not clicked when you can draw its class diagram from memory. It has clicked when you can look at an unfamiliar codebase and notice the design pressure that pattern responds to: algorithm swapping, object creation control, wrapper intent, broadcast updates, undoable actions, tree-shaped structures, and so on.
+
+The most important habit in this section is comparison. Patterns become useful in the moment where two or three shapes all seem plausible and you need to explain why one is the better fit. Keep asking not just "what is this pattern?" but "what other nearby pattern would someone confuse it with, and what makes them different in practice?"
+
+## Questions to carry through the catalog
+
+- What source of change is this pattern isolating?
+- What new indirection does it introduce?
+- What simpler alternative would I try first?
+- If I removed this pattern, where would complexity leak back into the system?

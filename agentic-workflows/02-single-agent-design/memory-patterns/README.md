@@ -143,3 +143,16 @@ node demo.js
 ```
 
 The demo implements file-backed memory with `save`/`load`/`list`/`search` tools and runs an agent across two "sessions" — proving that information persists between runs even though the loop is fresh each time.
+
+## Deeper intuition
+
+Single-agent design is mostly the craft of controlling ambiguity. A strong single agent is not the one with the longest prompt; it is the one whose tools, output contracts, memory choices, and recovery rules make useful behavior easier than unhelpful behavior.
+
+The best way to study **Memory Patterns** is to treat it as a control surface. Ask what part of agent behavior becomes more legible, more bounded, or more reusable when you apply this idea. If a technique makes the system easier to reason about under repeated use, it is probably serving a real purpose. If it mostly adds ceremony, it may be compensating for a blurrier design problem upstream.
+
+## Questions to carry into the demo
+
+- What kind of failure or drift is this topic trying to prevent?
+- What degree of autonomy does it allow, and where does it deliberately add constraint?
+- How would I know this concept is helping in production rather than just sounding good in a diagram?
+- If I removed this mechanism, where would confusion or risk re-enter the system?

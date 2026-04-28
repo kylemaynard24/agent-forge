@@ -132,3 +132,16 @@ node demo.js
 ```
 
 The demo runs a 3-stage research pipeline: gather → outline → draft. Each stage is a stub LLM with structured I/O.
+
+## Deeper intuition
+
+Multi-agent patterns are coordination strategies, not magic multipliers. They help only when splitting the work reduces cognitive load more than it increases communication overhead, synthesis work, and opportunities for contradictory conclusions.
+
+The best way to study **Sequential Pipeline** is to treat it as a control surface. Ask what part of agent behavior becomes more legible, more bounded, or more reusable when you apply this idea. If a technique makes the system easier to reason about under repeated use, it is probably serving a real purpose. If it mostly adds ceremony, it may be compensating for a blurrier design problem upstream.
+
+## Questions to carry into the demo
+
+- What kind of failure or drift is this topic trying to prevent?
+- What degree of autonomy does it allow, and where does it deliberately add constraint?
+- How would I know this concept is helping in production rather than just sounding good in a diagram?
+- If I removed this mechanism, where would confusion or risk re-enter the system?

@@ -37,3 +37,16 @@ node demo.js
 ```
 
 The demo runs a producer that enqueues 5 jobs in under 10ms and a slow consumer that takes 200ms per job. The producer finishes immediately while the consumer drains the queue in the background.
+
+## Deeper intuition
+
+Communication patterns are agreements about timing, coupling, ownership, and failure visibility. Every message path answers hidden questions: who waits, who retries, who owns the source of truth, and how much inconsistency the business can tolerate.
+
+A strong grasp of **Asynchronous Messaging** means you can explain what cost it is buying down and what new cost it introduces. That is the practical test for architecture knowledge: not whether you can define the term, but whether you can use it to reason honestly about trade-offs in a real system.
+
+## Questions to carry into the demo
+
+- What kind of coupling does this idea reduce, and what coupling does it still allow?
+- What gets easier to change if I adopt this approach?
+- What operational or organizational cost am I accepting in return?
+- What simpler alternative would I try before reaching for this in a small system?
