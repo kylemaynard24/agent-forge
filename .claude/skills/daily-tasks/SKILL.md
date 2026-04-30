@@ -111,6 +111,8 @@ Generate by **reading the topic's actual README** (for repo topics) or by drawin
 - **Watch for** — 1–2 specific things to pay attention to that the casual reader misses (a trade-off, a deliberate "wrong" first design, a sibling-pattern contrast, an author qualification of a strong claim).
 - **Excerpt** — for repo topics: a verbatim 2–4 line quote from the linked README, picked for the load-bearing idea. For Head First chapters: a verbatim quote from the **repo's secondary-reference README** for the same pattern (do NOT fabricate quotes from the book — you don't have it). For **external-only topics (devops + any external row)**: omit the excerpt block entirely OR replace it with a "Doc reference" line naming the canonical doc section to read first (e.g., "Microsoft Learn — *Bicep fundamentals*, Module 1: 'What is Bicep?'") — never invent a verbatim quote from a doc you haven't actually read in this session.
 
+- **Deep dive** (external-only topics only — REQUIRED for devops, optional for others): a 200–300 word substantive prose section that goes deeper than the primer and is meant to be read directly from the todo as actual learning material. Since the user can't click into a single authoritative README for these topics, the daily todo IS more of the reading. Cover: the conceptual model behind the topic (not just "what it is"), the most common mistake practitioners make, a concrete worked-through example (in prose, not code), and how this topic connects to the previous topic in the syllabus. Ground in real patterns — be specific about Azure / Bicep / Docker / GHA mechanics. Clearly title the block "_Deep dive:_". On a `read` day, this block is your main contribution to the user's reading depth; on `demo` and `implement` days, keep it but shift to focus on what they should look for as they execute.
+
 If the user is on `demo` or `implement` step (not `read`), shift the Reading material to be about the demo file or homework respectively — keep it grounded.
 
 #### B. Step task
@@ -203,6 +205,12 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 
 > _Excerpt (verbatim from the README/repo reference):_
 > > <2-4 line literal quote>
+
+> _Doc reference (external-only topics):_ <named canonical doc section>
+
+> _Deep dive (external-only topics — REQUIRED for devops):_
+>
+> <200-300 word substantive prose: conceptual model, common mistake, worked-through prose example, connection to previous topic. Be specific about mechanics. This block IS the user's main reading on `read` days for external-only topics — make it earn the time.>
 
 **Today:**
 - [ ] **Step:** <step task>
