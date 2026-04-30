@@ -45,6 +45,8 @@ Each syllabus has 4 levels (Beginner → Expert). Topics span multiple days — 
 
 Today's date is `currentDate` from system context. Use ISO `YYYY-MM-DD`.
 
+**Note on the yesterday-completion check (Step 1.5):** before generating a NEW day's plan, the skill asks the user whether yesterday was completed. If not, today's plan is a copy of yesterday's (no advancement, no new content). Real engineers have busy days; piling new work on top of unfinished work is how learning sprints die. See Step 1.5 for the full flow.
+
 ### Step 0 — Resolve which areas to plan for
 
 Look at the user's invocation arguments (if any).
@@ -68,6 +70,53 @@ For each subject in the resolved list, decide its planning mode:
 ### Step 1 — Idempotency check
 
 If the resolved output file already exists, do NOT regenerate. Read it and show it to the user with a note that the plan is already set. Stop.
+
+### Step 1.5 — Yesterday-completion check (gateway to new generation)
+
+Before generating a NEW day's plan, check whether yesterday's plan was completed. Real engineers have busy days; piling new work on top of unfinished work is how learning sprints die.
+
+Procedure:
+
+1. Find the most recent dated folder in `progress/` strictly before today (same logic as Step 4). If none exists, skip this step entirely — there's no prior plan to check.
+2. Read the prior day's `todo.md`. Quickly scan: count total checkboxes (lines starting with `- [ ]` or `- [x]`) and how many are checked. This gives a quick signal but is NOT the source of truth — the user might have done work without checking boxes.
+3. **Ask the user via `AskUserQuestion`** with this prompt:
+   - **Question:** "Did you complete <previous date>'s plan? Skill counted N of M tasks checked off, but you decide."
+   - **Options (multiSelect: false):**
+     - `yes` — Yes, ready for today's new plan
+     - `no` — No, repeat yesterday's plan today
+     - `partial` — Partially done; repeat yesterday's plan today (keep working on the unchecked items)
+
+4. Branch on the response:
+   - **`yes`** → Continue to normal generation (Steps 2–8 below). Today gets a fresh plan from the next state position.
+   - **`no` or `partial`** → Carry-forward mode (see below). Do NOT advance state. Do NOT generate new content.
+
+#### Carry-forward mode
+
+When the user answers `no` or `partial`:
+
+1. Copy `progress/<prev-date>/todo.md` to `progress/<today>/todo.md`. Use Read + Write (not file copy via Bash) so the skill controls the content.
+2. Replace the top-of-file date heading: `# <prev-date> — Daily todo` becomes `# <today> — Daily todo (continuing <prev-date>)`.
+3. Insert a new "Continuation note" block right after the heading, before the Yesterday section:
+   ```markdown
+   > **Continuation day.** Yesterday's plan wasn't finished — picking it up today with no new tasks added. Unchecked items below are what's left. State files were NOT advanced; the next fresh plan happens whenever you answer "yes" to "did you finish yesterday's plan?"
+   ```
+4. Keep all the original content otherwise — same questions, same model answers, same Reading material, same checked/unchecked status. The user resumes exactly where they left off.
+5. Scaffold today's `working-folder/` directories (Step 7) so the user has fresh scratch space if they want it. They can also keep working in yesterday's working-folder.
+6. Report to the user:
+   - "Today repeats <prev-date>'s plan. State unchanged."
+   - Show count: "X of Y tasks were checked off; Z left."
+   - One-line reminder: "When you finish, run `/daily-tasks` again — it'll ask if you completed it before generating a fresh plan."
+7. STOP. Do not run Steps 2–8.
+
+#### When to skip the check
+
+- First-time use (no prior dated folder) — no plan to check, generate fresh.
+- User invokes in focused mode (`/daily-tasks <area>`) for a different area than yesterday's plan covered — check is irrelevant; generate fresh.
+- The most recent prior folder was itself a continuation day with the same content — the check still fires, just the answer is more often "no" several days in a row, which is fine.
+
+#### Why ask instead of just inspecting checkboxes
+
+Some engineers don't mark checkboxes as they work (they just do the work). Others mark them aspirationally at the start. The user is the source of truth on whether the day was "complete enough" to advance. The checkbox count is a useful prompt context, not a verdict.
 
 ### Step 2 — Load syllabus + state for each tracked subject
 
