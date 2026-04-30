@@ -18,3 +18,8 @@ Thumbs.db
 
 # Salesforce
 .sfdx/
+
+# Personal learning progress (per-user; never push)
+# Each user maintains their own state and daily todos under progress/.
+# Shared curriculum lives in learning-syllabuses/.
+progress/

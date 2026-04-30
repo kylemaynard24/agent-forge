@@ -1,40 +1,52 @@
 # Daily Learning Goals
 
-A focused, sprint-driven plan for working through three subjects in parallel — one task per subject per day. Cadence comes from the `daily-tasks` skill in `.claude/skills/daily-tasks/`; progress is tracked under `progress/`.
+A focused, sprint-driven plan for working through four subjects in parallel — one step task + one apply task per subject per day, plus 2 comprehension questions per subject. Cadence comes from the `daily-tasks` skill in `.claude/skills/daily-tasks/`; personal progress lives under `progress/` (gitignored — your daily work never gets pushed).
 
-## The three subjects
+The cap is **four subjects** — chosen deliberately to keep daily load consistent. Small, consistent, incremental improvements > maximal coverage.
 
-| Subject | Source path | Syllabus |
+## The four subjects
+
+| Subject | Master syllabus (shared) | Source / canonical material |
 |---|---|---|
-| Agentic workflows | `agentic-workflows/` | `agentic-workflows/SYLLABUS.md` |
-| Software architecture | `software-engineering/architecture/` | `software-engineering/SYLLABUS.md` (Stage 2+) |
-| Design patterns | `software-engineering/design-patterns/` | `software-engineering/SYLLABUS.md` (Stage 1) |
+| Agentic workflows | [learning-syllabuses/agentic-workflows.md](learning-syllabuses/agentic-workflows.md) | `agentic-workflows/` repo content |
+| Software architecture | [learning-syllabuses/architecture.md](learning-syllabuses/architecture.md) | `software-engineering/architecture/` repo content |
+| Design patterns | [learning-syllabuses/design-patterns.md](learning-syllabuses/design-patterns.md) | *Head First Design Patterns* (2nd ed) — chapter by chapter; `software-engineering/design-patterns/` as secondary reference |
+| DevOps (Azure shop) | [learning-syllabuses/devops.md](learning-syllabuses/devops.md) | Microsoft Learn, Azure docs, GitHub Actions docs, Docker docs (no repo content) |
 
 ## The daily rhythm
 
-For each subject, on each working day, one of these three task types:
+For each subject, on each working day:
 
-1. **Read** — work through the topic's `README.md` and take notes.
-2. **Demo** — run, modify, and reason about the topic's `demo.js` (or equivalent).
-3. **Implement** — do the topic's `homework.md` (or a self-defined exercise) in `_solutions/`.
+1. **Read** — orient with the inline Reading material in today's todo, then work through the linked README or chapter.
+2. **Apply** — type out a small (~10–30 line) concrete piece using the day's concept; save to `progress/<today>/work/<subject>/`.
+3. **Prove it** — answer 2 comprehension questions in writing in the Notes section of today's todo.
 
-The progression for one topic is always **Read → Demo → Implement**, then advance to the next topic in syllabus order. Don't skip ahead, don't bend constraints in the homework — they exist on purpose.
+Topics span multiple days. The progression for one topic is **read → demo → implement**, then advance to the next topic in syllabus order.
 
-## The progress system
+## Shared vs personal — what's in git, what isn't
 
-Two layers under `progress/`:
+This repo is meant to be **shared**. The shared parts (syllabuses, the skill, this guide, the existing teaching content under `agentic-workflows/` and `software-engineering/`) are committed. Per-user **personal** parts live under `progress/` and are **gitignored**.
 
-- `<subject>/state.md` — long-lived: current topic, current step (read / demo / implement), last completed.
-- `YYYY-MM-DD/todo.md` — one folder per working day. Holds a single todo file with linked file paths for each subject and 3–6 checkbox tasks (1–2 per subject) for that day, plus a short summary of yesterday.
-
-The `daily-tasks` skill reads each `state.md`, looks at the most recent prior dated folder for yesterday's context, and writes today's `progress/YYYY-MM-DD/todo.md`. It does not overwrite an existing day's todo.
+| Location | What's in it | Tracked by git? |
+|---|---|---|
+| `learning-syllabuses/` | The four master syllabuses | Yes — shared |
+| `.claude/skills/daily-tasks/` | The skill | Yes — shared |
+| `agentic-workflows/`, `software-engineering/` | Existing teaching content (READMEs, demos, homework) | Yes — shared |
+| `progress/<subject>/state.md` | Your sprint position | **No — personal** |
+| `progress/<today>/todo.md` | Generated daily plan | **No — personal** |
+| `progress/<today>/work/<subject>/` | Your apply-task scratch work | **No — personal** |
 
 ## How to use
 
 - Run `/daily-tasks` at the start of a working session — opens or creates today's folder.
 - Open `progress/<today>/todo.md`, work through it, check boxes off, jot notes inline.
-- When you finish the third step (implement) for a topic, advance the relevant `state.md` to the next topic in the syllabus (or ask `/daily-tasks` to advance it for you).
+- Save apply-task code to `progress/<today>/work/<subject>/`.
+- When you finish a topic's `implement` step, advance the relevant `progress/<subject>/state.md` (or ask `/daily-tasks` to advance it for you).
+
+## First-time setup (you or a friend on a fresh clone)
+
+Nothing to do. Just run `/daily-tasks`. The skill bootstraps `progress/<subject>/state.md` for each subject from row 1 of its syllabus, scaffolds today's `progress/<today>/work/` directories, and writes the daily todo. Friends pulling the repo never collide on personal state — each person's `progress/` is their own.
 
 ## Definition of "done" for the sprint
 
-Through the agentic-workflows syllabus (6 months / 32 topics) and the design-patterns + architecture portions of the engineering syllabus (12 months / ~50 topics) at a sustainable pace — one substantive task per subject per day, no skipped homework.
+Through all four master syllabuses end-to-end at a sustainable pace — small consistent incremental improvements every working day, no skipped homework. The four syllabuses are sized for ~12+ months at part-time pace; the goal isn't speed, it's not stopping.
