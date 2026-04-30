@@ -139,7 +139,7 @@ Sprint starting — no prior day.
 
 **Today:**
 - [ ] **Step:** Start Head First Ch 1 — aim for ~30–60 minutes today. Read at least through the SimUDuck "inheritance breaks" reveal and the introduction of "encapsulating what varies."
-- [ ] **Apply:** Type (don't paste) a 15-line example: a `Sorter` class with a swappable `compare` Strategy. Two strategies (`byLength`, `byAlphabetical`), instantiate twice, sort `["bee", "a", "elephant"]` with both, print results. Save to `progress/2026-04-30/working-folder/design-patterns/sorter-strategy.js`.
+- [ ] **Apply:** Type (don't paste) a piece of the **chapter's SimUDuck example** — the actual code the book walks you through. Aim for ~30 lines: `Duck` base class (with `swim()` + `display()`); `MallardDuck` and `RubberDuck` subclasses; `FlyBehavior` interface with `FlyWithWings` and `FlyNoWay` implementations; ducks compose a `FlyBehavior` reference and call `performFly()` that delegates to it. Demo: instantiate one of each, call `performFly()`, see the difference. (Tomorrow's apply will extend this with `QuackBehavior` per the book's order.) Save to `progress/2026-04-30/working-folder/design-patterns/simuduck/Duck.js` (split into multiple files if you prefer the book's layout).
 
 **Prove it — answer in the Answers + explanations section at the bottom:**
 1. What specifically broke when they tried to put `fly()` on the Duck base class? What did inheritance promise it couldn't deliver?

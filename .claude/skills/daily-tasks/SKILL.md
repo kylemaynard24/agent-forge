@@ -123,15 +123,39 @@ If the user is on `demo` or `implement` step (not `read`), shift the Reading mat
 
 #### C. Apply task
 
-A small, concrete coding exercise (~10–30 lines) that uses the day's concept in a different setting from the README/demo. Must reference a concrete output: file path, line count, expected behavior. Examples:
-- `read` day on Strategy: "Type a 15-line example where a `Sorter` class has a swappable `compare` strategy. Run it with two different strategies."
-- `read` day on Observer: "Type a 20-line `EventBus` with subscribe/emit. Subscribe two listeners, emit one event, see both fire."
-- `read` day on `separation-of-concerns`: "Take any 30-line script you've written that mixes I/O and logic. Split it into a pure function + a thin I/O wrapper."
+A small, concrete coding exercise (~10–30 lines) that uses the day's concept. Must reference a concrete output: file path, line count, expected behavior.
 
-Save apply work to **today's per-day working-folder**: `progress/<today>/working-folder/<subject>/<filename>`. The skill scaffolds this directory tree when generating today's todo (see Step 7). Examples:
+**For repo topics (agentic-workflows, architecture, devops):** the apply task can use a different setting from the linked README/demo. Goal is to build something *new* using the concept. Examples:
+- `read` day on `what-is-an-agent`: "Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM, one tool, a loop, a goal."
+- `read` day on `separation-of-concerns`: "Take any 30-line script you've written that mixes I/O and logic. Split it into a pure function + a thin I/O wrapper."
+- `read` day on `Bicep modules`: "Refactor a Storage Account Bicep into a parameterized module. Call it twice for dev + prod."
+
+**For design-patterns (Head First chapters): the apply task MUST mirror the chapter's actual running example.** The book teaches each pattern through one extended worked example — your apply task is to type out (don't paste) a piece of that same example, the way the chapter walks you through it. This keeps the apply work in lockstep with the reading and lets the user follow chapter-by-chapter rather than building unrelated parallel examples.
+
+Mapping of Head First chapter → running example to build:
+
+| Chapter | Pattern(s) | Running example to build |
+|---|---|---|
+| Ch 1 | Strategy | **SimUDuck** — Duck base + MallardDuck + RubberDuck + FlyBehavior interface (FlyWithWings, FlyNoWay) + QuackBehavior interface (Quack, Squeak); compose behaviors in subclass constructors; demo `performFly()` + `performQuack()` |
+| Ch 2 | Observer | **Weather Station** — WeatherData subject + 2-3 Display observers (CurrentConditions, Statistics); subject notifies on data change |
+| Ch 3 | Decorator | **Starbuzz Coffee** — Beverage base + concrete drinks (Espresso, HouseBlend) + CondimentDecorator wrappers (Mocha, Whip) that recursively compute `cost()` and `getDescription()` |
+| Ch 4 | Factory Method + Abstract Factory | **Pizza Store** — Pizza interface + NYStylePizzaStore / ChicagoStylePizzaStore subclasses overriding `createPizza()`; (Abstract Factory section: ingredient family for each region) |
+| Ch 5 | Singleton | **Chocolate Boiler** — single instance with `fill()`, `boil()`, `drain()`; classic version + thread-safe versions the book contrasts |
+| Ch 6 | Command | **Remote Control** — RemoteControl with 7 slots; LightOnCommand / LightOffCommand / GarageDoorOpenCommand; receivers held inside command objects |
+| Ch 7 | Adapter + Facade | **Turkey/Duck Adapter** + **Home Theater Facade** — TurkeyAdapter wraps a Turkey to look like a Duck; HomeTheaterFacade wraps Amplifier + Tuner + DvdPlayer + Projector + Lights into one `watchMovie()` call |
+| Ch 8 | Template Method | **CaffeineBeverage** — abstract base with `prepareRecipe()` template method; Coffee + Tea subclasses override `brew()` and `addCondiments()` hooks |
+| Ch 9 | Iterator + Composite | **Diner / Pancake House Menu** — Iterator: each menu exposes a uniform Iterator over its differently-typed internals; Composite: MenuComponent with leaves (MenuItem) and composites (Menu) |
+| Ch 10 | State | **Gumball Machine** — context with `NoQuarterState`, `HasQuarterState`, `SoldState`, `SoldOutState`; transitions defined inside each state |
+| Ch 11 | Proxy | **Gumball Machine Monitor** — remote proxy via Java RMI in the book; in JS/TS it's fine to do a network proxy or a virtual proxy that defers loading |
+| Ch 12 | Compound Patterns | **Duck simulator revisited** — combine Strategy + Observer + Adapter + Composite + Iterator + MVC into one richer simulator |
+| Appendix | (one per leftover pattern) | One short example per appendix pattern — Bridge / Builder / Chain of Resp / Flyweight / Interpreter / Mediator / Memento / Prototype / Visitor |
+
+For multi-day chapters, split the running example across days (e.g., Day 1 of Ch 1: type the Duck base + 2 subclasses; Day 2: type the FlyBehavior interface + 2 implementations + wire them in). The book itself sequences this — follow the book's order.
+
+**Save apply work to today's per-day working-folder:** `progress/<today>/working-folder/<subject>/<filename>`. The skill scaffolds this directory tree when generating today's todo (see Step 7). Examples:
 - agentic-workflows → `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`
 - architecture → `progress/2026-04-30/working-folder/architecture/before.js`, `.../after.js`
-- design-patterns → `progress/2026-04-30/working-folder/design-patterns/sorter-strategy.js`
+- design-patterns → `progress/2026-04-30/working-folder/design-patterns/simuduck/Duck.js` (named for the chapter's example)
 - devops → `progress/2026-04-30/working-folder/devops/portal-tour.md`
 
 `working-folder/` directories are gitignored (`progress/*/working-folder/` in `.gitignore`). The rest of `progress/` — state files, the daily `todo.md`, the dated folder itself — IS tracked. So your daily plans and sprint position are in git history; only the scratch code stays local.
