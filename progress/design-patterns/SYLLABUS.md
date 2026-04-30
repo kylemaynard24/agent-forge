@@ -1,86 +1,92 @@
-# Design patterns — master syllabus (beginner → expert)
+# Design patterns — master syllabus (Head First chapter order, beginner → expert)
 
-Source of truth for the `daily-tasks` skill. Walks you from "I've never named a pattern" to "I know which of two similar patterns fits a problem and can defend rejecting one." Follows the **six-phase study path** in `software-engineering/design-patterns/README.md` (which is pedagogically better than GoF book order: it interleaves families by intent and starts with the highest-leverage patterns).
+Source of truth for the `daily-tasks` skill. Follows the table of contents of *Head First Design Patterns* (2nd edition, 2020 — Freeman/Robson). Each **chapter** is one topic, and each topic typically spans **4–7 working days** because Head First chapters are long, illustrated, and dense with "Sharpen your pencil" exercises that earn their time.
 
-For each topic the canonical step order is **read → demo → implement**. The "implement" step uses the topic's `homework.md` (where present) and writes to `software-engineering/_solutions/design-patterns/<family>/<topic>/`. Some patterns may not yet have a `homework.md` — in that case the implement step is "build a small original example using the pattern correctly" and put it under the same `_solutions/...` path.
+> Edition note: this syllabus assumes the 2nd edition (2020) chapter list. If your copy is the 1st edition (2004), the order is the same through Ch 12 but Ch 13 is shorter and the appendix has slightly fewer leftover patterns. Adjust as needed.
 
-The skill picks the next topic by `(level, index)` in `state.md`. When a topic's `implement` step is done, advance the index by 1; when the index passes the end of a level, advance the level.
+For each chapter the canonical step order is **read → demo → implement**:
 
----
+- **read** — work through the chapter at your own pace. Often spans 2–3 days for a full Head First chapter; the skill will keep assigning "continue reading" tasks until you advance the step.
+- **demo** — type out the chapter's main running code example yourself (don't paste — typing builds the muscle memory). Run it. Modify it. Predict before re-running.
+- **implement** — do the chapter's "Sharpen your pencil" / exercises AND build a small original example that uses the chapter's pattern in a different domain. Save to `software-engineering/_solutions/design-patterns/headfirst-ch<N>-<short>/`.
 
-## Level 1 — Beginner: Fundamentals (the four highest-leverage patterns)
+Repo content under `software-engineering/design-patterns/<family>/<pattern>/` is a **secondary reference** — the linked README/demo/homework give a second angle on the same pattern, and the skill includes them as additional resources. For chapters covering multiple patterns (Ch 4, 7, 9), all relevant pattern dirs are linked.
 
-Goal: name and apply Strategy, Observer, Adapter, Singleton without prompting; recognize them in any codebase.
-
-| # | Topic | Path |
-|---|---|---|
-| 1 | strategy | `software-engineering/design-patterns/behavioral/strategy/` |
-| 2 | observer | `software-engineering/design-patterns/behavioral/observer/` |
-| 3 | adapter | `software-engineering/design-patterns/structural/adapter/` |
-| 4 | singleton | `software-engineering/design-patterns/creational/singleton/` |
-
-**Level capstone:** find each of these four patterns in real code (your project or open-source). Write a 1-paragraph note per pattern: what it is, why it fits there, what would break if it weren't.
+The skill picks the next chapter by `(level, index)` in `state.md`. When a chapter's `implement` step is done, advance the index by 1; when the index passes the level's last chapter, advance the level.
 
 ---
 
-## Level 2 — Intermediate: Wrappers and creation
+## Level 1 — Beginner: Foundations of pattern thinking (Chapters 1–5)
 
-Goal: pick by intent — distinguish Decorator (adds behavior), Proxy (controls access), Facade (simplifies subsystem), and the family of construction patterns.
+The five most-used patterns and the chapters where the book teaches you HOW to think in patterns, not just enumerate them.
 
-| # | Topic | Path |
-|---|---|---|
-| 1 | decorator | `software-engineering/design-patterns/structural/decorator/` |
-| 2 | proxy | `software-engineering/design-patterns/structural/proxy/` |
-| 3 | facade | `software-engineering/design-patterns/structural/facade/` |
-| 4 | factory-method | `software-engineering/design-patterns/creational/factory-method/` |
-| 5 | abstract-factory | `software-engineering/design-patterns/creational/abstract-factory/` |
-| 6 | builder | `software-engineering/design-patterns/creational/builder/` |
-| 7 | prototype | `software-engineering/design-patterns/creational/prototype/` |
+| # | Chapter | Pattern(s) | Running example | Repo refs |
+|---|---|---|---|---|
+| 1 | Ch 1: Welcome to Design Patterns | Strategy | SimUDuck | `software-engineering/design-patterns/behavioral/strategy/` |
+| 2 | Ch 2: Keeping Your Objects in the Know | Observer | Weather Station | `software-engineering/design-patterns/behavioral/observer/` |
+| 3 | Ch 3: Decorating Objects | Decorator | Starbuzz Coffee | `software-engineering/design-patterns/structural/decorator/` |
+| 4 | Ch 4: Baking with OO Goodness | Factory Method + Abstract Factory | Pizza Store | `software-engineering/design-patterns/creational/factory-method/`, `software-engineering/design-patterns/creational/abstract-factory/` |
+| 5 | Ch 5: One of a Kind Objects | Singleton | Chocolate Boiler | `software-engineering/design-patterns/creational/singleton/` |
+
+**Level capstone:** find each of these patterns (Strategy, Observer, Decorator, Factory, Singleton) in real code — your project, an open-source codebase, or a framework you use. 1-paragraph note per pattern: what it is, why it fits there, what would break without it.
+
+---
+
+## Level 2 — Intermediate: Encapsulation and adaptation (Chapters 6–8)
+
+Three more patterns that show how to encapsulate change.
+
+| # | Chapter | Pattern(s) | Running example | Repo refs |
+|---|---|---|---|---|
+| 1 | Ch 6: Encapsulating Invocation | Command | Remote Control | `software-engineering/design-patterns/behavioral/command/` |
+| 2 | Ch 7: Being Adaptive | Adapter + Facade | Turkey/Duck adapter, Home Theater facade | `software-engineering/design-patterns/structural/adapter/`, `software-engineering/design-patterns/structural/facade/` |
+| 3 | Ch 8: Encapsulating Algorithms | Template Method | Coffee/Tea (CaffeineBeverage) | `software-engineering/design-patterns/behavioral/template-method/` |
 
 **Level capstone:** write a 1-page summary contrasting Adapter / Decorator / Proxy / Facade. They look similar in UML; they aren't. If you can't tell them apart in writing, you don't yet understand them.
 
 ---
 
-## Level 3 — Advanced: State, behavior over time, navigating and coordinating
+## Level 3 — Advanced: Composing and controlling (Chapters 9–12)
 
-Goal: master the behavioral patterns most common in real systems; learn the deliberate Strategy-vs-State and Strategy-vs-Template-Method comparisons.
+Patterns that work on collections, manage state, control access, and combine other patterns.
 
-| # | Topic | Path |
-|---|---|---|
-| 1 | state | `software-engineering/design-patterns/behavioral/state/` |
-| 2 | template-method | `software-engineering/design-patterns/behavioral/template-method/` |
-| 3 | command | `software-engineering/design-patterns/behavioral/command/` |
-| 4 | memento | `software-engineering/design-patterns/behavioral/memento/` |
-| 5 | chain-of-responsibility | `software-engineering/design-patterns/behavioral/chain-of-responsibility/` |
-| 6 | iterator | `software-engineering/design-patterns/behavioral/iterator/` |
-| 7 | composite | `software-engineering/design-patterns/structural/composite/` |
-| 8 | mediator | `software-engineering/design-patterns/behavioral/mediator/` |
+| # | Chapter | Pattern(s) | Running example | Repo refs |
+|---|---|---|---|---|
+| 1 | Ch 9: Well-Managed Collections | Iterator + Composite | Diner / Pancake House menu | `software-engineering/design-patterns/behavioral/iterator/`, `software-engineering/design-patterns/structural/composite/` |
+| 2 | Ch 10: The State of Things | State | Gumball Machine | `software-engineering/design-patterns/behavioral/state/` |
+| 3 | Ch 11: Controlling Object Access | Proxy | Gumball Machine monitor | `software-engineering/design-patterns/structural/proxy/` |
+| 4 | Ch 12: Patterns of Patterns | Compound Patterns / MVC | Duck simulator revisited | (combines Strategy, Observer, Adapter, Composite, Iterator, MVC) |
 
-**Level capstone:** build an undoable drawing app OR a CLI command processor that uses Command + Memento + at least three other patterns from this level.
+**Level capstone:** rebuild the Ch 12 Duck simulator in your own style. Document each pattern you used and at least one pattern you considered but rejected.
 
 ---
 
-## Level 4 — Expert: Specialized patterns + capstone (extends beyond repo)
+## Level 4 — Expert: Real-world judgment + leftover patterns (Chapter 13 + Appendix)
 
-Goal: recognize the rare patterns when they appear, and design a real system using patterns *because the problem fits them* — never the other way around.
+The patterns the book treats as less critical, plus the meta-skill of choosing patterns wisely (and rejecting them when the problem doesn't fit).
 
-| # | Topic | Path / source |
-|---|---|---|
-| 1 | bridge | `software-engineering/design-patterns/structural/bridge/` |
-| 2 | flyweight | `software-engineering/design-patterns/structural/flyweight/` |
-| 3 | visitor | `software-engineering/design-patterns/behavioral/visitor/` |
-| 4 | interpreter | `software-engineering/design-patterns/behavioral/interpreter/` |
-| 5 | repo capstone — "Design Vocabulary in Action" | `software-engineering/SYLLABUS.md` Stage 2 Capstone. Build a small system using ≥6 GoF patterns *that fit* + 2-page design doc with at least one *rejected* pattern. |
-| 6 | read GoF *Design Patterns* — chapters on the four patterns you find hardest. Write a 1-page synthesis | external. Deliverable in `_solutions/external/` |
-| 7 | refactor a real codebase to introduce or remove a pattern, with measurements | external. Deliverable: before/after diffs + 1-page write-up of what improved and what didn't |
-| 8 | original capstone — pick a non-trivial system you'd actually use, build it, and document every pattern you adopted *and* every one you rejected | external |
+| # | Chapter / topic | Pattern(s) | Notes |
+|---|---|---|---|
+| 1 | Ch 13: Patterns in the Real World | (no new pattern) | Anti-patterns, when NOT to apply patterns, refactoring to patterns. Implement step: pick a small piece of your own code, identify a pattern that's hiding in it, refactor to make it explicit (or argue why you shouldn't). |
+| 2 | Appendix — Bridge | Bridge | `software-engineering/design-patterns/structural/bridge/` |
+| 3 | Appendix — Builder | Builder | `software-engineering/design-patterns/creational/builder/` |
+| 4 | Appendix — Chain of Responsibility | Chain of Resp | `software-engineering/design-patterns/behavioral/chain-of-responsibility/` |
+| 5 | Appendix — Flyweight | Flyweight | `software-engineering/design-patterns/structural/flyweight/` |
+| 6 | Appendix — Interpreter | Interpreter | `software-engineering/design-patterns/behavioral/interpreter/` |
+| 7 | Appendix — Mediator | Mediator | `software-engineering/design-patterns/behavioral/mediator/` |
+| 8 | Appendix — Memento | Memento | `software-engineering/design-patterns/behavioral/memento/` |
+| 9 | Appendix — Prototype | Prototype | `software-engineering/design-patterns/creational/prototype/` |
+| 10 | Appendix — Visitor | Visitor | `software-engineering/design-patterns/behavioral/visitor/` |
+| 11 | Original capstone — pick a non-trivial system you'd actually use, build it, document every pattern adopted AND every one rejected | external | Deliverable: design doc + working code in `_solutions/external/capstone/` |
 
-For external topics: no `README.md`/`demo.js`/`homework.md` — the deliverable is the implement step. Skip read/demo for them.
+For the appendix patterns, Head First gives a one-page treatment, so the workload is smaller — typically 2–3 days each (a short read, a small example, a paragraph contrasting it with a sibling pattern).
+
+For the external capstone: no `README.md`/`demo.js`/`homework.md` — the deliverable is the implement step. Multi-day implement is fine; the skill will give you a sub-goal per day.
 
 ---
 
 ## Reading alongside
 
-- *Design Patterns* — Gamma/Helm/Johnson/Vlissides (the GoF book) — Levels 1–4 reference
-- *Head First Design Patterns* — Freeman/Robson (Levels 1–2 if you want a friendlier on-ramp)
-- *Refactoring* — Fowler (Level 3+ for "when to introduce a pattern")
+- *Head First Design Patterns* (2nd ed, 2020) — Freeman/Robson — primary text
+- *Design Patterns* (Gamma/Helm/Johnson/Vlissides) — GoF reference for the formal version of each pattern
+- *Refactoring* (Fowler) — for "when to introduce a pattern" judgment
