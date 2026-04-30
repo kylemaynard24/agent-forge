@@ -229,38 +229,68 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 
 ---
 
-## Answers + explanations
+## Your answers — attempt these BEFORE peeking at the model answers below
 
-_All Prove-it questions consolidated here. The skill fills in a **model answer** (concise, often a concrete example) and an **explanation** (the why — the reasoning that connects the answer back to the topic's core idea). Treat the model answer as a study key: attempt the question yourself first (mentally or in your working-folder), then check against the model answer to see what you missed or where your reasoning differed. Edit the model answer with your own thinking if you disagree — it's a starting point, not a verdict._
+_All Prove-it questions consolidated. Write your own answer + reasoning for each. Don't scroll past this section yet — the model answers are below, and the learning compounds when you commit to your own answer first._
 
-### 1. <Subject 1> Q1
+### Q1 — <Subject 1>
 
 **Q:** <question 1 from Subject 1, repeated verbatim for context>
 
-**Answer:** <model answer — concise, concrete, often uses a worked example>
+**Your answer:**
 
-**Explanation:** <2-4 sentences on why this is the answer; ground in the topic's mechanics, not just restating the answer>
+**Your reasoning:**
 
-### 2. <Subject 1> Q2
+### Q2 — <Subject 1>
 
 **Q:** <question 2 from Subject 1>
 
-**Answer:** <model answer>
+**Your answer:**
 
-**Explanation:** <why>
+**Your reasoning:**
 
-### 3. <Subject 2> Q1
+### Q3 — <Subject 2>
 
 **Q:** <question 1 from Subject 2>
 
-**Answer:** <model answer>
+**Your answer:**
 
-**Explanation:** <why>
+**Your reasoning:**
 
-(continue numbering across all subjects — one flat list, not subject-grouped subsections)
+(continue numbering across all subjects — one flat list)
+
+---
+
+## Model answers + how to approach — peek after attempting
+
+_Model answer + explanation + the meta-skill of how to approach this kind of question. The "How to approach" notes are the most transferable — they're the reasoning patterns you can apply to similar future questions._
+
+### Q1 — <Subject 1>
+
+**Q:** <question 1 repeated>
+
+**Model answer:** <concise, often a worked example>
+
+**Why this is the answer:** <2-4 sentences grounding the answer in the topic's mechanics>
+
+**How to approach this kind of question:** <2-4 sentences on the meta-skill: what to ask yourself, what trap to avoid, what general pattern this question is probing>
+
+### Q2 — <Subject 1>
+
+**Q:** <question 2 repeated>
+
+**Model answer:**
+
+**Why this is the answer:**
+
+**How to approach this kind of question:**
+
+(continue for all questions)
 ```
 
 **Generating model answers:** for personal-context questions ("pick a function you've written recently", "pick a tool you actually use"), give a plausible worked example (e.g., "Take `submitOrder(order)`: ...") that demonstrates the type of thinking expected — not a generic placeholder. The example should be specific enough that the user can compare their actual situation to it productively.
+
+**Generating "How to approach" notes:** these are the senior-engineer angle — they teach a transferable reasoning move, not just answer this question. Good shapes: "When evaluating any X against this taxonomy, ask Y", "Watch for the common trap of Z", "The pattern this question is probing is...". Avoid restating the explanation.
 
 For untracked areas in discovery mode, additionally include this callout above the Files block:
 

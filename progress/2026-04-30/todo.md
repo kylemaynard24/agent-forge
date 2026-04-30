@@ -197,70 +197,156 @@ Sprint starting — no prior day.
 
 ---
 
-## Answers + explanations
+## Your answers — attempt these BEFORE peeking at the model answers below
 
-_Model answers + explanations for each Prove-it question. Treat the model answer as a **study key**: attempt the question yourself first (mentally, or jot in the working-folder), then check against the model to see what you missed or where your reasoning differed. Edit these with your own thinking — they're a starting point, not a verdict._
+_All Prove-it questions consolidated. Write your own answer + reasoning for each. Don't scroll past this section yet — model answers + how-to-approach notes are below, and the learning compounds when you commit to your own answer first._
 
-### 1. Agentic workflows Q1
+### Q1 — Agentic workflows
 
 **Q:** Pick a tool you actually use — is it agent / chatbot / workflow by the README's "who decides what to do next" test? One sentence.
 
-**Answer:** Claude Code (this tool) is an **agent** — when given a goal, the LLM picks each next action (Read this, Edit that, run Bash) at runtime; I don't pre-script the sequence. By contrast, a CI pipeline is a **workflow** (steps fixed at design time) and ChatGPT-the-website is a **chatbot** (LLM responds, but I decide what to do with the response).
+**Your answer:**
 
-**Explanation:** The test isn't whether an LLM is involved — it's whether the LLM picks the next move at runtime. Claude Code's loop hands control back to the LLM after every tool result, asking "what now?" CI pipelines also receive results, but they consult a YAML file written months ago, not a model. ChatGPT receives my message and replies, but the next *action* (open a tab, copy the snippet, run it) is mine, not the model's.
+**Your reasoning:**
 
-### 2. Agentic workflows Q2
+### Q2 — Agentic workflows
 
 **Q:** The README says agents fail when "the tool set is too rich (paralysis) or too sparse (impossibility)." Give one concrete example of each.
 
-**Answer:** **Too rich:** an agent given 50 tools (search, edit, deploy, message, schedule, browse, calendar, ticket, ...) for "fix this typo" often picks the wrong one or chains them unnecessarily — opening Slack to ask the author about the typo instead of just editing the file. **Too sparse:** an agent given only `Read` but asked to "commit a fix" literally cannot complete the task, no matter how good the LLM is.
+**Your answer:**
 
-**Explanation:** Tool selection is part of the LLM's reasoning load — every available tool is in context every turn. With too many, the model burns tokens deliberating and frequently picks suboptimal combinations or misuses a tool that has overlapping purpose with another. With too few, capability is gated by the toolbox regardless of the model's reasoning ability. Right-sizing the toolbox is a design decision, not an afterthought, and "more tools" is rarely the right answer.
+**Your reasoning:**
 
-### 3. Software architecture Q1
+### Q3 — Software architecture
 
 **Q:** Pick a function you've written recently — name three reasons it might change. Is it really one concern or three?
 
-**Answer:** Take a typical `submitOrder(order)`: (a) tax calculation rules change (business logic), (b) payment provider integration changes (external dependency), (c) the confirmation email template changes (notification format). Three independent reasons → three concerns hiding in one function.
+**Your answer:**
 
-**Explanation:** None of those three changes should require the others to be touched. When all three live in `submitOrder`, a tax-rule change forces you to re-test payment and notification paths, which makes you cautious, which slows everything down. Splitting into `validateAndPriceOrder` (logic) + `chargePayment` (payment provider wrapper) + `sendConfirmation` (notification) lets each evolve independently — and `submitOrder` becomes a thin orchestrator that's easy to read.
+**Your reasoning:**
 
-### 4. Software architecture Q2
+### Q4 — Software architecture
 
 **Q:** What's the equivalent of pastry / grill / dish stations for a typical "create an order" web feature? Name three stations and what each owns.
 
-**Answer:** Three stations: **(1) Validation** — does this order shape look right? Pure logic, no I/O (mirror of the prep cook). **(2) Persistence** — write order to DB, return the order ID; wraps the database (the grill, doing the heavy I/O work). **(3) Notification** — send confirmation email; wraps the email service (the dish station, the final hand-off to the customer).
+**Your answer:**
 
-**Explanation:** Each station has one job and one external dependency. If the email provider goes down, validation and persistence still work; if the DB schema changes, validation logic doesn't care; if a new field is added to the order shape, only validation has to know first. The orchestrator (controller / handler / use-case) reads top-to-bottom: validate → persist → notify. Failures of any one station are localized and recoverable, just like a slammed pastry station doesn't bring down the grill.
+**Your reasoning:**
 
-### 5. Design patterns Q1
+### Q5 — Design patterns
 
 **Q:** What specifically broke when they tried to put `fly()` on the Duck base class? What did inheritance promise it couldn't deliver?
 
-**Answer:** Adding `fly()` to base `Duck` made *every* Duck fly — including `RubberDuck` (which shouldn't fly) and `DecoyDuck` (which can't). The "fix" of overriding `fly()` to do nothing on each non-flying subclass spreads the silently-do-nothing rule everywhere, is repetitive, and is easy to forget when adding the next duck type — `MountainDuck` will inherit a default `fly()` that's wrong for it too.
+**Your answer:**
 
-**Explanation:** Inheritance promises code reuse via "is-a" relationships, but flying isn't an is-a property of all ducks — it's a behavior that **varies** across ducks. Encoding varying behavior in the type hierarchy means every variation becomes a hierarchy decision, and behaviors don't compose (a `JetSkiDuck` that flies AND dives can't easily inherit both). Strategy fixes this by making fly behavior a swappable composed object: ducks have-a `FlyBehavior` rather than is-a `FlyingDuck`, and the behavior can be swapped at runtime.
+**Your reasoning:**
 
-### 6. Design patterns Q2
+### Q6 — Design patterns
 
 **Q:** Name a Strategy hiding in code you've worked with under a different name (common aliases: "policy", "handler", "provider", "selector", "comparator"). What's the strategy interface, and what concrete strategies exist?
 
-**Answer:** An auth **provider**: many codebases have a `LoginProvider` interface with a single `authenticate(credentials) -> Session` method, implemented concretely by `EmailPasswordProvider`, `GoogleSSOProvider`, `SAMLProvider`, `MagicLinkProvider`. The auth controller holds a reference to the configured provider (chosen per-tenant or per-environment) and delegates. Different name, exact Strategy structure.
+**Your answer:**
 
-**Explanation:** Real codebases rarely use the GoF name "Strategy" — they use domain words. Watch for three signals: (1) an interface with a single (or very narrow) verb-shaped method, (2) multiple concrete implementations with totally different mechanics, and (3) a client object that holds one of them and delegates. When all three are present, you're looking at Strategy regardless of what it's called. Recognizing this lets you communicate at design speed ("we should swap this for a Strategy") even when the team's name for it is `XYZHandler`.
+**Your reasoning:**
 
-### 7. DevOps Q1
+### Q7 — DevOps
 
 **Q:** The Deep dive argues a parameter without two distinct callers using different values should probably be a constant. Look at one of your team's Bicep templates — pick a parameter that fails this test. What would you do instead, and why might the original author have added it?
 
-**Answer:** Common offender: `param skuName string = 'Standard_LRS'` on a Storage Account module where every caller across dev, staging, and prod uses the default. Fix: replace with a literal `sku: { name: 'Standard_LRS' }` inside the module, or make it a `var` with a comment explaining the choice. The original author probably added it "in case we ever need different SKUs per env" — speculative flexibility before a real second caller existed.
+**Your answer:**
 
-**Explanation:** Parameters carry visible cost: every caller has to know about them, every refactor has to consider them, every reader has to wonder if they vary in practice. Speculative parameters pay that cost for nothing. The author's instinct (flexibility) is reasonable but premature — the cheap thing to do is *add the parameter when the second caller actually appears*, which is fast (a one-line module change). "Just in case" parameter-creep is a common Bicep code-review finding because Bicep makes it easy to add params and harder to remove them (downstream callers may now depend on the parameter even with the default).
+**Your reasoning:**
 
-### 8. DevOps Q2
+### Q8 — DevOps
 
 **Q:** The Deep dive frames modules as "functions, parameters as arguments, outputs as return values." Pick a non-Bicep system in your daily work that uses the same pattern (some module/function decomposition). What does Bicep's module system do *better* than that system, and what does it do *worse*?
 
-**Answer:** Closest analogue: **TypeScript modules with typed exports**, or React components with props + render output. **Bicep does better:** outputs are deployment-time-resolved, so dependency ordering between modules is automatic (you don't write the wiring); the deployment engine handles idempotency without you writing retry/check-existence logic. **Bicep does worse:** there's no real higher-order composition — you can't pass a module to a module, can't build module factories, debugging is harder than reading a stack trace, the type system is far less expressive (no generics, no discriminated unions), and module reuse across repos requires a registry and tooling rather than `npm install`.
+**Your answer:**
 
-**Explanation:** The structural similarity (named inputs, named outputs, encapsulated body) is real, but the **runtime is fundamentally different**. TS/React modules execute in a single process where you control control-flow; Bicep modules compile to nested ARM deployments where the deployment engine does orchestration. That trade gives you idempotency for free but loses expressiveness. Knowing this trade is what makes you write Bicep that "feels right" for the deployment engine instead of fighting it — for example, you stop trying to express conditional logic with complex ternaries (the deployment engine handles `if` declaratively) and you stop trying to refactor for code elegance at the cost of clearer deployment semantics.
+**Your reasoning:**
+
+---
+
+## Model answers + how to approach — peek after attempting
+
+_Model answer (often a worked example), why it's the answer (grounding in mechanics), and how to approach this kind of question (the transferable reasoning move). The "how to approach" notes are the most valuable — they're patterns you can apply to similar future questions._
+
+### Q1 — Agentic workflows
+
+**Q:** Pick a tool you actually use — is it agent / chatbot / workflow by the README's "who decides what to do next" test? One sentence.
+
+**Model answer:** Claude Code (this tool) is an **agent** — when given a goal, the LLM picks each next action (Read this, Edit that, run Bash) at runtime; I don't pre-script the sequence. By contrast, a CI pipeline is a **workflow** (steps fixed at design time) and ChatGPT-the-website is a **chatbot** (LLM responds, but I decide what to do with the response).
+
+**Why this is the answer:** The test isn't whether an LLM is involved — it's whether the LLM picks the next move at runtime. Claude Code's loop hands control back to the LLM after every tool result, asking "what now?" CI pipelines also receive results, but they consult a YAML file written months ago, not a model. ChatGPT receives my message and replies, but the next *action* is mine, not the model's.
+
+**How to approach this kind of question:** When evaluating any tool against this taxonomy, **ignore whether an LLM is involved** — many systems have LLMs in different structural roles. Ask instead: at runtime, who picks the next move? If a human → chatbot. If a developer at design time → workflow. If a model at runtime → agent. Watch for the trap of equating "uses AI" with "agent" — that's marketing language, not architecture.
+
+### Q2 — Agentic workflows
+
+**Q:** The README says agents fail when "the tool set is too rich (paralysis) or too sparse (impossibility)." Give one concrete example of each.
+
+**Model answer:** **Too rich:** an agent given 50 tools (search, edit, deploy, message, schedule, browse, calendar, ticket, ...) for "fix this typo" often picks the wrong one or chains them unnecessarily — opening Slack to ask the author about the typo instead of just editing the file. **Too sparse:** an agent given only `Read` but asked to "commit a fix" literally cannot complete the task, no matter how good the LLM is.
+
+**Why this is the answer:** Tool selection is part of the LLM's reasoning load — every available tool is in context every turn. With too many, the model burns tokens deliberating and frequently picks suboptimal combinations. With too few, capability is gated by the toolbox regardless of model quality. Right-sizing is a design decision; "more tools" is rarely the right answer.
+
+**How to approach this kind of question:** When designing an agent's toolbox, ask **"what's the minimum set of tools that lets the agent complete its goals?"** Then add one only when a real failure mode justifies it. The default mistake is adding tools defensively ("just in case the agent needs to..."), which expands the deliberation surface for no gain. The opposite mistake — withholding necessary tools — is rarer but easy to spot when you watch the agent's trajectory: it'll loop trying to solve the unsolvable.
+
+### Q3 — Software architecture
+
+**Q:** Pick a function you've written recently — name three reasons it might change. Is it really one concern or three?
+
+**Model answer:** Take a typical `submitOrder(order)`: (a) tax calculation rules change (business logic), (b) payment provider integration changes (external dependency), (c) the confirmation email template changes (notification format). Three independent reasons → three concerns hiding in one function.
+
+**Why this is the answer:** None of those three changes should require the others to be touched. When all three live in `submitOrder`, a tax-rule change forces re-testing payment and notification paths, which makes you cautious, which slows everything down. Splitting into `validateAndPriceOrder` + `chargePayment` + `sendConfirmation` lets each evolve independently — and `submitOrder` becomes a thin orchestrator that's easy to read.
+
+**How to approach this kind of question:** Apply the **"who would file the bug?"** test. For each potential change, ask which team or stakeholder would request it. If three different stakeholders (finance/tax, payments, marketing/comms) request three different changes, the function is doing three jobs. The number of reasons-to-change a piece of code has is a proxy for the number of concerns it owns; one concern = one reason = one stakeholder, ideally.
+
+### Q4 — Software architecture
+
+**Q:** What's the equivalent of pastry / grill / dish stations for a typical "create an order" web feature? Name three stations and what each owns.
+
+**Model answer:** **(1) Validation** — does this order shape look right? Pure logic, no I/O (the prep cook). **(2) Persistence** — write order to DB, return the order ID; wraps the database (the grill, doing the heavy I/O work). **(3) Notification** — send confirmation email; wraps the email service (the dish station, the final hand-off to the customer).
+
+**Why this is the answer:** Each station has one job and one external dependency. If the email provider goes down, validation and persistence still work; if the DB schema changes, validation logic doesn't care; if a new field is added to the order shape, only validation has to know first. The orchestrator reads top-to-bottom: validate → persist → notify. Failures of any one station are localized and recoverable, like a slammed pastry station not bringing down the grill.
+
+**How to approach this kind of question:** When decomposing a feature into stations, **trace the failure modes**. Ask "if X breaks, what should still work?" If the answer is "everything else," then X belongs in its own station. The kitchen analogy is good because each station has its own equipment, its own staff, and its own crisis pattern — software components should too. A station with no clear failure-isolation answer probably isn't a station; it's just code you split because a principle told you to.
+
+### Q5 — Design patterns
+
+**Q:** What specifically broke when they tried to put `fly()` on the Duck base class? What did inheritance promise it couldn't deliver?
+
+**Model answer:** Adding `fly()` to base `Duck` made *every* Duck fly — including `RubberDuck` (which shouldn't fly) and `DecoyDuck` (which can't). The "fix" of overriding `fly()` to do nothing on each non-flying subclass spreads the silently-do-nothing rule everywhere, is repetitive, and is easy to forget when adding the next duck type — `MountainDuck` will inherit a default `fly()` that's wrong for it too.
+
+**Why this is the answer:** Inheritance promises code reuse via "is-a" relationships, but flying isn't an is-a property of all ducks — it's a behavior that **varies**. Encoding varying behavior in the type hierarchy means every variation becomes a hierarchy decision, and behaviors don't compose (a `JetSkiDuck` that flies AND dives can't easily inherit both). Strategy fixes this by making fly behavior a swappable composed object: ducks have-a `FlyBehavior` rather than is-a `FlyingDuck`.
+
+**How to approach this kind of question:** When evaluating an inheritance hierarchy, ask **"is this behavior an essential property of every subclass, or does it vary?"** If it varies, inheritance is the wrong tool — you'll end up with overrides-that-suppress, which is a code smell signaling that the hierarchy doesn't reflect reality. The general move: when a behavior varies independently of the type, lift it out into a composed object the type holds. This is the "encapsulate what varies" principle, and it's the template for almost every GoF pattern that follows.
+
+### Q6 — Design patterns
+
+**Q:** Name a Strategy hiding in code you've worked with under a different name (common aliases: "policy", "handler", "provider", "selector", "comparator"). What's the strategy interface, and what concrete strategies exist?
+
+**Model answer:** An auth **provider**: many codebases have a `LoginProvider` interface with a single `authenticate(credentials) -> Session` method, implemented concretely by `EmailPasswordProvider`, `GoogleSSOProvider`, `SAMLProvider`, `MagicLinkProvider`. The auth controller holds a reference to the configured provider (chosen per-tenant or per-environment) and delegates. Different name, exact Strategy structure.
+
+**Why this is the answer:** Real codebases rarely use the GoF name "Strategy" — they use domain words. Watch for three signals: (1) an interface with a single (or very narrow) verb-shaped method, (2) multiple concrete implementations with totally different mechanics, and (3) a client object that holds one of them and delegates. When all three are present, you're looking at Strategy regardless of what it's called.
+
+**How to approach this kind of question:** When pattern-spotting in real code, **ignore the names and look at the structure**. Names are domain-driven; structure is pattern-driven. Three useful structural signals: a thin interface, multiple wildly-different implementations, and a client that delegates rather than implements. Develop the reflex of mentally translating local domain names ("policy", "handler", "provider") into the GoF vocabulary so you can communicate at design speed across teams that name things differently.
+
+### Q7 — DevOps
+
+**Q:** The Deep dive argues a parameter without two distinct callers using different values should probably be a constant. Look at one of your team's Bicep templates — pick a parameter that fails this test. What would you do instead, and why might the original author have added it?
+
+**Model answer:** Common offender: `param skuName string = 'Standard_LRS'` on a Storage Account module where every caller across dev, staging, and prod uses the default. Fix: replace with a literal `sku: { name: 'Standard_LRS' }` inside the module, or make it a `var` with a comment explaining the choice. The original author probably added it "in case we ever need different SKUs per env" — speculative flexibility before a real second caller existed.
+
+**Why this is the answer:** Parameters carry visible cost: every caller has to know about them, every refactor has to consider them, every reader has to wonder if they vary in practice. Speculative parameters pay that cost for nothing. The cheap thing to do is *add the parameter when the second caller actually appears*, which is fast (a one-line module change). "Just in case" parameter-creep is a common Bicep code-review finding.
+
+**How to approach this kind of question:** When evaluating any abstraction (parameter, interface, configuration option), apply **"rule of three"**: don't abstract until you have three concrete examples that genuinely vary. With one concrete example, an abstraction is premature; with two, it's a coin flip; with three, the shape of variation is clear enough to abstract well. The instinct to add flexibility ahead of need feels responsible but is one of the most common sources of long-term complexity. The senior move is to leave it concrete and refactor when forced.
+
+### Q8 — DevOps
+
+**Q:** The Deep dive frames modules as "functions, parameters as arguments, outputs as return values." Pick a non-Bicep system in your daily work that uses the same pattern (some module/function decomposition). What does Bicep's module system do *better* than that system, and what does it do *worse*?
+
+**Model answer:** Closest analogue: **TypeScript modules with typed exports**, or React components with props + render output. **Bicep does better:** outputs are deployment-time-resolved, so dependency ordering between modules is automatic; the deployment engine handles idempotency without you writing retry/check-existence logic. **Bicep does worse:** there's no real higher-order composition — you can't pass a module to a module, can't build module factories, debugging is harder than reading a stack trace, the type system is far less expressive (no generics, no discriminated unions), and module reuse across repos requires a registry rather than `npm install`.
+
+**Why this is the answer:** The structural similarity (named inputs, named outputs, encapsulated body) is real, but the **runtime is fundamentally different**. TS/React modules execute in a single process where you control control-flow; Bicep modules compile to nested ARM deployments where the deployment engine does orchestration. That trade gives you idempotency for free but loses expressiveness. Knowing this trade is what makes you write Bicep that "feels right" for the deployment engine instead of fighting it.
+
+**How to approach this kind of question:** When comparing tools that share a surface-level abstraction, **separate the syntax from the runtime**. Same shape (functions / inputs / outputs) doesn't mean same semantics. Bicep modules and TS functions look alike syntactically and have completely different execution models — declarative-deployed-by-engine vs imperative-executed-by-process. The senior move is to design *with* the runtime, not against it: stop forcing patterns that work in one runtime onto a tool whose runtime makes those patterns expensive or impossible.
