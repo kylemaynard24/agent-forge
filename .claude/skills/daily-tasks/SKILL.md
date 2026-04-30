@@ -111,7 +111,7 @@ Generate by **reading the topic's actual README** (for repo topics) or by drawin
 - **Watch for** — 1–2 specific things to pay attention to that the casual reader misses (a trade-off, a deliberate "wrong" first design, a sibling-pattern contrast, an author qualification of a strong claim).
 - **Excerpt** — for repo topics: a verbatim 2–4 line quote from the linked README, picked for the load-bearing idea. For Head First chapters: a verbatim quote from the **repo's secondary-reference README** for the same pattern (do NOT fabricate quotes from the book — you don't have it). For **external-only topics (devops + any external row)**: omit the excerpt block entirely OR replace it with a "Doc reference" line naming the canonical doc section to read first (e.g., "Microsoft Learn — *Bicep fundamentals*, Module 1: 'What is Bicep?'") — never invent a verbatim quote from a doc you haven't actually read in this session.
 
-- **Deep dive** (external-only topics only — REQUIRED for devops, optional for others): a 200–300 word substantive prose section that goes deeper than the primer and is meant to be read directly from the todo as actual learning material. Since the user can't click into a single authoritative README for these topics, the daily todo IS more of the reading. Cover: the conceptual model behind the topic (not just "what it is"), the most common mistake practitioners make, a concrete worked-through example (in prose, not code), and how this topic connects to the previous topic in the syllabus. Ground in real patterns — be specific about Azure / Bicep / Docker / GHA mechanics. Clearly title the block "_Deep dive:_". On a `read` day, this block is your main contribution to the user's reading depth; on `demo` and `implement` days, keep it but shift to focus on what they should look for as they execute.
+- **Deep dive** (REQUIRED for ALL subjects): a 200–300 word substantive prose section that goes deeper than the primer and is meant to be read directly from the todo as actual learning material. Cover: the conceptual model behind the topic (not just "what it is"), the most common mistake practitioners make, a concrete worked-through example (in prose, not code), and how this topic connects to the next topic in the syllabus. Ground in specifics — for repo topics, draw on the README's framing; for external topics (devops, Head First chapters), draw on common knowledge of the tool/pattern. Clearly title the block "_Deep dive:_". On a `read` day, this block is the user's main contribution to reading depth beyond the linked README/chapter; on `demo` and `implement` days, keep it but shift to focus on what they should look for as they execute.
 
 If the user is on `demo` or `implement` step (not `read`), shift the Reading material to be about the demo file or homework respectively — keep it grounded.
 
@@ -210,9 +210,9 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 
 > _Doc reference (external-only topics):_ <named canonical doc section>
 
-> _Deep dive (external-only topics — REQUIRED for devops):_
+> _Deep dive (REQUIRED for all subjects):_
 >
-> <200-300 word substantive prose: conceptual model, common mistake, worked-through prose example, connection to previous topic. Be specific about mechanics. This block IS the user's main reading on `read` days for external-only topics — make it earn the time.>
+> <200-300 word substantive prose: conceptual model, common mistake, worked-through prose example, connection to next topic. Be specific about mechanics. This block earns its space by giving the user real reading content beyond the linked README — not a summary of it.>
 
 **Today:**
 - [ ] **Step:** <step task>
@@ -231,34 +231,36 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 
 ## Answers + explanations
 
-_All Prove-it questions consolidated here. For each question: write your **Answer** (be brief — one sentence is fine) and your **Explanation** (the reasoning — this is where the learning compounds). Don't skip the explanation; the answer alone doesn't prove understanding._
+_All Prove-it questions consolidated here. The skill fills in a **model answer** (concise, often a concrete example) and an **explanation** (the why — the reasoning that connects the answer back to the topic's core idea). Treat the model answer as a study key: attempt the question yourself first (mentally or in your working-folder), then check against the model answer to see what you missed or where your reasoning differed. Edit the model answer with your own thinking if you disagree — it's a starting point, not a verdict._
 
 ### 1. <Subject 1> Q1
 
 **Q:** <question 1 from Subject 1, repeated verbatim for context>
 
-**Answer:**
+**Answer:** <model answer — concise, concrete, often uses a worked example>
 
-**Explanation:**
+**Explanation:** <2-4 sentences on why this is the answer; ground in the topic's mechanics, not just restating the answer>
 
 ### 2. <Subject 1> Q2
 
 **Q:** <question 2 from Subject 1>
 
-**Answer:**
+**Answer:** <model answer>
 
-**Explanation:**
+**Explanation:** <why>
 
 ### 3. <Subject 2> Q1
 
 **Q:** <question 1 from Subject 2>
 
-**Answer:**
+**Answer:** <model answer>
 
-**Explanation:**
+**Explanation:** <why>
 
 (continue numbering across all subjects — one flat list, not subject-grouped subsections)
 ```
+
+**Generating model answers:** for personal-context questions ("pick a function you've written recently", "pick a tool you actually use"), give a plausible worked example (e.g., "Take `submitOrder(order)`: ...") that demonstrates the type of thinking expected — not a generic placeholder. The example should be specific enough that the user can compare their actual situation to it productively.
 
 For untracked areas in discovery mode, additionally include this callout above the Files block:
 

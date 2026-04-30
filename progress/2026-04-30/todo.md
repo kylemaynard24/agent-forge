@@ -32,6 +32,16 @@ Sprint starting — no prior day.
 > _Excerpt (verbatim from the linked README):_
 > > "The defining difference is **who decides what to do next**. In a chatbot, the user does. In a workflow, the developer did (at design time). In an agent, the LLM does — at runtime, every step."
 
+> _Deep dive:_
+>
+> The four-piece anatomy (LLM + tools + loop + goal) isn't an academic taxonomy — it's a **debugging checklist**. When a real agent misbehaves, the failure almost always traces to one of those four pieces being the wrong shape: the LLM is too small for the reasoning required, the tools are too coarse or too fine-grained, the loop has no termination condition or runs unbounded, or the goal is ambiguous and gets reinterpreted mid-run.
+>
+> The most underrated piece is **the loop**. People focus on the LLM (which model, what prompt) and the tools (which capabilities). But the loop is where reliability lives. A well-designed loop has explicit termination conditions ("done when the test passes", "give up after 5 iterations", "stop if cost exceeds $X"), structured state passed between iterations (not just appending to a chat history that grows forever), and a way to detect circular reasoning (LLM keeps trying the same failing approach). Loop design is the leverage point that lets a 70%-reliable model produce a 95%-reliable agent.
+>
+> The autonomy gradient is the second underrated concept. Most production agent failures aren't "the agent did something wrong" — they're "the agent was given more autonomy than the task warranted." Level 4 ("acts unsupervised in production") is rare and dangerous outside narrow well-scoped domains. Most production agents should sit at Level 2–3: act in a sandbox or with guardrails, with humans reviewing aggregates rather than every action.
+>
+> **Connecting forward:** the next topic, `the-agentic-loop`, is a deep dive on the loop itself — termination, ReAct, observation handling. The piece you'll spend the most time on for the rest of this dojo is the loop, because it's the piece you have the most control over.
+
 **Today:**
 - [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
 - [ ] **Apply:** Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM (returns canned next-action), one tool (`countLines(filename)`), a loop (max 3 iterations), a goal. Print each iteration. Save to `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`.
@@ -67,6 +77,16 @@ Sprint starting — no prior day.
 
 > _Excerpt (verbatim from the linked README):_
 > > "Each module, file, or class owns one focus area. When a single piece of code mixes UI, business rules, and persistence, every change ripples in three directions."
+
+> _Deep dive:_
+>
+> Separation of Concerns is a **force that pulls in two directions**, and the practitioner skill is knowing when each direction wins. The pull toward separation is obvious: edit one concern without rippling into others, test in isolation, parallelize team work. The pull *back* — under-applied SoC — is less obvious until you've felt it: a 30-line script that does one job is easier to read than the same logic split across 7 files in 3 directories with 2 abstract base classes mediating between them.
+>
+> The most common practitioner failure is **applying SoC too aggressively too early**. You read about Hexagonal Architecture, decide your CRUD app needs ports and adapters, and end up with `IUserRepository` interface + `UserRepositoryImpl` + `UserService` + `UserController` + `UserDTO` + `UserEntity` for what was 200 lines of direct DB-to-route code. The original was easier to maintain. The "clean" version is now 6 files of forwarding calls — the anemic-module failure mode the README warns about. You paid ceremony cost for hypothetical future flexibility that never arrived.
+>
+> The honest rule: **separate when you feel the pain, not when you read the principle**. The README's "three independent reasons to change → three functions" is a good test, but the underlying judgment is "have I actually had to change one without the other?" If yes, separate. If no, you're paying ceremony cost for a refactor you might never need. Senior engineers err toward keeping things together until concrete pressure forces a split — the pressure becomes evidence the split is worth its cost.
+>
+> **Connecting forward:** the next topic, `coupling-and-cohesion`, is the *measurement layer* for what SoC accomplishes. SoC tells you to split; coupling/cohesion tell you whether your split was a good one — high cohesion within each module, low coupling between them. Without coupling/cohesion as a check, "separated" can just mean "scattered."
 
 **Today:**
 - [ ] **Step:** Read `separation-of-concerns/README.md` (73 lines, ~15 min). Capture 3–5 takeaways in Notes — at least one **trade-off**.
@@ -106,6 +126,16 @@ Sprint starting — no prior day.
 
 > _Excerpt (verbatim from the repo's secondary-reference README — `software-engineering/design-patterns/behavioral/strategy/README.md`):_
 > > "Define a family of algorithms, encapsulate each one behind a common interface, and make them **interchangeable at runtime**. The client holds a strategy object and delegates the algorithmic work to it."
+
+> _Deep dive:_
+>
+> What makes Head First Chapter 1 work as a teaching device is the **wrong-design-first pedagogy**. The book deliberately walks you into the inheritance trap, shows the override-and-suppress smell when you try to fix it, then introduces the three OO principles as the way out. By the time Strategy appears, you've already felt the design pressure that makes it the right answer — so the pattern feels inevitable rather than arbitrary.
+>
+> The deepest takeaway from Ch 1 isn't "use Strategy" — it's **"encapsulate what varies."** Strategy is one application of that meta-principle. Decorator (Ch 3), Factory (Ch 4), Command (Ch 6) are all different applications of the same core idea: take the part that changes, lift it out, give it an explicit name, make it pluggable. Once you internalize this, you'll start seeing pattern opportunities everywhere — but also, importantly, recognize when *not* to apply a pattern (when nothing actually varies, separation is just ceremony).
+>
+> The **most common practitioner mistake** when first learning Strategy is creating an interface with one concrete implementation and calling it "future-proof." That's not Strategy — that's premature abstraction. Strategy earns its keep when you have **two or more** real, currently-existing variants that need to coexist at runtime. One implementation behind an interface is a smell, not a pattern. Senior engineers wait for the second variant before extracting the interface, then extract it cheaply when the second appears.
+>
+> **Connecting forward:** Chapter 2 (Observer) introduces the second-most-used pattern in modern code, also via the "encapsulate what varies" lens — what varies is *who responds to events*. Chapter 3 (Decorator) does the same for *what wrapping behavior gets applied*. The four-chapter arc 1-2-3 is really one extended argument about composition over inheritance.
 
 **Today:**
 - [ ] **Step:** Start Head First Ch 1 — aim for ~30–60 minutes today. Read at least through the SimUDuck "inheritance breaks" reveal and the introduction of "encapsulating what varies."
@@ -169,68 +199,68 @@ Sprint starting — no prior day.
 
 ## Answers + explanations
 
-_All Prove-it questions consolidated here. Write your **Answer** (be brief — one sentence is fine) and your **Explanation** (the reasoning — this is where the learning compounds). Don't skip the explanation; the answer alone doesn't prove understanding._
+_Model answers + explanations for each Prove-it question. Treat the model answer as a **study key**: attempt the question yourself first (mentally, or jot in the working-folder), then check against the model to see what you missed or where your reasoning differed. Edit these with your own thinking — they're a starting point, not a verdict._
 
 ### 1. Agentic workflows Q1
 
 **Q:** Pick a tool you actually use — is it agent / chatbot / workflow by the README's "who decides what to do next" test? One sentence.
 
-**Answer:**
+**Answer:** Claude Code (this tool) is an **agent** — when given a goal, the LLM picks each next action (Read this, Edit that, run Bash) at runtime; I don't pre-script the sequence. By contrast, a CI pipeline is a **workflow** (steps fixed at design time) and ChatGPT-the-website is a **chatbot** (LLM responds, but I decide what to do with the response).
 
-**Explanation:**
+**Explanation:** The test isn't whether an LLM is involved — it's whether the LLM picks the next move at runtime. Claude Code's loop hands control back to the LLM after every tool result, asking "what now?" CI pipelines also receive results, but they consult a YAML file written months ago, not a model. ChatGPT receives my message and replies, but the next *action* (open a tab, copy the snippet, run it) is mine, not the model's.
 
 ### 2. Agentic workflows Q2
 
 **Q:** The README says agents fail when "the tool set is too rich (paralysis) or too sparse (impossibility)." Give one concrete example of each.
 
-**Answer:**
+**Answer:** **Too rich:** an agent given 50 tools (search, edit, deploy, message, schedule, browse, calendar, ticket, ...) for "fix this typo" often picks the wrong one or chains them unnecessarily — opening Slack to ask the author about the typo instead of just editing the file. **Too sparse:** an agent given only `Read` but asked to "commit a fix" literally cannot complete the task, no matter how good the LLM is.
 
-**Explanation:**
+**Explanation:** Tool selection is part of the LLM's reasoning load — every available tool is in context every turn. With too many, the model burns tokens deliberating and frequently picks suboptimal combinations or misuses a tool that has overlapping purpose with another. With too few, capability is gated by the toolbox regardless of the model's reasoning ability. Right-sizing the toolbox is a design decision, not an afterthought, and "more tools" is rarely the right answer.
 
 ### 3. Software architecture Q1
 
 **Q:** Pick a function you've written recently — name three reasons it might change. Is it really one concern or three?
 
-**Answer:**
+**Answer:** Take a typical `submitOrder(order)`: (a) tax calculation rules change (business logic), (b) payment provider integration changes (external dependency), (c) the confirmation email template changes (notification format). Three independent reasons → three concerns hiding in one function.
 
-**Explanation:**
+**Explanation:** None of those three changes should require the others to be touched. When all three live in `submitOrder`, a tax-rule change forces you to re-test payment and notification paths, which makes you cautious, which slows everything down. Splitting into `validateAndPriceOrder` (logic) + `chargePayment` (payment provider wrapper) + `sendConfirmation` (notification) lets each evolve independently — and `submitOrder` becomes a thin orchestrator that's easy to read.
 
 ### 4. Software architecture Q2
 
 **Q:** What's the equivalent of pastry / grill / dish stations for a typical "create an order" web feature? Name three stations and what each owns.
 
-**Answer:**
+**Answer:** Three stations: **(1) Validation** — does this order shape look right? Pure logic, no I/O (mirror of the prep cook). **(2) Persistence** — write order to DB, return the order ID; wraps the database (the grill, doing the heavy I/O work). **(3) Notification** — send confirmation email; wraps the email service (the dish station, the final hand-off to the customer).
 
-**Explanation:**
+**Explanation:** Each station has one job and one external dependency. If the email provider goes down, validation and persistence still work; if the DB schema changes, validation logic doesn't care; if a new field is added to the order shape, only validation has to know first. The orchestrator (controller / handler / use-case) reads top-to-bottom: validate → persist → notify. Failures of any one station are localized and recoverable, just like a slammed pastry station doesn't bring down the grill.
 
 ### 5. Design patterns Q1
 
 **Q:** What specifically broke when they tried to put `fly()` on the Duck base class? What did inheritance promise it couldn't deliver?
 
-**Answer:**
+**Answer:** Adding `fly()` to base `Duck` made *every* Duck fly — including `RubberDuck` (which shouldn't fly) and `DecoyDuck` (which can't). The "fix" of overriding `fly()` to do nothing on each non-flying subclass spreads the silently-do-nothing rule everywhere, is repetitive, and is easy to forget when adding the next duck type — `MountainDuck` will inherit a default `fly()` that's wrong for it too.
 
-**Explanation:**
+**Explanation:** Inheritance promises code reuse via "is-a" relationships, but flying isn't an is-a property of all ducks — it's a behavior that **varies** across ducks. Encoding varying behavior in the type hierarchy means every variation becomes a hierarchy decision, and behaviors don't compose (a `JetSkiDuck` that flies AND dives can't easily inherit both). Strategy fixes this by making fly behavior a swappable composed object: ducks have-a `FlyBehavior` rather than is-a `FlyingDuck`, and the behavior can be swapped at runtime.
 
 ### 6. Design patterns Q2
 
 **Q:** Name a Strategy hiding in code you've worked with under a different name (common aliases: "policy", "handler", "provider", "selector", "comparator"). What's the strategy interface, and what concrete strategies exist?
 
-**Answer:**
+**Answer:** An auth **provider**: many codebases have a `LoginProvider` interface with a single `authenticate(credentials) -> Session` method, implemented concretely by `EmailPasswordProvider`, `GoogleSSOProvider`, `SAMLProvider`, `MagicLinkProvider`. The auth controller holds a reference to the configured provider (chosen per-tenant or per-environment) and delegates. Different name, exact Strategy structure.
 
-**Explanation:**
+**Explanation:** Real codebases rarely use the GoF name "Strategy" — they use domain words. Watch for three signals: (1) an interface with a single (or very narrow) verb-shaped method, (2) multiple concrete implementations with totally different mechanics, and (3) a client object that holds one of them and delegates. When all three are present, you're looking at Strategy regardless of what it's called. Recognizing this lets you communicate at design speed ("we should swap this for a Strategy") even when the team's name for it is `XYZHandler`.
 
 ### 7. DevOps Q1
 
 **Q:** The Deep dive argues a parameter without two distinct callers using different values should probably be a constant. Look at one of your team's Bicep templates — pick a parameter that fails this test. What would you do instead, and why might the original author have added it?
 
-**Answer:**
+**Answer:** Common offender: `param skuName string = 'Standard_LRS'` on a Storage Account module where every caller across dev, staging, and prod uses the default. Fix: replace with a literal `sku: { name: 'Standard_LRS' }` inside the module, or make it a `var` with a comment explaining the choice. The original author probably added it "in case we ever need different SKUs per env" — speculative flexibility before a real second caller existed.
 
-**Explanation:**
+**Explanation:** Parameters carry visible cost: every caller has to know about them, every refactor has to consider them, every reader has to wonder if they vary in practice. Speculative parameters pay that cost for nothing. The author's instinct (flexibility) is reasonable but premature — the cheap thing to do is *add the parameter when the second caller actually appears*, which is fast (a one-line module change). "Just in case" parameter-creep is a common Bicep code-review finding because Bicep makes it easy to add params and harder to remove them (downstream callers may now depend on the parameter even with the default).
 
 ### 8. DevOps Q2
 
 **Q:** The Deep dive frames modules as "functions, parameters as arguments, outputs as return values." Pick a non-Bicep system in your daily work that uses the same pattern (some module/function decomposition). What does Bicep's module system do *better* than that system, and what does it do *worse*?
 
-**Answer:**
+**Answer:** Closest analogue: **TypeScript modules with typed exports**, or React components with props + render output. **Bicep does better:** outputs are deployment-time-resolved, so dependency ordering between modules is automatic (you don't write the wiring); the deployment engine handles idempotency without you writing retry/check-existence logic. **Bicep does worse:** there's no real higher-order composition — you can't pass a module to a module, can't build module factories, debugging is harder than reading a stack trace, the type system is far less expressive (no generics, no discriminated unions), and module reuse across repos requires a registry and tooling rather than `npm install`.
 
-**Explanation:**
+**Explanation:** The structural similarity (named inputs, named outputs, encapsulated body) is real, but the **runtime is fundamentally different**. TS/React modules execute in a single process where you control control-flow; Bicep modules compile to nested ARM deployments where the deployment engine does orchestration. That trade gives you idempotency for free but loses expressiveness. Knowing this trade is what makes you write Bicep that "feels right" for the deployment engine instead of fighting it — for example, you stop trying to express conditional logic with complex ternaries (the deployment engine handles `if` declaratively) and you stop trying to refactor for code elegance at the cost of clearer deployment semantics.
