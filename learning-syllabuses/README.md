@@ -13,9 +13,11 @@ Each syllabus has 4 levels (Beginner → Expert) with topics that link to repo c
 
 ## How the system works
 
-This repo is meant to be **shared**. The shared parts (this directory + the skill + `goals.md` + the repo's existing teaching content) are committed. Per-user **personal** parts (your sprint position, your daily todos, your scratch work) live under a `progress/` directory that is **gitignored** — your daily progress never gets pushed, and friends sharing the repo never see each other's working state.
+This repo is meant to be **shared**. Almost everything is committed — the syllabuses (here), the skill, `goals.md`, the existing teaching content, AND your sprint state + daily todos under `progress/`. The only thing kept local is each day's `progress/<date>/working-folder/` (gitignored via `progress/*/working-folder/`), where apply-task scratch code lives.
 
-When you (or a friend) clone the repo and run `/daily-tasks` for the first time, the skill auto-bootstraps your `progress/` directory: it creates `progress/<subject>/state.md` for each subject starting at Level 1, topic 1, step `read`, then writes today's plan to `progress/<today>/todo.md` and scaffolds `progress/<today>/work/<subject>/` for your apply work.
+That split lets your learning journey stay in git history (every daily todo, every level you advanced, every comprehension answer you wrote) while messy experiments and local secrets in scratch code stay off the network.
+
+When you (or a friend) clone the repo and run `/daily-tasks` for the first time, the skill auto-bootstraps any missing `progress/<subject>/state.md` files starting at Level 1 row 1, then writes today's plan to `progress/<today>/todo.md` and scaffolds `progress/<today>/working-folder/<subject>/` for your apply work.
 
 ## How to use
 

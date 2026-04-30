@@ -128,19 +128,21 @@ A small, concrete coding exercise (~10–30 lines) that uses the day's concept i
 - `read` day on Observer: "Type a 20-line `EventBus` with subscribe/emit. Subscribe two listeners, emit one event, see both fire."
 - `read` day on `separation-of-concerns`: "Take any 30-line script you've written that mixes I/O and logic. Split it into a pure function + a thin I/O wrapper."
 
-Save apply work to **today's per-day work folder**: `progress/<today>/work/<subject>/<filename>`. The skill scaffolds this directory tree when generating today's todo (see Step 7). Examples:
-- agentic-workflows → `progress/2026-04-30/work/agentic-workflows/tiny-agent.js`
-- architecture → `progress/2026-04-30/work/architecture/before.js`, `.../after.js`
-- design-patterns → `progress/2026-04-30/work/design-patterns/sorter-strategy.js`
-- devops → `progress/2026-04-30/work/devops/portal-tour.md`
+Save apply work to **today's per-day working-folder**: `progress/<today>/working-folder/<subject>/<filename>`. The skill scaffolds this directory tree when generating today's todo (see Step 7). Examples:
+- agentic-workflows → `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`
+- architecture → `progress/2026-04-30/working-folder/architecture/before.js`, `.../after.js`
+- design-patterns → `progress/2026-04-30/working-folder/design-patterns/sorter-strategy.js`
+- devops → `progress/2026-04-30/working-folder/devops/portal-tour.md`
 
-Per-day work folders are inside gitignored `progress/`, so artifacts stay local. If the user wants to keep something for later reference, they copy/move it out.
+`working-folder/` directories are gitignored (`progress/*/working-folder/` in `.gitignore`). The rest of `progress/` — state files, the daily `todo.md`, the dated folder itself — IS tracked. So your daily plans and sprint position are in git history; only the scratch code stays local.
 
 #### D. Prove-it questions
 
 **Default 2 questions per subject** (was 3 — trimmed when the 4th subject was added to keep total ≤ ~8 questions per day). Bump back to 3 only when the user is in focused mode with ≤2 subjects in the plan, OR when the topic genuinely needs three angles to probe (rare).
 
-Questions must be grounded in today's content, answered in writing in Notes. Avoid generic prompts. Question shapes that work:
+Questions are listed in each subject's section but **answered in the consolidated "Answers + explanations" section at the very bottom of the todo**, not in per-subject subsections. The bottom section repeats each question verbatim for context and provides blank `Answer:` and `Explanation:` lines per question. The user is expected to fill in BOTH — the answer is brief, the explanation is the learning.
+
+Avoid generic prompts. Question shapes that work:
 - "In your own words, what problem does X solve that Y doesn't?"
 - "Name a place in code you've written where X is hiding under a different name (e.g., 'policy', 'handler', 'provider')."
 - "If you had to explain X to a junior dev in 60 seconds, what would you say?"
@@ -155,14 +157,14 @@ Default: **2 checkbox tasks per subject** (one step + one apply). With the four 
 
 Do NOT bump to 3 tasks per subject in the default 4-subject plan — the user explicitly chose 4 subjects to keep daily load consistent and small. Only bump in focused mode (≤2 subjects) when an `implement` step has many "Done when" boxes that genuinely split. Never exceed 3 tasks per subject. Cap total at 8.
 
-### Step 7 — Scaffold today's work folder + write the output file
+### Step 7 — Scaffold today's working-folder + write the output file
 
-Before writing the todo, create today's per-day work folder structure with `mkdir -p`:
-- `progress/<today>/work/<subject>/` for each subject in the resolved list
+Before writing the todo, create today's per-day working-folder structure with `mkdir -p`:
+- `progress/<today>/working-folder/<subject>/` for each subject in the resolved list
 
 Example (default 4-subject mode for 2026-04-30):
 ```
-mkdir -p progress/2026-04-30/work/agentic-workflows progress/2026-04-30/work/architecture progress/2026-04-30/work/design-patterns progress/2026-04-30/work/devops
+mkdir -p progress/2026-04-30/working-folder/agentic-workflows progress/2026-04-30/working-folder/architecture progress/2026-04-30/working-folder/design-patterns progress/2026-04-30/working-folder/devops
 ```
 
 These directories are where Apply tasks save their artifacts. They start empty; the user fills them in as they work. The whole `progress/` tree is gitignored, so artifacts stay local — friends sharing the repo never see each other's scratch work.
@@ -189,7 +191,7 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 - README: [<path>/README.md](../../<path>/README.md)
 - Demo: [<path>/<demo file>](../../<path>/<demo file>)
 - Homework: [<path>/homework.md](../../<path>/homework.md)
-- Today's work folder: `progress/<today>/work/<subject>/` (scaffolded; save apply work here)
+- Today's working-folder: `progress/<today>/working-folder/<subject>/` (scaffolded; save apply work here — gitignored)
 - (additional links per subject — see existing examples)
 
 **Reading material — orient yourself before opening the linked README:**
@@ -216,7 +218,7 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 - [ ] **Step:** <step task>
 - [ ] **Apply:** <apply task — file path, line count, expected behavior>
 
-**Prove it — answer in Notes:**
+**Prove it — answer in the Answers + explanations section at the bottom:**
 1. <grounded question 1>
 2. <grounded question 2>
 3. <grounded question 3 — optional>
@@ -227,17 +229,35 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 
 ---
 
-## Notes
+## Answers + explanations
 
-_(Free space — answer the "Prove it" questions here, jot insights, blockers, things to revisit.)_
+_All Prove-it questions consolidated here. For each question: write your **Answer** (be brief — one sentence is fine) and your **Explanation** (the reasoning — this is where the learning compounds). Don't skip the explanation; the answer alone doesn't prove understanding._
 
-### <Subject 1> — answers
+### 1. <Subject 1> Q1
 
-1.
-2.
-3.
+**Q:** <question 1 from Subject 1, repeated verbatim for context>
 
-(per-subject answer subsections)
+**Answer:**
+
+**Explanation:**
+
+### 2. <Subject 1> Q2
+
+**Q:** <question 2 from Subject 1>
+
+**Answer:**
+
+**Explanation:**
+
+### 3. <Subject 2> Q1
+
+**Q:** <question 1 from Subject 2>
+
+**Answer:**
+
+**Explanation:**
+
+(continue numbering across all subjects — one flat list, not subject-grouped subsections)
 ```
 
 For untracked areas in discovery mode, additionally include this callout above the Files block:
@@ -248,7 +268,7 @@ For untracked areas in discovery mode, additionally include this callout above t
 
 Important details:
 
-- All file links are RELATIVE FROM `progress/YYYY-MM-DD/`. Master-syllabus links use `../../learning-syllabuses/<subject>.md`; repo-content links use `../../<path>`. Today's work folder is at `work/<subject>/` (relative) — display in the todo as `progress/<today>/work/<subject>/` for clarity.
+- All file links are RELATIVE FROM `progress/YYYY-MM-DD/`. Master-syllabus links use `../../learning-syllabuses/<subject>.md`; repo-content links use `../../<path>`. Today's working-folder is at `working-folder/<subject>/` (relative) — display in the todo as `progress/<today>/working-folder/<subject>/` for clarity.
 - Only include link lines for files that actually exist.
 - For external topics: drop README/Demo/Homework lines and replace with a `Resource:` line quoting the syllabus deliverable. The Step task IS the deliverable. Apply task is still required.
 - Reading-material excerpts must be VERBATIM from the linked file. Do not paraphrase. Do not invent quotes from books you don't have access to.
