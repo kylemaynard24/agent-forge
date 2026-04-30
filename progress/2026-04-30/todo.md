@@ -42,6 +42,10 @@ Sprint starting — no prior day.
 >
 > **Connecting forward:** the next topic, `the-agentic-loop`, is a deep dive on the loop itself — termination, ReAct, observation handling. The piece you'll spend the most time on for the rest of this curriculum is the loop, because it's the piece you have the most control over.
 
+> _Extra credit (optional — papers, talks, posts for going deeper):_
+> - **Building Effective Agents** — Anthropic engineering team (2024). The modern definition of what an agent actually is, including the patterns Anthropic uses internally. ~30 min read. [anthropic.com/engineering/building-effective-agents](https://www.anthropic.com/engineering/building-effective-agents)
+> - **ReAct: Synergizing Reasoning and Acting in Language Models** — Yao et al. (2022). The foundational paper on the agent loop pattern (thought + action + observation). The vocabulary you'll see everywhere downstream. [arxiv.org/abs/2210.03629](https://arxiv.org/abs/2210.03629)
+
 **Today:**
 - [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
 - [ ] **Apply:** Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM (returns canned next-action), one tool (`countLines(filename)`), a loop (max 3 iterations), a goal. Print each iteration. Save to `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`.
@@ -87,6 +91,10 @@ Sprint starting — no prior day.
 > The honest rule: **separate when you feel the pain, not when you read the principle**. The README's "three independent reasons to change → three functions" is a good test, but the underlying judgment is "have I actually had to change one without the other?" If yes, separate. If no, you're paying ceremony cost for a refactor you might never need. Senior engineers err toward keeping things together until concrete pressure forces a split — the pressure becomes evidence the split is worth its cost.
 >
 > **Connecting forward:** the next topic, `coupling-and-cohesion`, is the *measurement layer* for what SoC accomplishes. SoC tells you to split; coupling/cohesion tell you whether your split was a good one — high cohesion within each module, low coupling between them. Without coupling/cohesion as a check, "separated" can just mean "scattered."
+
+> _Extra credit (optional — papers, talks, posts for going deeper):_
+> - **On the Criteria To Be Used in Decomposing Systems into Modules** — David Parnas (1972). The original "information hiding" paper and probably the most-cited paper in software design history. 6 pages; foundational reading for any architecture work.
+> - **Out of the Tar Pit** — Ben Moseley & Peter Marks (2006). On the distinction between *essential* and *accidental* complexity — the framing that makes "separation of concerns" earn its space. ~30 pages, free PDF widely available; changes how you see codebases.
 
 **Today:**
 - [ ] **Step:** Read `separation-of-concerns/README.md` (73 lines, ~15 min). Capture 3–5 takeaways in Notes — at least one **trade-off**.
@@ -137,6 +145,10 @@ Sprint starting — no prior day.
 >
 > **Connecting forward:** Chapter 2 (Observer) introduces the second-most-used pattern in modern code, also via the "encapsulate what varies" lens — what varies is *who responds to events*. Chapter 3 (Decorator) does the same for *what wrapping behavior gets applied*. The four-chapter arc 1-2-3 is really one extended argument about composition over inheritance.
 
+> _Extra credit (optional — papers, talks, posts for going deeper):_
+> - **A Behavioral Notion of Subtyping** — Barbara Liskov & Jeannette Wing (1994). The actual academic source for the Liskov Substitution Principle. The "L" in SOLID. Strategy is partly about avoiding the inheritance traps Liskov's principle warns about — reading the source paper is illuminating.
+> - **Sandi Metz — *Nothing is Something*** (RailsConf 2015, available on YouTube). On the Null Object pattern, polymorphism, and removing conditionals. The clearest practical demonstration of how "encapsulate what varies" plays out in real code. ~35 min watch.
+
 **Today:**
 - [ ] **Step:** Start Head First Ch 1 — aim for ~30–60 minutes today. Read at least through the SimUDuck "inheritance breaks" reveal and the introduction of "encapsulating what varies."
 - [ ] **Apply:** Type (don't paste) a piece of the **chapter's SimUDuck example** — the actual code the book walks you through. Aim for ~30 lines: `Duck` base class (with `swim()` + `display()`); `MallardDuck` and `RubberDuck` subclasses; `FlyBehavior` interface with `FlyWithWings` and `FlyNoWay` implementations; ducks compose a `FlyBehavior` reference and call `performFly()` that delegates to it. Demo: instantiate one of each, call `performFly()`, see the difference. (Tomorrow's apply will extend this with `QuackBehavior` per the book's order.) Save to `progress/2026-04-30/working-folder/design-patterns/simuduck/Duck.js` (split into multiple files if you prefer the book's layout).
@@ -186,6 +198,10 @@ Sprint starting — no prior day.
 > **Worked example in prose:** imagine your team has three apps, each with the same shape — App Service + App Insights + Storage Account + Key Vault. The wrong move is one big module per app. The right move is **four small modules** (`appService.bicep`, `appInsights.bicep`, `storage.bicep`, `keyVault.bicep`), each parameterized only on `name`, `location`, and a few app-specific knobs (SKU, retention). Then one **per-app composition module** (`webapp-stack.bicep`) that calls all four and wires them together (App Service reads its connection string from Key Vault, which holds Storage's key). Each app's `main.bicep` is now ~10 lines: pick a name, pick a region, call `webapp-stack.bicep`. New app? 10 more lines. The four base modules and the composition module never change.
 >
 > **Connecting back:** in Level 1 you wrote a single-resource Bicep file. The leap here is teaching that file to participate in a **composition** — to be one piece of a larger templated system. Every Level-2 and Level-3 topic from here builds on this: outputs feed Key Vault (topic 2), modules get versioned and published to ACR (Level 4), `what-if` operates per-module (Level 3 topic 3). Get this one solid.
+
+> _Extra credit (optional — papers, talks, posts for going deeper):_
+> - **The Twelve-Factor App** — Adam Wiggins (2011). Short web essay, foundational for any IaC/SaaS work. Section III ("Config") and section X ("Dev/prod parity") are particularly relevant to module-and-parameter design — they explain *why* parameters exist as a category. [12factor.net](https://12factor.net/)
+> - **Azure Verified Modules (AVM)** — Microsoft's first-party Bicep module library. Read 2–3 modules end-to-end (e.g., `avm/res/storage/storage-account` or `avm/res/key-vault/vault`) to see how professional Bicep parameters and outputs are structured. The README of any AVM module is itself a teaching artifact. [aka.ms/avm](https://aka.ms/avm)
 
 **Today:**
 - [ ] **Step:** Read the Bicep *Modules* doc and the *Parameters and outputs* doc (~30–45 min total). Then start the MS Learn path *Structure your Bicep code for collaboration* (~60 min). Capture 3–5 takeaways in Notes including at least one **anti-pattern** you've personally seen (or now suspect you've written).

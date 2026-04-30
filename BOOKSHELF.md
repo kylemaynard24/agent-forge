@@ -134,10 +134,18 @@ A small literature with a few standout texts. The current sprint already centers
 - **Patterns of Enterprise Application Architecture** — Martin Fowler (2002)
   The architectural cousin to GoF: patterns at the level of layers, not classes. Read after you've shipped a non-trivial CRUD application.
 
+### 📄 Papers
+
+- **A Behavioral Notion of Subtyping** — Barbara Liskov & Jeannette Wing (1994). The actual academic source for the Liskov Substitution Principle. The "L" in SOLID. Dense but worth skimming once.
+- **On the Criteria To Be Used in Decomposing Systems into Modules** — David Parnas (1972). The original "information hiding" paper. Probably the most-cited paper in software design history; a 6-page foundational read.
+- **Mock Roles, not Objects** — Steve Freeman, Nat Pryce, Tim Mackinnon, Joe Walnes (2004). Reframes mocks as a *design* tool for discovering roles, not just a testing trick. Pairs well with Strategy and dependency-inversion thinking.
+
 ### 🎤 Talks / posts
 
 - **Sandi Metz — *All the Little Things*** (RailsConf 2014, YouTube). Refactoring a real codebase live, applying multiple patterns. Watch even if you don't write Ruby.
 - **Sandi Metz — *SOLID Object-Oriented Design*** (Gotham Ruby Conference, 2009). Probably the best 30-minute introduction to SOLID anywhere.
+- **Sandi Metz — *Nothing is Something*** (RailsConf 2015, YouTube). On the Null Object pattern, polymorphism, and removing conditionals. The clearest argument for "patterns reduce decisions."
+- **Kent Beck — *Test-Driven Development*** writing collected on his Substack and at tidyfirst.substack.com. His four rules of simple design and the "tidy first?" sequencing of refactoring is the meta-level pattern that makes the GoF patterns useful.
 
 ---
 
@@ -176,6 +184,12 @@ The literature splits into culture/practice (DevOps as a movement) and technical
 
 - **The Twelve-Factor App** — Adam Wiggins (2011) 🆓 ([12factor.net](https://12factor.net/))
   Short web essay, foundational for SaaS app design. ~30-minute read; permanently cited.
+- **Microservices** — James Lewis & Martin Fowler (2014) 🆓 ([martinfowler.com/articles/microservices.html](https://martinfowler.com/articles/microservices.html))
+  Functions as a paper despite being a blog post — the canonical definition of microservices, with honest trade-offs. Read before deciding "we should be microservices."
+- **Principles of Chaos Engineering** — Netflix team (2015) 🆓 ([principlesofchaos.org](https://principlesofchaos.org/))
+  Short manifesto; the foundational text for chaos engineering. Pairs with the SRE chapter on "Designing For Failure."
+- **The Tail at Scale** — Jeffrey Dean & Luiz André Barroso (Google, 2013). On p99 latency in distributed systems. Explains why request hedging, micro-partitioning, and tied requests exist. Highly cited.
+- **Borg, Omega, and Kubernetes** — Brendan Burns et al. (Google, 2016). The lineage of cluster management at Google, leading to Kubernetes. Useful even if you'll never run AKS.
 - **[Microsoft Learn — Azure documentation root](https://learn.microsoft.com/en-us/azure/)**
   The single most-referenced Azure resource. Bookmark the *Bicep*, *Container Apps*, *Key Vault*, *Cost Management*, and *Well-Architected Framework* sections.
 - **[Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)** 🆓
@@ -209,6 +223,8 @@ The repo's `software-engineering/advanced-engineering/` covers six tracks not in
 - **Debugging: The 9 Indispensable Rules for Finding Even the Most Elusive Software and Hardware Problems** — David J. Agans (2002). Short, ageless, opinionated. The "make it fail" and "quit thinking and look" rules alone justify the book.
 - **Why Programs Fail: A Guide to Systematic Debugging** — Andreas Zeller (2nd ed, 2009). More academic; covers delta debugging and statistical debugging.
 - **Systems Performance** — Brendan Gregg (2nd ed, 2020). Mostly perf, but the diagnostic methodology (USE, RED) is foundational for any production debugging.
+- 📄 **Yesterday, My Program Worked. Today, It Does Not. Why?** — Andreas Zeller (1999). The original delta-debugging paper. Explains how to systematically narrow down which change broke a working program.
+- 📄 **The Five Whys** — Sakichi Toyoda (Toyota production system). Not a paper but a technique; reading the [Wikipedia entry](https://en.wikipedia.org/wiki/Five_whys) plus 1-2 critiques of it produces a more nuanced root-cause-analysis practice than most engineers ever develop.
 
 ### 02 — Testing and verification
 
@@ -216,12 +232,17 @@ The repo's `software-engineering/advanced-engineering/` covers six tracks not in
 - **Working Effectively with Legacy Code** — Michael Feathers (2004). The single best book on adding tests to systems that don't have them. Senior engineers often define legacy code as "code without tests"; this is the book that fixes that.
 - **Property-Based Testing with PropEr, Erlang, and Elixir** — Fred Hébert (2019). Even if you're not in Erlang/Elixir, the approach (think in invariants, generate inputs, shrink failures) translates to any language with a property-test library (fast-check for JS, Hypothesis for Python).
 - 📄 **[QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs](https://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf)** — Claessen & Hughes (2000). The original property-based testing paper.
+- 📄 **An Empirical Study of the Reliability of UNIX Utilities** — Miller, Fredriksen, So (1990). The original fuzzing paper. Foundational; explains why "throw random nonsense at it" works as a test technique.
+- 🎤 **Hillel Wayne — *Why Don't People Use Formal Methods?*** ([hillelwayne.com](https://www.hillelwayne.com)). Wayne's writing on the testing/specification spectrum (typed, property-based, specifications, formal methods) is the best modern thinking on "what kinds of bugs do which tools catch?"
 
 ### 03 — Performance and capacity
 
 - **Systems Performance** — Brendan Gregg (2nd ed, 2020). The reference. Covers Linux performance soup-to-nuts. Use as a lookup, not a read-through.
 - **BPF Performance Tools** — Brendan Gregg (2019). The follow-up; deep on eBPF observability. Niche but powerful for production diagnosis.
 - **Database Internals** — Alex Petrov (2019). For understanding why a database query is slow at the storage-engine level.
+- 📄 **The Tail at Scale** — Jeffrey Dean & Luiz André Barroso (Google, 2013). On p99 latency in distributed systems. (Also listed in DevOps; doubly relevant here.)
+- 📄 **Latency Numbers Every Programmer Should Know** — Jeff Dean 🆓 ([gist by colin-scott](https://colin-scott.github.io/personal_website/research/interactive_latency.html)). Interactive scaled view. Memorize the orders of magnitude.
+- 📄 **The USE Method** — Brendan Gregg ([brendangregg.com/usemethod.html](https://www.brendangregg.com/usemethod.html)) 🆓. A 30-minute read that gives you a checklist for diagnosing any performance problem: Utilization, Saturation, Errors per resource.
 
 ### 04 — Security and trust boundaries
 
@@ -235,6 +256,8 @@ The repo's `software-engineering/advanced-engineering/` covers six tracks not in
 - **Working Effectively with Legacy Code** — Michael Feathers (2004). (Mentioned in testing too — it's the one book that bridges testing + legacy + refactoring.)
 - **Refactoring** — Martin Fowler (2nd ed, 2018). The bible. The 2nd edition's JavaScript examples are accessible.
 - **Refactoring to Patterns** — Joshua Kerievsky (2004). When refactoring naturally produces a pattern.
+- 📄 **A Refactoring Tool for Smalltalk** — Don Roberts, John Brant, Ralph Johnson (1997). The original "refactoring browser" paper that defined what an automated refactoring tool can guarantee. Useful for understanding what your modern IDE refactorings can and can't safely do.
+- 📄 **Tidy First?** — Kent Beck (essay series, 2023+, [tidyfirst.substack.com](https://tidyfirst.substack.com)) 🆓. Beck's modern reframing of refactoring sequencing — when to tidy *before* a feature change vs *after*. Shorter and more practical than his book on the same topic.
 
 ### 06 — Incident response and engineering execution
 

@@ -113,6 +113,8 @@ Generate by **reading the topic's actual README** (for repo topics) or by drawin
 
 - **Deep dive** (REQUIRED for ALL subjects): a 200–300 word substantive prose section that goes deeper than the primer and is meant to be read directly from the todo as actual learning material. Cover: the conceptual model behind the topic (not just "what it is"), the most common mistake practitioners make, a concrete worked-through example (in prose, not code), and how this topic connects to the next topic in the syllabus. Ground in specifics — for repo topics, draw on the README's framing; for external topics (devops, Head First chapters), draw on common knowledge of the tool/pattern. Clearly title the block "_Deep dive:_". On a `read` day, this block is the user's main contribution to reading depth beyond the linked README/chapter; on `demo` and `implement` days, keep it but shift to focus on what they should look for as they execute.
 
+- **Extra credit** (REQUIRED for ALL subjects): 1–2 optional pointers to research papers, conference talks, or canonical blog posts that go deeper on the day's topic. Curate from `BOOKSHELF.md` — that file is the source of truth for what's worth recommending. Pick references that specifically illuminate the day's topic, not generic recommendations. Name each reference in the format: `**<title>** — <author(s)> (<year>). <one-sentence why-this-one>.` Include a stable URL only if confident (arxiv.org/abs/NNNN.NNNNN for arXiv papers, or canonical project sites). The user can ignore extra credit on busy days — the daily plan stays achievable without it. Clearly title the block "_Extra credit (optional — papers, talks, posts for going deeper):_".
+
 If the user is on `demo` or `implement` step (not `read`), shift the Reading material to be about the demo file or homework respectively — keep it grounded.
 
 #### B. Step task
@@ -237,6 +239,10 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 > _Deep dive (REQUIRED for all subjects):_
 >
 > <200-300 word substantive prose: conceptual model, common mistake, worked-through prose example, connection to next topic. Be specific about mechanics. This block earns its space by giving the user real reading content beyond the linked README — not a summary of it.>
+
+> _Extra credit (optional — papers, talks, posts for going deeper):_
+> - **<paper/talk title>** — <author(s)> (<year>). <one-sentence why-this-one>. <stable URL if confident; else omit>
+> - **<second reference, optional>** — <author(s)> (<year>). <why this one>.
 
 **Today:**
 - [ ] **Step:** <step task>
