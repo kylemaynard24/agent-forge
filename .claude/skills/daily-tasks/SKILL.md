@@ -17,7 +17,7 @@ The skill **enforces** that any area name resolves either to a repo learning dir
 
 | Area name | Repo path | External-only? | Tracked? (has progress/ state) | Notes |
 |---|---|---|---|---|
-| `agentic-workflows` | `agentic-workflows/` | no | yes (default) | 6-stage agent dojo; multi-day topics |
+| `agentic-workflows` | `agentic-workflows/` | no | yes (default) | 6-stage agent track; multi-day topics |
 | `architecture` | `software-engineering/architecture/` | no | yes (default) | 8 sections, fundamentals → distributed systems |
 | `design-patterns` | `software-engineering/design-patterns/` | no | yes (default) | Head First chapter order; multi-day chapters |
 | `devops` | (none — Azure-shop tooling: Bicep, GitHub Actions, Azure resources/portal, Docker) | yes | yes (default) | All topics link to official docs; deliverables drive implement |

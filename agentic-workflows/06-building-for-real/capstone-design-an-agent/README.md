@@ -4,7 +4,7 @@
 
 ## What this is
 
-This is the **integration test** for everything in the dojo. You design and build an agent that uses the patterns from each prior section — and you defend your design choices.
+This is the **integration test** for everything in the curriculum. You design and build an agent that uses the patterns from each prior section — and you defend your design choices.
 
 There's no rubric and no grade. The point is: you make decisions, and you can articulate why each one.
 
@@ -53,7 +53,7 @@ Working code. Doesn't need to be production-grade. *Does* need to:
 - Be runnable.
 - Implement the design as written.
 - Have at least one test you trust.
-- Demonstrate at least 4 of the dojo's patterns/principles.
+- Demonstrate at least 4 of the curriculum's patterns/principles.
 
 ### 3. Retrospective (1-2 pages)
 
@@ -61,7 +61,7 @@ After building:
 - What surprised you?
 - What pattern was harder than expected?
 - What would you do differently?
-- One thing you'd cut from the dojo as not useful for *this* project.
+- One thing you'd cut from the curriculum as not useful for *this* project.
 - One thing you'd add.
 
 ## What we're testing

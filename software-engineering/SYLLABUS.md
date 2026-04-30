@@ -1,4 +1,4 @@
-# The Engineering Dojo — A 12-Month Syllabus
+# Engineering Foundations — A 12-Month Syllabus
 
 A self-directed path from "I write code that works" to "I design systems that survive contact with reality." Three stages, twelve months, ~50 topics. Every topic has three artifacts:
 
@@ -125,7 +125,7 @@ Patterns are about classes. Architecture is about systems. The shift is from "ho
 | 1 | layered + hexagonal-ports-and-adapters | The classic and the better default. |
 | 2 | clean-onion | Hexagonal with explicit rings. |
 | 3 | mvc-mvp-mvvm | Three siblings for separating UI from logic. |
-| 4 | ddd-building-blocks | Entity, value object, aggregate, repository. The most reusable vocabulary in the dojo. |
+| 4 | ddd-building-blocks | Entity, value object, aggregate, repository. The most reusable vocabulary in the curriculum. |
 
 ---
 
@@ -209,11 +209,11 @@ There's no rubric, no grade. The point is that **you know what trade-offs you ma
 
 - **Don't aim for perfect code.** Aim for code that you understand fully, with constraints honestly satisfied.
 - **The homework constraints are the point.** Without them, you'll route around the concept.
-- **Pair the dojo with reading.** Pick a few books to layer on: *A Philosophy of Software Design* (Ousterhout), *Designing Data-Intensive Applications* (Kleppmann), *Clean Architecture* (Martin), *Domain-Driven Design* (Evans). Don't try to read all four — pick one per quarter.
+- **Pair the curriculum with reading.** Pick a few books to layer on: *A Philosophy of Software Design* (Ousterhout), *Designing Data-Intensive Applications* (Kleppmann), *Clean Architecture* (Martin), *Domain-Driven Design* (Evans). Don't try to read all four — pick one per quarter.
 - **Use the repo reading guide when you want a fuller shelf.** See [`../READING-LIBRARY.md`](../READING-LIBRARY.md) for a subject-by-subject book map across the repo.
 - **Teach what you learn.** Write a blog post or do a brown-bag talk. Teaching exposes the holes in your understanding.
 - **Skip patterns you'll never use.** Interpreter and Flyweight rarely come up; if you've understood them once, that's plenty.
-- **Architecture is bigger than this dojo.** It includes things this dojo doesn't cover: security architecture, deployment topology, organizational design, build systems. The 50 topics here are a strong start, not the whole field.
+- **Architecture is bigger than this curriculum.** It includes things this curriculum doesn't cover: security architecture, deployment topology, organizational design, build systems. The 50 topics here are a strong start, not the whole field.
 
 ---
 
@@ -236,4 +236,4 @@ software-engineering/
     └── 08-cross-cutting/              ← Stage 3, Month 11 (part 2)
 ```
 
-Twelve months. Fifty topics. One hundred forty-something files. The dojo is the curriculum. The work is yours. Begin.
+Twelve months. Fifty topics. One hundred forty-something files. The curriculum is the structure. The work is yours. Begin.

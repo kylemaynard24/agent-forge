@@ -41,7 +41,7 @@ Architecture is the set of decisions that are expensive to change. There is no s
 node demo.js
 ```
 
-The demo is a small decision script. Given constraints (team size, latency target, budget, scale), it prints which patterns from the dojo are worth reaching for, and which are over-engineering at this stage. Try changing the inputs and see how the recommendations move.
+The demo is a small decision script. Given constraints (team size, latency target, budget, scale), it prints which patterns from the curriculum are worth reaching for, and which are over-engineering at this stage. Try changing the inputs and see how the recommendations move.
 
 ## Deeper intuition
 

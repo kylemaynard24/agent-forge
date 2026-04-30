@@ -19,7 +19,7 @@ Sprint starting — no prior day.
 
 **Reading material — orient yourself before opening the README:**
 
-> _Primer:_ "Agent" is the most overloaded word in the current AI conversation. The README cuts through this by giving a precise, working definition: an LLM put inside a loop, given tools to act on the world, and pointed at a goal. The defining test for whether something is an agent — versus a chatbot or a workflow — is **who decides what to do next at runtime**. This is the vocabulary anchor for the entire 6-month dojo: every later topic refines one of the four pieces introduced here.
+> _Primer:_ "Agent" is the most overloaded word in the current AI conversation. The README cuts through this by giving a precise, working definition: an LLM put inside a loop, given tools to act on the world, and pointed at a goal. The defining test for whether something is an agent — versus a chatbot or a workflow — is **who decides what to do next at runtime**. This is the vocabulary anchor for the entire 6-month curriculum: every later topic refines one of the four pieces introduced here.
 
 > _Key concepts you'll meet:_
 > - **Agent** — LLM + tools + loop + goal. Decides each next move at runtime.
@@ -40,7 +40,7 @@ Sprint starting — no prior day.
 >
 > The autonomy gradient is the second underrated concept. Most production agent failures aren't "the agent did something wrong" — they're "the agent was given more autonomy than the task warranted." Level 4 ("acts unsupervised in production") is rare and dangerous outside narrow well-scoped domains. Most production agents should sit at Level 2–3: act in a sandbox or with guardrails, with humans reviewing aggregates rather than every action.
 >
-> **Connecting forward:** the next topic, `the-agentic-loop`, is a deep dive on the loop itself — termination, ReAct, observation handling. The piece you'll spend the most time on for the rest of this dojo is the loop, because it's the piece you have the most control over.
+> **Connecting forward:** the next topic, `the-agentic-loop`, is a deep dive on the loop itself — termination, ReAct, observation handling. The piece you'll spend the most time on for the rest of this curriculum is the loop, because it's the piece you have the most control over.
 
 **Today:**
 - [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
@@ -147,11 +147,11 @@ Sprint starting — no prior day.
 
 ---
 
-## DevOps (Azure shop) — Level 2 (Intermediate — Composable infrastructure)
+## DevOps — Level 2 (Intermediate — Composable infrastructure)
 
 **Topic:** `Bicep modules + parameters` (#1 in Level 2) — step: `read`
 
-> Personal note: skipping Level 1. You already deploy Azure resources daily and are comfortable with Docker, Bicep basics, and GitHub workflows — Level 1 is preserved in the syllabus for friends starting fresh.
+> State file is starting at Level 2 — appropriate for a learner already comfortable with Level-1 fundamentals (deploying Azure resources, basic Docker, Bicep basics, GitHub Actions hello-world). Reset state.md to Level 1 row 1 if you want the foundations track instead.
 
 **Files:**
 - Master syllabus: [learning-syllabuses/devops.md](../../learning-syllabuses/devops.md) (see Level 2 row 1 for the topic + deeper-reading + deliverable)

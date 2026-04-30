@@ -92,7 +92,7 @@ The demo implements a minimal agent — 60 lines, no API key required. The "LLM"
 - The four pieces (LLM + tools + loop + goal) and why each is needed.
 - The difference between an agent, a workflow, and a chatbot — phrased so you can correct the next person who confuses them.
 - A cautious read on agent hype: agents are a powerful pattern, not a default architecture.
-- A vocabulary for the rest of this dojo: when you hear "tool," "loop," "context," "goal," they should mean specific things to you.
+- A vocabulary for the rest of this curriculum: when you hear "tool," "loop," "context," "goal," they should mean specific things to you.
 
 ## Deeper intuition
 

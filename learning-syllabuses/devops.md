@@ -1,6 +1,6 @@
-# DevOps (Azure shop) — master syllabus (beginner → expert)
+# DevOps (Azure-focused) — master syllabus (beginner → expert)
 
-Source of truth for the `daily-tasks` skill. Walks you from "I can find a resource group in the portal" to "I design and run the entire delivery pipeline for a real Azure product." Focused on the **Azure-native toolchain** — Bicep, GitHub Actions, Azure resources, the portal, and Docker — rather than cloud-agnostic generalities.
+Source of truth for the `daily-tasks` skill. Walks the learner from "I can find a resource group in the portal" to "I design and run the entire delivery pipeline for a real Azure product." Focused on the **Azure-native toolchain** — Bicep, GitHub Actions, Azure resources, the portal, and Docker — rather than cloud-agnostic generalities.
 
 > No backing repo content. Unlike the other three subjects, there is no `devops/` directory in this repo with READMEs/demos/homework. Each topic links to canonical official docs (Microsoft Learn, GitHub Actions docs, Docker docs) and gives a deliverable. The skill treats every topic as "external" — implement step uses the deliverable verbatim.
 

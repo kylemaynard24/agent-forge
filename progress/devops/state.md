@@ -1,4 +1,4 @@
-# DevOps (Azure shop) — current state
+# DevOps — current state
 
 - **Master syllabus:** [learning-syllabuses/devops.md](../../learning-syllabuses/devops.md)
 - **Level:** 2 (Intermediate — Composable infrastructure: you can ship a Dockerized app via CI/CD)
@@ -7,7 +7,7 @@
 - **Canonical resource:** Bicep docs — *Modules*, *Parameters and outputs*
 - **Repo path:** none — this subject is external-only (no `devops/` repo content; topics link to official docs and use deliverables for the implement step)
 - **Next step:** read
-- **Last completed:** (skipping Level 1; daily-work practitioner already deploying Azure resources, comfortable with Docker / Bicep basics / GitHub Actions hello-world)
+- **Last completed:** (starting at Level 2 — the learner using this state file already has Level-1 fundamentals: deploys Azure resources, comfortable with Docker / Bicep basics / GitHub Actions hello-world. Reset to Level 1 row 1 if starting fresh.)
 
 ## Pacing
 

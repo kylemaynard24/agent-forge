@@ -7,13 +7,13 @@ Shared, version-controlled curriculum for the four subjects driven by the `daily
 | Agentic workflows | [agentic-workflows.md](agentic-workflows.md) | `agentic-workflows/` repo content |
 | Software architecture | [architecture.md](architecture.md) | `software-engineering/architecture/` repo content |
 | Design patterns | [design-patterns.md](design-patterns.md) | *Head First Design Patterns* (2nd ed) — chapter by chapter; `software-engineering/design-patterns/` as secondary reference |
-| DevOps (Azure shop) | [devops.md](devops.md) | Microsoft Learn, Azure docs, GitHub Actions docs, Docker docs (no repo content) |
+| DevOps (Azure-focused) | [devops.md](devops.md) | Microsoft Learn, Azure docs, GitHub Actions docs, Docker docs (no repo content) |
 
 Each syllabus has 4 levels (Beginner → Expert) with topics that link to repo content (where available) and external canonical resources. Topics span multiple days; the daily skill paces you through them.
 
 ## How the system works
 
-This repo is meant to be **shared**. Almost everything is committed — the syllabuses (here), the skill, `goals.md`, the existing teaching content, AND your sprint state + daily todos under `progress/`. The only thing kept local is each day's `progress/<date>/working-folder/` (gitignored via `progress/*/working-folder/`), where apply-task scratch code lives.
+This repo is meant to be **shared**. Almost everything is committed — the syllabuses (here), the skill, `goals.md`, the existing teaching content, AND the per-user sprint state + daily todos under `progress/`. The only thing kept local is each day's `progress/<date>/working-folder/` (gitignored via `progress/*/working-folder/`), where apply-task scratch code lives.
 
 That split lets your learning journey stay in git history (every daily todo, every level you advanced, every comprehension answer you wrote) while messy experiments and local secrets in scratch code stay off the network.
 

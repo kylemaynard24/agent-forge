@@ -247,7 +247,7 @@ Finish the core tracks, then go into:
 There are two major syllabus entry points:
 
 - [`SYLLABUS.md`](SYLLABUS.md) — the repository-wide learning plan
-- [`software-engineering/SYLLABUS.md`](software-engineering/SYLLABUS.md) — the deeper engineering dojo syllabus
+- [`software-engineering/SYLLABUS.md`](software-engineering/SYLLABUS.md) — the deeper engineering syllabus
 
 Use the root syllabus for the broad roadmap. Use the software-engineering syllabus for the more detailed engineering sequence.
 

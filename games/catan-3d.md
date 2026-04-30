@@ -37,13 +37,13 @@ Single-player mode plays against AI opponents (3 difficulty levels). Multiplayer
 | 3D engine | **Babylon.js** (or Three.js) | Browser-native, no install, microsoft-backed (Babylon), TS-friendly |
 | Frontend framework | React or SvelteKit | Whatever you're fastest in; UI is mostly menus + HUD over the canvas |
 | Game state | Authoritative server (don't trust client) | Cheating is trivial in client-state games |
-| Backend | **Azure Container Apps** (Node/TS or .NET) | Hits your devops sprint Level 2-3 |
+| Backend | **Azure Container Apps** (Node/TS or .NET) | Hits the devops syllabus Level 2-3 |
 | Real-time multiplayer | **Azure Web PubSub** (or SignalR) | Managed real-time without standing up sockets yourself |
 | State persistence | **Cosmos DB** (game session document per game) | TTL'd; one document per active game |
 | Auth | Entra ID guest accounts OR magic-link email | Lightweight; players don't want to make an account |
 | Static hosting | **Azure Static Web Apps** | Built-in GHA integration, free tier covers a lot |
-| IaC | **Bicep** | Practice for your devops sprint |
-| CI/CD | **GitHub Actions** with OIDC to Azure | Practice for your devops sprint |
+| IaC | **Bicep** | Practice for the devops syllabus |
+| CI/CD | **GitHub Actions** with OIDC to Azure | Practice for the devops syllabus |
 
 The whole stack is buildable on the Azure free tier for development; production runs maybe $20-50/mo at modest concurrency.
 

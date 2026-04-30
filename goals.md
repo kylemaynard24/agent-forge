@@ -11,7 +11,7 @@ The cap is **four subjects** — chosen deliberately to keep daily load consiste
 | Agentic workflows | [learning-syllabuses/agentic-workflows.md](learning-syllabuses/agentic-workflows.md) | `agentic-workflows/` repo content |
 | Software architecture | [learning-syllabuses/architecture.md](learning-syllabuses/architecture.md) | `software-engineering/architecture/` repo content |
 | Design patterns | [learning-syllabuses/design-patterns.md](learning-syllabuses/design-patterns.md) | *Head First Design Patterns* (2nd ed) — chapter by chapter; `software-engineering/design-patterns/` as secondary reference |
-| DevOps (Azure shop) | [learning-syllabuses/devops.md](learning-syllabuses/devops.md) | Microsoft Learn, Azure docs, GitHub Actions docs, Docker docs (no repo content) |
+| DevOps (Azure-focused) | [learning-syllabuses/devops.md](learning-syllabuses/devops.md) | Microsoft Learn, Azure docs, GitHub Actions docs, Docker docs (no repo content) |
 
 ## The daily rhythm
 

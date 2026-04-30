@@ -18,7 +18,7 @@ There's no fixed deadline. A reasonable scope is 10-30 hours of focused work. Ta
 
 - [ ] Design doc fills every section without handwaving.
 - [ ] Implementation matches the design.
-- [ ] At least 4 of the dojo's patterns are visible (e.g., plan-then-act, structured output, observability, an eval suite).
+- [ ] At least 4 of the curriculum's patterns are visible (e.g., plan-then-act, structured output, observability, an eval suite).
 - [ ] You've run the agent on a real input and looked at the trace.
 - [ ] Eval suite passes at your declared baseline.
 - [ ] Retrospective identifies at least 2 things you'd change next time.
@@ -48,7 +48,7 @@ Give a 30-minute talk to colleagues about your agent. Their questions are your d
 ## Reflection
 
 - "Most agents fail because the architecture wasn't designed; it accreted." Defend or refute, based on your experience here.
-- Looking back at the dojo: which topic helped you the most on this capstone? Which was over-emphasized for your project?
+- Looking back at the curriculum: which topic helped you the most on this capstone? Which was over-emphasized for your project?
 - "An agent isn't done when it works on the demo. It's done when it survives a week of real use." Defend or refute.
 
 ## Done when

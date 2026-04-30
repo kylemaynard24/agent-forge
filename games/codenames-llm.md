@@ -64,7 +64,7 @@ This is the **cheapest** of the three to run — Functions on consumption tier c
 - **Agentic workflows:** the spymaster is a constrained-reasoning agent — single-step (no loop, just one call per turn) but with a hard structured-output requirement and a non-trivial avoidance constraint. Perfect for the `tool-design-principles` and `structured-output` topics in your syllabus. The eval harness is the `evals-for-agents` topic in practice.
 - **Software architecture:** clean separation between game logic (state machine, win conditions, turn order), LLM client (prompt building, API call, parsing), and rendering (card meshes, animations). Each is testable in isolation; each can be replaced.
 - **Design patterns:** Strategy for spymaster type (HumanSpymaster, LLMSpymaster, CleverLLMSpymaster, ChaoticLLMSpymaster); Observer for clue events; Decorator for the prompt-cached LLM client wrapping the base client.
-- **DevOps:** smallest of the three infrastructurally — but exercises the Azure-Function + Key Vault + managed-identity + Bicep modules pattern that's directly your devops-syllabus Level 2-3. The Claude API call from a Function with KV-stored secret is a common real-world pattern.
+- **DevOps:** smallest of the three infrastructurally — but exercises the Azure-Function + Key Vault + managed-identity + Bicep modules pattern from devops-syllabus Level 2-3. The Claude API call from a Function with KV-stored secret is a common real-world pattern.
 
 ## Stretch ideas (only after Phase 4 ships)
 

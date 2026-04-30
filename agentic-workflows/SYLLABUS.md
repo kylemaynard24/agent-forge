@@ -1,4 +1,4 @@
-# The Agentic Workflows Dojo — A 6-Month Syllabus
+# Agentic Workflows — A 6-Month Syllabus
 
 A self-directed path from "I've heard of agents" to "I can design, build, and ship an agentic system that doesn't embarrass me." Six stages, six months, ~32 topics. Every topic has three artifacts:
 
@@ -111,18 +111,18 @@ Making agents that don't embarrass you in production.
 | 3 | autonomy-gradient |
 | 4 | **Capstone** — design an agent (and build it) |
 
-**End of month / end of dojo:** You've designed and built an agent end-to-end. You can defend every design choice. You're an agentic engineer.
+**End of month / end of course:** You've designed and built an agent end-to-end. You can defend every design choice. You're an agentic engineer.
 
 ---
 
-## How this dojo relates to the others in this repo
+## How this course relates to the others in this repo
 
-This `agentic-workflows/` dojo sits alongside two others:
+This `agentic-workflows/` track sits alongside two others:
 
 - `software-engineering/design-patterns/` — GoF design patterns (single-process patterns).
 - `software-engineering/architecture/` — software architecture from fundamentals to distributed systems.
 
-The three together cover: how to write good code (patterns), how to organize a system (architecture), and how to build an agentic system (this dojo). They reinforce each other; you'll find SRP and dependency inversion appearing in agent design, and observability appearing in both.
+The three together cover: how to write good code (patterns), how to organize a system (architecture), and how to build an agentic system (this track). They reinforce each other; you'll find SRP and dependency inversion appearing in agent design, and observability appearing in both.
 
 If you're new to all three: start with **`software-engineering/SYLLABUS.md`** for foundations, then come back here for agentic depth.
 
@@ -205,4 +205,4 @@ agentic-workflows/
 
 Six months. Thirty-two topics. ~100 files. You design and build an agent at the end.
 
-The dojo is the curriculum. The work is yours. Begin.
+The curriculum is the structure. The work is yours. Begin.

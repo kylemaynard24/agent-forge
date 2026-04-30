@@ -1,6 +1,6 @@
 # Homework — Trade-off Analysis (Capstone)
 
-> Synthesize everything from the dojo. The **constraints** are the point.
+> Synthesize everything from the curriculum. The **constraints** are the point.
 
 ## Exercise: Design and defend an architecture
 
