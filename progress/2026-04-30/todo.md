@@ -46,6 +46,9 @@ Sprint starting — no prior day.
 > - **Building Effective Agents** — Anthropic engineering team (2024). The modern definition of what an agent actually is, including the patterns Anthropic uses internally. ~30 min read. [anthropic.com/engineering/building-effective-agents](https://www.anthropic.com/engineering/building-effective-agents)
 > - **ReAct: Synergizing Reasoning and Acting in Language Models** — Yao et al. (2022). The foundational paper on the agent loop pattern (thought + action + observation). The vocabulary you'll see everywhere downstream. [arxiv.org/abs/2210.03629](https://arxiv.org/abs/2210.03629)
 
+> _C# extra credit (optional — go deeper on the language idioms):_
+> - **C# topic 04: interfaces-and-abstract-classes** — today's `TinyAgent.cs` apply task hinges on the `ILlm` interface + `StubLlm` implementation pattern; the topic 04 README explains the deeper "depend on the smallest abstraction" reasoning behind why the agent takes `ILlm` rather than `StubLlm` directly. README + demo + questions at `software-engineering/csharp-and-dotnet/04-interfaces-and-abstract-classes/`.
+
 **Today:**
 - [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
 - [ ] **Apply (C#):** Build `TinyAgent.cs` containing the four-piece anatomy in C#: an `ILlm` interface with a `StubLlm` implementation that returns canned next-actions, one tool (a static `CountLines(path)` method), a loop (max 3 iterations), and a goal. Print each iteration. ~50 lines. Save to `progress/2026-04-30/working-folder/agentic-workflows/TinyAgent.cs`. New to C#? See `software-engineering/csharp-and-dotnet/01-classes-basics/` and `04-interfaces-and-abstract-classes/`. Run with `dotnet new console -n agentic-day-1 && cd agentic-day-1 && (replace Program.cs with the file) && dotnet run`.
@@ -95,6 +98,9 @@ Sprint starting — no prior day.
 > _Extra credit (optional — papers, talks, posts for going deeper):_
 > - **On the Criteria To Be Used in Decomposing Systems into Modules** — David Parnas (1972). The original "information hiding" paper and probably the most-cited paper in software design history. 6 pages; foundational reading for any architecture work.
 > - **Out of the Tar Pit** — Ben Moseley & Peter Marks (2006). On the distinction between *essential* and *accidental* complexity — the framing that makes "separation of concerns" earn its space. ~30 pages, free PDF widely available; changes how you see codebases.
+
+> _C# extra credit (optional — go deeper on the language idioms):_
+> - **C# topic 04: interfaces-and-abstract-classes** — the `OrderHandlerBad` → `OrderHandlerGood` refactor in today's apply IS the architectural-separation-via-interfaces story told in C#. Topic 04 question Q1 (depending on the smallest abstraction) and Q4 (Interface Segregation Principle) are directly relevant. README + demo + questions at `software-engineering/csharp-and-dotnet/04-interfaces-and-abstract-classes/`.
 
 **Today:**
 - [ ] **Step:** Read `separation-of-concerns/README.md` (73 lines, ~15 min). Capture 3–5 takeaways in Notes — at least one **trade-off**.
@@ -148,6 +154,10 @@ Sprint starting — no prior day.
 > _Extra credit (optional — papers, talks, posts for going deeper):_
 > - **A Behavioral Notion of Subtyping** — Barbara Liskov & Jeannette Wing (1994). The actual academic source for the Liskov Substitution Principle. The "L" in SOLID. Strategy is partly about avoiding the inheritance traps Liskov's principle warns about — reading the source paper is illuminating.
 > - **Sandi Metz — *Nothing is Something*** (RailsConf 2015, available on YouTube). On the Null Object pattern, polymorphism, and removing conditionals. The clearest practical demonstration of how "encapsulate what varies" plays out in real code. ~35 min watch.
+
+> _C# extra credit (optional — go deeper on the language idioms):_
+> - **C# topic 03: inheritance-and-polymorphism** — the SimUDuck apply uses an abstract `Duck` base class with virtual/override mechanics; topic 03 explains when this is the right call (closed taxonomy, semantic specialization) vs when composition wins (the Part 2 logger refactor in topic 03's homework). README + demo + questions at `software-engineering/csharp-and-dotnet/03-inheritance-and-polymorphism/`.
+> - **C# topic 04: interfaces-and-abstract-classes** — `IFlyBehavior` + composition is exactly the modern Strategy form in C#; the demo.cs in topic 04 has the full SimUDuck implementation worked through.
 
 **Today:**
 - [ ] **Step:** Start Head First Ch 1 — aim for ~30–60 minutes today. Read at least through the SimUDuck "inheritance breaks" reveal and the introduction of "encapsulating what varies."

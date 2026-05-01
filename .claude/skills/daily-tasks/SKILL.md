@@ -165,6 +165,23 @@ Generate by **reading the topic's actual README** (for repo topics) or by drawin
 
 - **Extra credit** (REQUIRED for ALL subjects): 1–2 optional pointers to research papers, conference talks, or canonical blog posts that go deeper on the day's topic. Curate from `BOOKSHELF.md` — that file is the source of truth for what's worth recommending. Pick references that specifically illuminate the day's topic, not generic recommendations. Name each reference in the format: `**<title>** — <author(s)> (<year>). <one-sentence why-this-one>.` Include a stable URL only if confident (arxiv.org/abs/NNNN.NNNNN for arXiv papers, or canonical project sites). The user can ignore extra credit on busy days — the daily plan stays achievable without it. Clearly title the block "_Extra credit (optional — papers, talks, posts for going deeper):_".
 
+- **C# extra credit** (REQUIRED for the three subjects whose apply tasks use C# — agentic-workflows, architecture, design-patterns. SKIP for devops since its apply tasks are Bicep/Azure CLI, not C#): a pointer to the **csharp-and-dotnet topic that aligns with today's apply task**. The point: when the apply task uses an interface, the user can dig deeper into `04-interfaces-and-abstract-classes` (its README + demo + homework + questions) for C# depth on that exact concept. This integrates the C# track into the daily flow without making it a fifth subject.
+
+  Mapping logic — pick the csharp-and-dotnet topic whose concepts dominate the day's apply task. Common alignments:
+  - Apply task uses interface composition / DI → `04-interfaces-and-abstract-classes`
+  - Apply task uses class hierarchies / abstract base / virtual+override → `03-inheritance-and-polymorphism`
+  - Apply task uses records / properties / immutability → `01-classes-basics` and/or `02-properties-and-encapsulation`
+  - Apply task uses generics → `05-generics`
+  - Apply task uses LINQ over collections → `06-collections-and-linq`
+  - Apply task uses async / await / Task → `08-async-and-await`
+  - Apply task uses delegates / events / lambdas → `07-delegates-events-functional`
+  - Apply task involves resource cleanup / using → `09-exceptions-and-using`
+  - Apply task involves a test → `12-testing-with-xunit`
+
+  Format: `**C# topic <NN>: <topic-name>** — <one-sentence why-it-aligns>. The README + demo + questions in that folder go deeper on the C# language mechanics underneath today's apply work. Optional homework brief: <homework-md-path>.`
+
+  Pick 1 csharp-and-dotnet topic per subject section. Two only when the apply task genuinely spans two concepts (e.g., classes AND properties together). Clearly title the block "_C# extra credit (optional — go deeper on the language idioms):_".
+
 If the user is on `demo` or `implement` step (not `read`), shift the Reading material to be about the demo file or homework respectively — keep it grounded.
 
 #### B. Step task
@@ -295,6 +312,9 @@ Now Write the todo file (which must not exist; Step 1 guaranteed that). Template
 > _Extra credit (optional — papers, talks, posts for going deeper):_
 > - **<paper/talk title>** — <author(s)> (<year>). <one-sentence why-this-one>. <stable URL if confident; else omit>
 > - **<second reference, optional>** — <author(s)> (<year>). <why this one>.
+
+> _C# extra credit (optional — go deeper on the language idioms):_
+> - **C# topic <NN>: <name>** — <one-sentence why-it-aligns with today's apply task>. README + demo + questions at `software-engineering/csharp-and-dotnet/<NN>-<topic>/`. (Skip this block for devops; devops apply tasks are Bicep/Azure CLI, not C#.)
 
 **Today:**
 - [ ] **Step:** <step task>
