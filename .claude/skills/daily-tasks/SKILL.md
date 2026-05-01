@@ -1,463 +1,128 @@
 ---
 name: daily-tasks
-description: Use when the user wants their daily learning tasks. By default produces a plan covering four tracked subjects (agentic workflows, software architecture, design patterns, devops). Accepts area-name argument(s) to focus on a different repo learning area instead. Each subject's section includes inline reading material (primer + key concepts + watch-for + excerpt), a step task, an apply task, and 2 comprehension questions.
+description: Use to get today's small slice (2-3 items, ~1-2 hours) from the currently active learning sprint. Designed for sustainable daily progress alongside a full-time job — pulls a chewable amount of work from the sprint plan rather than asking you to do everything in one day. Re-run on the same day after finishing to pull the next slice.
 ---
 
-This skill produces one file per working day under `progress/<today>/`. Each subject's section includes:
-- **Reading material** — a primer, key concepts, what to watch for, and a verbatim excerpt — so the user is oriented before opening the linked README or book.
-- **Step task** — today's read/demo/implement work.
-- **Apply task** — a small concrete piece to physically type and build.
-- **Prove-it questions** — 2–3 grounded comprehension questions answered inline in Notes.
+This skill is the **execution** half of the sprint loop. `/next-sprint` is the **planning** half — it generates the comprehensive sprint plan that this skill consumes from. If no active sprint exists, this skill stops and prompts the user to run `/next-sprint` first.
 
-The day always ends with the user having read something, typed something, and proven they understood it.
+## The daily slice model
 
-## Area registry — the only valid areas
+Real engineers have ~1-3 hours per working day for self-directed learning. The previous version of this skill generated 6-10+ hours of content per day, which only worked as a sabbatical. The new model:
 
-The skill **enforces** that any area name resolves either to a repo learning directory that exists on disk OR to a registered external-only subject (devops). The registry below is the authoritative list. To add a new area, the repo path must exist (or the area must be marked external-only with `progress/<area>/` set up).
-
-| Area name | Repo path | External-only? | Tracked? (has progress/ state) | Notes |
-|---|---|---|---|---|
-| `agentic-workflows` | `agentic-workflows/` | no | yes (default) | 6-stage agent track; multi-day topics |
-| `architecture` | `software-engineering/architecture/` | no | yes (default) | 8 sections, fundamentals → distributed systems |
-| `design-patterns` | `software-engineering/design-patterns/` | no | yes (default) | Head First chapter order; multi-day chapters |
-| `devops` | (none — Azure-shop tooling: Bicep, GitHub Actions, Azure resources/portal, Docker) | yes | yes (default) | All topics link to official docs; deliverables drive implement |
-| `advanced-engineering` | `software-engineering/advanced-engineering/` | no | no | 6 sections: debugging, testing, perf, security, refactoring, incident response |
-| `super-beginner-javascript` | `software-engineering/super-beginner-javascript/` | no | no | 12 sections, JS from values up through a mini-capstone |
-| `csharp-and-dotnet` | `software-engineering/csharp-and-dotnet/` | no | no | 14 sections, C# / modern .NET; covers classes-onward in depth. The default language for sprint apply tasks. |
-
-When verifying a non-external area, confirm the **Repo path** exists on disk. For external-only areas (devops), skip the repo-path check; verify the `learning-syllabuses/<area>.md` exists instead. Do not invent areas; only accept registered names.
-
-**Important: `progress/` is gitignored personal state.** Each user has their own `progress/` directory (it never gets pushed). The skill MUST gracefully bootstrap missing files — see "Bootstrapping personal progress" below.
-
-The default plan is **capped at 4 subjects** (the four marked "default" above). Do not expand the default. The user explicitly chose 4 to keep daily load consistent — small consistent incremental improvements, not maximal coverage.
-
-## Subjects, syllabuses, and state — for the four defaults
-
-| Key | Master syllabus | State file |
-|---|---|---|
-| agentic-workflows | `learning-syllabuses/agentic-workflows.md` | `progress/agentic-workflows/state.md` |
-| architecture | `learning-syllabuses/architecture.md` | `progress/architecture/state.md` |
-| design-patterns | `learning-syllabuses/design-patterns.md` | `progress/design-patterns/state.md` |
-| devops | `learning-syllabuses/devops.md` | `progress/devops/state.md` |
-
-Each syllabus has 4 levels (Beginner → Expert). Topics span multiple days — the skill keeps producing same-step tasks until the user advances state.
+- A **sprint** (made by `/next-sprint`) covers one step (`read`, `demo`, or `implement`) for each of the four subjects, broken into ~10-14 discrete items totaling 10-15 hours. A sprint takes ~1-2 weeks of part-time work.
+- A **daily slice** (made by this skill) is 2-3 items, ~1-2 hours of work. You get one fresh slice per `/daily-tasks` call.
+- Re-run on the same day if you finish — the skill asks "did you finish?" and either pulls the next 2-3 items (yes) or shows you what you already have (no).
 
 ## Run order
 
 Today's date is `currentDate` from system context. Use ISO `YYYY-MM-DD`.
 
-**Note on the yesterday-completion check (Step 1.5):** before generating a NEW day's plan, the skill asks the user whether yesterday was completed. If not, today's plan is a copy of yesterday's (no advancement, no new content). Real engineers have busy days; piling new work on top of unfinished work is how learning sprints die. See Step 1.5 for the full flow.
+### Step 1 — Find the active sprint
 
-### Step 0 — Resolve which areas to plan for
+List `progress/sprints/` (skipping `README.md`). Find the most recent sprint folder by date that has an `items.md` with at least one unchecked `[ ]` item.
 
-Look at the user's invocation arguments (if any).
+If no sprint folders exist OR all sprints are fully complete: STOP. Tell the user "No active sprint. Run `/next-sprint` to generate one." Do not generate today's todo.
 
-- **No arguments → default mode.** Subjects = `[agentic-workflows, architecture, design-patterns, devops]`. Output file: `progress/<today>/todo.md`.
-- **One or more area names → focused mode.** Subjects = the named areas (in the order given).
-  - Validate each name against the area registry above. If a name is not in the registry, STOP and tell the user the valid names. Do not partially proceed.
-  - Validate each name's `Repo path` exists on disk. If not, STOP and surface this — the registry is stale and needs updating.
-  - Output file: `progress/<today>/<area>.md` for a single area, or `progress/<today>/<area1>-<area2>...md` for multiple. (Never overwrite the default `todo.md`.)
+If found: read `progress/sprints/<sprint-date>/items.md`. Identify all unchecked items (lines starting with `- [ ]`).
 
-For each subject in the resolved list, decide its planning mode:
+### Step 2 — Resolve focus area (optional)
 
-- **Tracked subject** (has `progress/<subject>/SYLLABUS.md` AND `state.md`): use the full sprint flow (Steps 1–8 below).
-- **Untracked area** (in registry but no progress/ state): use **discovery mode**:
-  - Pick the lowest-numbered top-level subdir of the area's repo path (e.g., `01-debugging-and-diagnostics/`).
-  - Inside it, pick the first lexicographically-ordered topic subdir.
-  - Treat it as Level 1, index 1, step `read`.
-  - Generate the same Reading material + Step + Apply + Prove-it sections.
-  - At the end of the subject section, include a callout: "**To track this area as a sprint subject, ask me to create `progress/<area>/SYLLABUS.md` and `state.md`.**"
+If the user passed an area name as an argument (`/daily-tasks architecture`), filter the unchecked items to that subject only. Otherwise use all unchecked items.
 
-### Step 1 — Idempotency check
+If filtering produces zero items: tell the user "No unchecked items remain for `<area>` in the active sprint."
 
-If the resolved output file already exists, do NOT regenerate. Read it and show it to the user with a note that the plan is already set. Stop.
+### Step 3 — Today's-todo handling
 
-### Step 1.5 — Yesterday-completion check (gateway to new generation)
+If `progress/<today>/todo.md` does NOT exist:
+- Pick the next 2-3 unchecked items from the filtered list (in their order in items.md). Aim for a total estimated time of ~60-120 minutes — three short items, or one big + one small.
+- Continue to Step 4 to generate the file.
 
-Before generating a NEW day's plan, check whether yesterday's plan was completed. Real engineers have busy days; piling new work on top of unfinished work is how learning sprints die.
+If `progress/<today>/todo.md` DOES exist:
+- Read it.
+- Use `AskUserQuestion`:
+  - **Question:** "Today's todo at `progress/<today>/todo.md` already has items. Did you finish them?"
+  - **Options (multiSelect: false):**
+    - `yes_more` — Yes; pull the next 2-3 items and append to today's todo.
+    - `yes_done` — Yes, but I'm done for the day. Just show me what I completed.
+    - `no_show` — Not yet. Show me the current todo.
+- Branch:
+  - `yes_more` → mark the previously-listed items as `[x]` in items.md, pick the next 2-3 unchecked items, APPEND a new "## Round N (added <time>)" section to today's todo.
+  - `yes_done` → mark items as `[x]` in items.md, show today's todo, stop.
+  - `no_show` → show today's existing todo, stop.
 
-Procedure:
+### Step 4 — Generate / append the slice
 
-1. Find the most recent dated folder in `progress/` strictly before today (same logic as Step 4). If none exists, skip this step entirely — there's no prior plan to check.
-2. Read the prior day's `todo.md`. Quickly scan: count total checkboxes (lines starting with `- [ ]` or `- [x]`) and how many are checked. This gives a quick signal but is NOT the source of truth — the user might have done work without checking boxes.
-3. **Ask the user via `AskUserQuestion`** with this prompt:
-   - **Question:** "Did you complete <previous date>'s plan? Skill counted N of M tasks checked off, but you decide."
-   - **Options (multiSelect: false):**
-     - `yes` — Yes, ready for today's new plan
-     - `no` — No, repeat yesterday's plan today
-     - `partial` — Partially done; repeat yesterday's plan today (keep working on the unchecked items)
-
-4. Branch on the response:
-   - **`yes`** → Continue to normal generation (Steps 2–8 below). Today gets a fresh plan from the next state position.
-   - **`no` or `partial`** → Carry-forward mode (see below). Do NOT advance state. Do NOT generate new content.
-
-#### Carry-forward mode
-
-When the user answers `no` or `partial`:
-
-1. Copy `progress/<prev-date>/todo.md` to `progress/<today>/todo.md`. Use Read + Write (not file copy via Bash) so the skill controls the content.
-2. Replace the top-of-file date heading: `# <prev-date> — Daily todo` becomes `# <today> — Daily todo (continuing <prev-date>)`.
-3. Insert a new "Continuation note" block right after the heading, before the Yesterday section:
-   ```markdown
-   > **Continuation day.** Yesterday's plan wasn't finished — picking it up today with no new tasks added. Unchecked items below are what's left. State files were NOT advanced; the next fresh plan happens whenever you answer "yes" to "did you finish yesterday's plan?"
-   ```
-4. Keep all the original content otherwise — same questions, same model answers, same Reading material, same checked/unchecked status. The user resumes exactly where they left off.
-5. Scaffold today's `working-folder/` directories (Step 7) so the user has fresh scratch space if they want it. They can also keep working in yesterday's working-folder.
-6. Report to the user:
-   - "Today repeats <prev-date>'s plan. State unchanged."
-   - Show count: "X of Y tasks were checked off; Z left."
-   - One-line reminder: "When you finish, run `/daily-tasks` again — it'll ask if you completed it before generating a fresh plan."
-7. STOP. Do not run Steps 2–8.
-
-#### When to skip the check
-
-- First-time use (no prior dated folder) — no plan to check, generate fresh.
-- User invokes in focused mode (`/daily-tasks <area>`) for a different area than yesterday's plan covered — check is irrelevant; generate fresh.
-- The most recent prior folder was itself a continuation day with the same content — the check still fires, just the answer is more often "no" several days in a row, which is fine.
-
-#### Why ask instead of just inspecting checkboxes
-
-Some engineers don't mark checkboxes as they work (they just do the work). Others mark them aspirationally at the start. The user is the source of truth on whether the day was "complete enough" to advance. The checkbox count is a useful prompt context, not a verdict.
-
-### Step 2 — Load syllabus + state for each tracked subject
-
-In parallel, Read all syllabuses and state files for subjects in the resolved list.
-
-**If a `progress/<subject>/state.md` is MISSING** (first-time user, fresh clone, friend bootstrapping): create it from the syllabus's Level 1 row 1. See "Bootstrapping personal progress" at the bottom. This is normal and expected.
-
-For each subject:
-- From state: `Level`, `Topic index in level`, `Next step`.
-- From syllabus level table row #`Topic index in level`: topic name, repo path(s), running example (design-patterns only).
-
-If state's path disagrees with the syllabus, trust the syllabus and note the correction in the todo. If the index exceeds the level's topic count, flag it loudly and ask the user to advance the level.
-
-### Step 3 — Verify topic files (skip for external topics)
-
-For repo paths starting with `agentic-workflows/` or `software-engineering/`:
-- step `read` → README.md exists
-- step `demo` → at least one `demo.*` file exists
-- step `implement` → `homework.md` exists
-
-For multi-pattern chapters (e.g., Head First Ch 4, 7, 9): verify each linked dir. Fall back to next available step if a needed file is missing. If the topic dir doesn't exist, surface as a blocker.
-
-For external topics (entire devops subject + design-patterns Head First chapters + any external-marked rows in other syllabuses): skip file verification; the implement step uses the syllabus deliverable text directly. There is no README to excerpt.
-
-### Step 4 — Find yesterday's folder
-
-List `progress/` for entries matching `YYYY-MM-DD`. Pick the most recent strictly before today. If found, Read its `todo.md` (or the matching ad-hoc file if you're in focused mode for the same area set) and capture: which boxes were checked, any inline notes, what was left unchecked, which questions got answered. Yesterday's section paraphrases this in one short paragraph.
-
-If none, "Sprint starting — no prior day." If yesterday's only entries are for a different area set, mention that briefly.
-
-### Step 5 — Generate today's per-subject content
-
-For each subject, produce:
-
-#### A. Reading material (the inline content the user reads in the todo itself)
-
-Generate by **reading the topic's actual README** (for repo topics) or by drawing on common knowledge of the chapter (for design-patterns Head First chapters). Produce:
-
-- **Primer** — 4–6 sentences orienting the reader to today's topic. Specific, not generic. State what the topic is, the problem it addresses, and how it fits with neighboring topics. For multi-day reads on day 2+, frame the primer around what's still ahead.
-- **Key concepts** — 3–5 bulleted vocab items with a one-line definition each. These are the words the user should be able to say back by end of day.
-- **Watch for** — 1–2 specific things to pay attention to that the casual reader misses (a trade-off, a deliberate "wrong" first design, a sibling-pattern contrast, an author qualification of a strong claim).
-- **Excerpt** — for repo topics: a verbatim 2–4 line quote from the linked README, picked for the load-bearing idea. For Head First chapters: a verbatim quote from the **repo's secondary-reference README** for the same pattern (do NOT fabricate quotes from the book — you don't have it). For **external-only topics (devops + any external row)**: omit the excerpt block entirely OR replace it with a "Doc reference" line naming the canonical doc section to read first (e.g., "Microsoft Learn — *Bicep fundamentals*, Module 1: 'What is Bicep?'") — never invent a verbatim quote from a doc you haven't actually read in this session.
-
-- **Deep dive** (REQUIRED for ALL subjects): a 200–300 word substantive prose section that goes deeper than the primer and is meant to be read directly from the todo as actual learning material. Cover: the conceptual model behind the topic (not just "what it is"), the most common mistake practitioners make, a concrete worked-through example (in prose, not code), and how this topic connects to the next topic in the syllabus. Ground in specifics — for repo topics, draw on the README's framing; for external topics (devops, Head First chapters), draw on common knowledge of the tool/pattern. Clearly title the block "_Deep dive:_". On a `read` day, this block is the user's main contribution to reading depth beyond the linked README/chapter; on `demo` and `implement` days, keep it but shift to focus on what they should look for as they execute.
-
-- **Extra credit** (REQUIRED for ALL subjects): 1–2 optional pointers to research papers, conference talks, or canonical blog posts that go deeper on the day's topic. Curate from `BOOKSHELF.md` — that file is the source of truth for what's worth recommending. Pick references that specifically illuminate the day's topic, not generic recommendations. Name each reference in the format: `**<title>** — <author(s)> (<year>). <one-sentence why-this-one>.` Include a stable URL only if confident (arxiv.org/abs/NNNN.NNNNN for arXiv papers, or canonical project sites). The user can ignore extra credit on busy days — the daily plan stays achievable without it. Clearly title the block "_Extra credit (optional — papers, talks, posts for going deeper):_".
-
-- **C# extra credit** (REQUIRED for the three subjects whose apply tasks use C# — agentic-workflows, architecture, design-patterns. SKIP for devops since its apply tasks are Bicep/Azure CLI, not C#): a pointer to the **csharp-and-dotnet topic that aligns with today's apply task**. The point: when the apply task uses an interface, the user can dig deeper into `04-interfaces-and-abstract-classes` (its README + demo + homework + questions) for C# depth on that exact concept. This integrates the C# track into the daily flow without making it a fifth subject.
-
-  Mapping logic — pick the csharp-and-dotnet topic whose concepts dominate the day's apply task. Common alignments:
-  - Apply task uses interface composition / DI → `04-interfaces-and-abstract-classes`
-  - Apply task uses class hierarchies / abstract base / virtual+override → `03-inheritance-and-polymorphism`
-  - Apply task uses records / properties / immutability → `01-classes-basics` and/or `02-properties-and-encapsulation`
-  - Apply task uses generics → `05-generics`
-  - Apply task uses LINQ over collections → `06-collections-and-linq`
-  - Apply task uses async / await / Task → `08-async-and-await`
-  - Apply task uses delegates / events / lambdas → `07-delegates-events-functional`
-  - Apply task involves resource cleanup / using → `09-exceptions-and-using`
-  - Apply task involves a test → `12-testing-with-xunit`
-
-  Format: `**C# topic <NN>: <topic-name>** — <one-sentence why-it-aligns>. The README + demo + questions in that folder go deeper on the C# language mechanics underneath today's apply work. Optional homework brief: <homework-md-path>.`
-
-  Pick 1 csharp-and-dotnet topic per subject section. Two only when the apply task genuinely spans two concepts (e.g., classes AND properties together). Clearly title the block "_C# extra credit (optional — go deeper on the language idioms):_".
-
-If the user is on `demo` or `implement` step (not `read`), shift the Reading material to be about the demo file or homework respectively — keep it grounded.
-
-#### B. Step task
-
-- **read**: "Continue reading `<topic>/README.md` (or Head First Ch N) for ~30–60 minutes. Capture 3–5 takeaways in Notes. If you finish the read, advance the step in state.md before tomorrow's run."
-- **demo**: "Type out `<demo file>` yourself (don't paste). Run it, predict output, modify one thing, note what broke or surprised you."
-- **implement**: "Do `<topic>/homework.md` (or chapter exercises). Hit each Done-when checkbox. Write a one-paragraph retro."
-
-#### C. Apply task
-
-A small, concrete coding exercise (~10–30 lines) that uses the day's concept. Must reference a concrete output: file path, line count, expected behavior.
-
-**Default implementation language:** C# / .NET 8+. The four sprint subjects' apply tasks should be written in C# unless the task explicitly involves another language (e.g., devops Bicep stays Bicep; a JavaScript-specific topic would stay JS). The user has the `software-engineering/csharp-and-dotnet/` track for language reference. Keep apply tasks tight — language choice should accelerate the conceptual learning, not become a yak-shave on its own.
-
-**For repo topics (agentic-workflows, architecture, devops):** the apply task can use a different setting from the linked README/demo. Goal is to build something *new* using the concept. Examples:
-- `read` day on `what-is-an-agent`: "Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM, one tool, a loop, a goal."
-- `read` day on `separation-of-concerns`: "Take any 30-line script you've written that mixes I/O and logic. Split it into a pure function + a thin I/O wrapper."
-- `read` day on `Bicep modules`: "Refactor a Storage Account Bicep into a parameterized module. Call it twice for dev + prod."
-
-**For design-patterns (Head First chapters): the apply task MUST mirror the chapter's actual running example.** The book teaches each pattern through one extended worked example — your apply task is to type out (don't paste) a piece of that same example, the way the chapter walks you through it. This keeps the apply work in lockstep with the reading and lets the user follow chapter-by-chapter rather than building unrelated parallel examples.
-
-Mapping of Head First chapter → running example to build:
-
-| Chapter | Pattern(s) | Running example to build |
-|---|---|---|
-| Ch 1 | Strategy | **SimUDuck** — Duck base + MallardDuck + RubberDuck + FlyBehavior interface (FlyWithWings, FlyNoWay) + QuackBehavior interface (Quack, Squeak); compose behaviors in subclass constructors; demo `performFly()` + `performQuack()` |
-| Ch 2 | Observer | **Weather Station** — WeatherData subject + 2-3 Display observers (CurrentConditions, Statistics); subject notifies on data change |
-| Ch 3 | Decorator | **Starbuzz Coffee** — Beverage base + concrete drinks (Espresso, HouseBlend) + CondimentDecorator wrappers (Mocha, Whip) that recursively compute `cost()` and `getDescription()` |
-| Ch 4 | Factory Method + Abstract Factory | **Pizza Store** — Pizza interface + NYStylePizzaStore / ChicagoStylePizzaStore subclasses overriding `createPizza()`; (Abstract Factory section: ingredient family for each region) |
-| Ch 5 | Singleton | **Chocolate Boiler** — single instance with `fill()`, `boil()`, `drain()`; classic version + thread-safe versions the book contrasts |
-| Ch 6 | Command | **Remote Control** — RemoteControl with 7 slots; LightOnCommand / LightOffCommand / GarageDoorOpenCommand; receivers held inside command objects |
-| Ch 7 | Adapter + Facade | **Turkey/Duck Adapter** + **Home Theater Facade** — TurkeyAdapter wraps a Turkey to look like a Duck; HomeTheaterFacade wraps Amplifier + Tuner + DvdPlayer + Projector + Lights into one `watchMovie()` call |
-| Ch 8 | Template Method | **CaffeineBeverage** — abstract base with `prepareRecipe()` template method; Coffee + Tea subclasses override `brew()` and `addCondiments()` hooks |
-| Ch 9 | Iterator + Composite | **Diner / Pancake House Menu** — Iterator: each menu exposes a uniform Iterator over its differently-typed internals; Composite: MenuComponent with leaves (MenuItem) and composites (Menu) |
-| Ch 10 | State | **Gumball Machine** — context with `NoQuarterState`, `HasQuarterState`, `SoldState`, `SoldOutState`; transitions defined inside each state |
-| Ch 11 | Proxy | **Gumball Machine Monitor** — remote proxy via Java RMI in the book; in JS/TS it's fine to do a network proxy or a virtual proxy that defers loading |
-| Ch 12 | Compound Patterns | **Duck simulator revisited** — combine Strategy + Observer + Adapter + Composite + Iterator + MVC into one richer simulator |
-| Appendix | (one per leftover pattern) | One short example per appendix pattern — Bridge / Builder / Chain of Resp / Flyweight / Interpreter / Mediator / Memento / Prototype / Visitor |
-
-For multi-day chapters, split the running example across days (e.g., Day 1 of Ch 1: type the Duck base + 2 subclasses; Day 2: type the FlyBehavior interface + 2 implementations + wire them in). The book itself sequences this — follow the book's order.
-
-**Save apply work to today's per-day working-folder:** `progress/<today>/working-folder/<subject>/<filename>`. The skill scaffolds this directory tree when generating today's todo (see Step 7). Examples:
-- agentic-workflows → `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`
-- architecture → `progress/2026-04-30/working-folder/architecture/before.js`, `.../after.js`
-- design-patterns → `progress/2026-04-30/working-folder/design-patterns/simuduck/Duck.js` (named for the chapter's example)
-- devops → `progress/2026-04-30/working-folder/devops/portal-tour.md`
-
-`working-folder/` directories are gitignored (`progress/*/working-folder/` in `.gitignore`). The rest of `progress/` — state files, the daily `todo.md`, the dated folder itself — IS tracked. So your daily plans and sprint position are in git history; only the scratch code stays local.
-
-#### D. Prove-it questions
-
-**Default 2 questions per subject** (was 3 — trimmed when the 4th subject was added to keep total ≤ ~8 questions per day). Bump back to 3 only when the user is in focused mode with ≤2 subjects in the plan, OR when the topic genuinely needs three angles to probe (rare).
-
-Questions are listed in each subject's section but **answered in the consolidated "Answers + explanations" section at the very bottom of the todo**, not in per-subject subsections. The bottom section repeats each question verbatim for context and provides blank `Answer:` and `Explanation:` lines per question. The user is expected to fill in BOTH — the answer is brief, the explanation is the learning.
-
-Avoid generic prompts. Question shapes that work:
-- "In your own words, what problem does X solve that Y doesn't?"
-- "Name a place in code you've written where X is hiding under a different name (e.g., 'policy', 'handler', 'provider')."
-- "If you had to explain X to a junior dev in 60 seconds, what would you say?"
-- "What's the trade-off the author identified between X and Y? Do you agree?"
-- "X and Z look similar in UML — what's the intent difference?"
-
-For `demo` days: questions probe what changing the demo taught you. For `implement` days: questions probe what trade-offs you made in the homework.
-
-### Step 6 — Decide task count
-
-Default: **2 checkbox tasks per subject** (one step + one apply). With the four default subjects, that's **8 tasks total** — at the cap. Comprehension questions are NOT checkboxes — they're inline prompts answered in Notes.
-
-Do NOT bump to 3 tasks per subject in the default 4-subject plan — the user explicitly chose 4 subjects to keep daily load consistent and small. Only bump in focused mode (≤2 subjects) when an `implement` step has many "Done when" boxes that genuinely split. Never exceed 3 tasks per subject. Cap total at 8.
-
-### Step 7 — Scaffold today's working-folder + write the output file
-
-Before writing the todo, create today's per-day working-folder structure with `mkdir -p`:
-- `progress/<today>/working-folder/<subject>/` for each subject in the resolved list
-
-Example (default 4-subject mode for 2026-04-30):
-```
-mkdir -p progress/2026-04-30/working-folder/agentic-workflows progress/2026-04-30/working-folder/architecture progress/2026-04-30/working-folder/design-patterns progress/2026-04-30/working-folder/devops
-```
-
-These directories are where Apply tasks save their artifacts. They start empty; the user fills them in as they work. The whole `progress/` tree is gitignored, so artifacts stay local — friends sharing the repo never see each other's scratch work.
-
-Now Write the todo file (which must not exist; Step 1 guaranteed that). Template:
+Each chosen item gets a section in today's todo. Format per item:
 
 ```markdown
-# YYYY-MM-DD — Daily todo[ — focused: <area1>, <area2>]
+### <item-id>: <item summary>
 
-## Yesterday (YYYY-MM-DD)
+**Time:** ~<minutes> min · **Subject:** <subject> · **Sprint section:** "<section title>" in [sprint.md](../sprints/<sprint-date>/sprint.md)
 
-<one short paragraph about prior day, OR "Sprint starting — no prior day.">
+<inline brief — 5-10 lines summarizing what to do, pulled from the sprint section. Goal: the user can act on this without flipping to the sprint file. If the item is "answer questions," include the question text inline. If the item is "read README," include the primer + the link to the README.>
 
----
+**Done when:** <2-3 specific completion criteria>
 
-## <Subject> — Level <N> (<level name>)[ — Head First Ch <N>]
-
-**Topic:** `<topic>` (#<index> in level) — step: `<read|demo|implement>`
-[**Pattern(s):** <pattern names> — design-patterns only]
-[**Running example:** <example> — design-patterns only]
-
-**Files:**
-- Master syllabus: [learning-syllabuses/<subject>.md](../../learning-syllabuses/<subject>.md)
-- README: [<path>/README.md](../../<path>/README.md)
-- Demo: [<path>/<demo file>](../../<path>/<demo file>)
-- Homework: [<path>/homework.md](../../<path>/homework.md)
-- Today's working-folder: `progress/<today>/working-folder/<subject>/` (scaffolded; save apply work here — gitignored)
-- (additional links per subject — see existing examples)
-
-**Reading material — orient yourself before opening the linked README:**
-
-> _Primer:_ <4-6 sentences>
-
-> _Key concepts you'll meet:_
-> - **<term 1>** — <one-line definition>
-> - **<term 2>** — <one-line definition>
-> - **<term 3>** — <one-line definition>
-
-> _Watch for as you read:_ <1-2 specific things>
-
-> _Excerpt (verbatim from the README/repo reference):_
-> > <2-4 line literal quote>
-
-> _Doc reference (external-only topics):_ <named canonical doc section>
-
-> _Deep dive (REQUIRED for all subjects):_
->
-> <200-300 word substantive prose: conceptual model, common mistake, worked-through prose example, connection to next topic. Be specific about mechanics. This block earns its space by giving the user real reading content beyond the linked README — not a summary of it.>
-
-> _Extra credit (optional — papers, talks, posts for going deeper):_
-> - **<paper/talk title>** — <author(s)> (<year>). <one-sentence why-this-one>. <stable URL if confident; else omit>
-> - **<second reference, optional>** — <author(s)> (<year>). <why this one>.
-
-> _C# extra credit (optional — go deeper on the language idioms):_
-> - **C# topic <NN>: <name>** — <one-sentence why-it-aligns with today's apply task>. README + demo + questions at `software-engineering/csharp-and-dotnet/<NN>-<topic>/`. (Skip this block for devops; devops apply tasks are Bicep/Azure CLI, not C#.)
-
-**Today:**
-- [ ] **Step:** <step task>
-- [ ] **Apply:** <apply task — file path, line count, expected behavior>
-
-**Prove it — answer in the Answers + explanations section at the bottom:**
-1. <grounded question 1>
-2. <grounded question 2>
-3. <grounded question 3 — optional>
-
----
-
-(repeat per subject)
-
----
-
-## Your answers — attempt these BEFORE peeking at the model answers below
-
-_All Prove-it questions consolidated. Write your own answer + reasoning for each. Don't scroll past this section yet — the model answers are below, and the learning compounds when you commit to your own answer first._
-
-### Q1 — <Subject 1>
-
-**Q:** <question 1 from Subject 1, repeated verbatim for context>
-
-**Your answer:**
-
-**Your reasoning:**
-
-### Q2 — <Subject 1>
-
-**Q:** <question 2 from Subject 1>
-
-**Your answer:**
-
-**Your reasoning:**
-
-### Q3 — <Subject 2>
-
-**Q:** <question 1 from Subject 2>
-
-**Your answer:**
-
-**Your reasoning:**
-
-(continue numbering across all subjects — one flat list)
-
----
-
-## Model answers + how to approach — peek after attempting
-
-_Model answer + explanation + the meta-skill of how to approach this kind of question. The "How to approach" notes are the most transferable — they're the reasoning patterns you can apply to similar future questions._
-
-### Q1 — <Subject 1>
-
-**Q:** <question 1 repeated>
-
-**Model answer:** <concise, often a worked example>
-
-**Why this is the answer:** <2-4 sentences grounding the answer in the topic's mechanics>
-
-**How to approach this kind of question:** <2-4 sentences on the meta-skill: what to ask yourself, what trap to avoid, what general pattern this question is probing>
-
-### Q2 — <Subject 1>
-
-**Q:** <question 2 repeated>
-
-**Model answer:**
-
-**Why this is the answer:**
-
-**How to approach this kind of question:**
-
-(continue for all questions)
+- [ ] Mark this item complete here AND in `progress/sprints/<sprint-date>/items.md` when finished.
 ```
 
-**Generating model answers:** for personal-context questions ("pick a function you've written recently", "pick a tool you actually use"), give a plausible worked example (e.g., "Take `submitOrder(order)`: ...") that demonstrates the type of thinking expected — not a generic placeholder. The example should be specific enough that the user can compare their actual situation to it productively.
-
-**Generating "How to approach" notes:** these are the senior-engineer angle — they teach a transferable reasoning move, not just answer this question. Good shapes: "When evaluating any X against this taxonomy, ask Y", "Watch for the common trap of Z", "The pattern this question is probing is...". Avoid restating the explanation.
-
-For untracked areas in discovery mode, additionally include this callout above the Files block:
+The slice file structure:
 
 ```markdown
-> **Untracked area** — `<area>` doesn't have `progress/<area>/state.md` or `SYLLABUS.md` yet. The skill picked the first topic in `<area_path>/01-.../<first-topic>/` as a starting point. To track this area as a sprint subject, ask me to create the syllabus and state files.
+# YYYY-MM-DD — Today's slice
+
+> **Active sprint:** [progress/sprints/<sprint-date>/sprint.md](../sprints/<sprint-date>/sprint.md)
+> **Sprint progress:** N of M items complete · K remaining after today's slice
+> **Working folder:** `progress/<today>/working-folder/<subject>/` (scaffolded; gitignored)
+
+## Round 1 (~<total-min> min)
+
+### <item-id>: ...
+
+(per the format above)
+
+### <item-id>: ...
+
+### <item-id>: ...
+
+---
+
+When you finish all of today's items, check the boxes and re-run `/daily-tasks` for the next slice (if you have time today). Or pick this up tomorrow.
+
+## Notes
+
+_(Free space — jot insights, blockers, things to revisit. Persists across rounds today.)_
 ```
 
-Important details:
+### Step 5 — Mark items as in-progress in items.md
 
-- All file links are RELATIVE FROM `progress/YYYY-MM-DD/`. Master-syllabus links use `../../learning-syllabuses/<subject>.md`; repo-content links use `../../<path>`. Today's working-folder is at `working-folder/<subject>/` (relative) — display in the todo as `progress/<today>/working-folder/<subject>/` for clarity.
-- Only include link lines for files that actually exist.
-- For external topics: drop README/Demo/Homework lines and replace with a `Resource:` line quoting the syllabus deliverable. The Step task IS the deliverable. Apply task is still required.
-- Reading-material excerpts must be VERBATIM from the linked file. Do not paraphrase. Do not invent quotes from books you don't have access to.
-- Prove-it questions must be GROUNDED — specific to today's content, not boilerplate.
+For each item that went into today's slice, change its checkbox in `progress/sprints/<sprint-date>/items.md` from `- [ ]` to `- [~]` (in-progress). When the user marks it done in their todo (or answers `yes_more` / `yes_done` on the next /daily-tasks run), the skill updates `[~]` → `[x]`.
 
-### Step 8 — Report to the user
+This lets the skill distinguish: unstarted (`[ ]`), assigned-but-pending (`[~]`), done (`[x]`).
+
+### Step 6 — Scaffold today's working folder
+
+Same as the previous version. Create `progress/<today>/working-folder/<subject>/` for each subject that today's slice touches. (Skip if today's todo already exists — the folders should already be there.)
+
+### Step 7 — Report to the user
 
 Show:
-- Path to the new file.
-- For each subject: level + topic + step (one line).
-- Total task count + total question count.
-- One-line reminder: check boxes off as you go; answer the Prove-it questions in Notes; advance `state.md` when a topic's `implement` is done (or a step is finished and you're ready to move on) — or ask this skill to do it.
+- Path to today's todo.
+- Items added this round (id + summary + time).
+- Sprint progress: "N of M items complete (X% through the sprint)."
+- One-line reminder: "Run `/daily-tasks` again today if you finish, or tomorrow for a new slice."
 
-## Multi-day topics
+## Sprint completion
 
-A topic spans multiple days. The skill does NOT track "day in step" — it just keeps producing same-step tasks until you advance state. On a multi-day `read`, vary the apply task each day (use yesterday's notes to pick a fresh angle).
+When the LAST item in items.md is checked, the sprint is complete. The next `/daily-tasks` invocation will see no unchecked items and tell the user "Sprint at `progress/sprints/<date>/` is complete. Run `/next-sprint` to generate the next one." `/next-sprint` will then advance state and produce the next sprint.
 
-## Advancing state
+## Bootstrapping a fresh clone
 
-This skill does NOT auto-advance `state.md`. The user advances it (or asks). When asked to advance a tracked subject:
+If any `progress/<subject>/state.md` is missing, create it from the syllabus's Level 1 Topic 1 / step `read` (silent bootstrap). Then tell the user to run `/next-sprint` to create the first sprint, since this skill needs an active sprint to consume from.
 
-- Within a topic: bump `Next step`: `read` → `demo` → `implement`.
-- After `implement` is done:
-  - If there's a next topic in the same level: increment `Topic index in level` by 1, reset `Next step` to `read`, look up the new topic from the master syllabus and update all topic fields. Update `Last completed`.
-  - If that was the last topic in the level: bump `Level` by 1, reset `Topic index in level` to 1.
-  - If that was the final row: congratulate, mark "syllabus complete," ask whether to start a new sprint or pick external goals.
+## Hard constraints
 
-When advancing, ALWAYS re-read the master syllabus to pull the next topic — don't infer from memory.
-
-## Bootstrapping personal progress (first run on a fresh clone)
-
-The `progress/` directory is gitignored — when a friend clones the repo and runs `/daily-tasks` for the first time, none of the personal state files exist. The skill must self-bootstrap silently:
-
-For each subject in the resolved list:
-1. If `progress/<subject>/` doesn't exist, create it with `mkdir -p`.
-2. If `progress/<subject>/state.md` doesn't exist, create it from the Level 1 row 1 of `learning-syllabuses/<subject>.md`. Set `Level: 1`, `Topic index in level: 1`, `Next step: read`, `Last completed: (none yet — sprint starting)`. Pull topic name + path/resource from the syllabus.
-3. Use the same state.md format as the existing tracked subjects (see any current `progress/<subject>/state.md` for the template).
-
-Bootstrap silently — don't make the user confirm. Just note in the day's todo report which subjects you bootstrapped (so they know).
-
-## Bootstrapping a new tracked subject (when the user asks)
-
-If the user asks to add a NEW area to the registry (beyond the four defaults + the two recognized untracked areas):
-1. Create `learning-syllabuses/<area>.md` modeled on the existing four syllabuses (4 levels, beginner → expert; pull topics from the area's actual repo subdirs in numeric order, or curate external resources for an external-only area).
-2. Add the area to the registry table at the top of this skill file.
-3. The next time the skill runs, it will auto-bootstrap `progress/<area>/state.md` per the previous section.
-4. Confirm with the user that the auto-generated syllabus matches their intent before they sprint on it.
-
-## What this skill does NOT do
-
-- Doesn't accept area names not in the registry.
-- Doesn't grade homework or check correctness.
-- Doesn't skip ahead or reorder topics within a syllabus.
-- Doesn't exceed 8 tasks per day or 3 tasks per subject.
-- Doesn't overwrite an existing day's output file — that day's plan is locked once written.
-- Doesn't auto-advance state — the user owns that decision.
-- Doesn't fabricate excerpts from books or files it hasn't actually read.
-- Doesn't generate generic comprehension questions — every question must be specific to today's topic content.
+- **Don't generate sprint content.** This skill is a slice picker — it pulls from existing sprint content. The sprint content is generated by `/next-sprint`. If a slice item references a sprint section that doesn't exist, surface as a blocker.
+- **Don't advance state.** State advances only when a sprint completes and `/next-sprint` is invoked again. This skill never edits `state.md`.
+- **Don't generate more than 3 items per round.** Even if items are tiny. The sustainability constraint is the point.
+- **Don't overwrite today's todo.** Append rounds; never replace prior content.
