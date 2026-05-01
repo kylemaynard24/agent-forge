@@ -48,7 +48,7 @@ Sprint starting — no prior day.
 
 **Today:**
 - [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
-- [ ] **Apply:** Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM (returns canned next-action), one tool (`countLines(filename)`), a loop (max 3 iterations), a goal. Print each iteration. Save to `progress/2026-04-30/working-folder/agentic-workflows/tiny-agent.js`.
+- [ ] **Apply (C#):** Build `TinyAgent.cs` containing the four-piece anatomy in C#: an `ILlm` interface with a `StubLlm` implementation that returns canned next-actions, one tool (a static `CountLines(path)` method), a loop (max 3 iterations), and a goal. Print each iteration. ~50 lines. Save to `progress/2026-04-30/working-folder/agentic-workflows/TinyAgent.cs`. New to C#? See `software-engineering/csharp-and-dotnet/01-classes-basics/` and `04-interfaces-and-abstract-classes/`. Run with `dotnet new console -n agentic-day-1 && cd agentic-day-1 && (replace Program.cs with the file) && dotnet run`.
 
 **Prove it — answer in the Answers + explanations section at the bottom:**
 1. Pick a tool you actually use — is it agent / chatbot / workflow by the README's "who decides what to do next" test? One sentence.
@@ -98,7 +98,7 @@ Sprint starting — no prior day.
 
 **Today:**
 - [ ] **Step:** Read `separation-of-concerns/README.md` (73 lines, ~15 min). Capture 3–5 takeaways in Notes — at least one **trade-off**.
-- [ ] **Apply:** Write a 30-line script that mixes three concerns (reads CSV, computes stat, writes report). Then split into `parse.js` (pure), `compute.js` (pure), `report.js` (I/O). Save to `progress/2026-04-30/working-folder/architecture/before.js` and `progress/2026-04-30/working-folder/architecture/after/`. The "after" should let you swap `report.js` for a no-op without touching the others.
+- [ ] **Apply (C#):** Write `OrderHandlerBad.cs` (~30 lines) — a single class that mixes three concerns: validates an `Order` record, persists it (write to a text file), and prints a notification. Then refactor into `OrderHandlerGood.cs` plus three small classes implementing `IOrderValidator`, `IOrderRepository`, `IOrderNotifier` — `OrderHandlerGood` takes them via constructor injection. Save both versions side-by-side under `progress/2026-04-30/working-folder/architecture/`. The "after" should let you swap `IOrderNotifier` for a no-op test double without touching the other classes. New to C#? See `software-engineering/csharp-and-dotnet/13-capstone-implement-with-the-four-tracks/` for a near-complete walkthrough of this exact pattern.
 
 **Prove it — answer in the Answers + explanations section at the bottom:**
 1. Pick a function you've written recently — name three reasons it might change. Is it really one concern or three?
@@ -151,7 +151,7 @@ Sprint starting — no prior day.
 
 **Today:**
 - [ ] **Step:** Start Head First Ch 1 — aim for ~30–60 minutes today. Read at least through the SimUDuck "inheritance breaks" reveal and the introduction of "encapsulating what varies."
-- [ ] **Apply:** Type (don't paste) a piece of the **chapter's SimUDuck example** — the actual code the book walks you through. Aim for ~30 lines: `Duck` base class (with `swim()` + `display()`); `MallardDuck` and `RubberDuck` subclasses; `FlyBehavior` interface with `FlyWithWings` and `FlyNoWay` implementations; ducks compose a `FlyBehavior` reference and call `performFly()` that delegates to it. Demo: instantiate one of each, call `performFly()`, see the difference. (Tomorrow's apply will extend this with `QuackBehavior` per the book's order.) Save to `progress/2026-04-30/working-folder/design-patterns/simuduck/Duck.js` (split into multiple files if you prefer the book's layout).
+- [ ] **Apply (C#):** Type (don't paste) a piece of the **chapter's SimUDuck example** in C# — the actual code the book walks you through, modernized for C# 12 / .NET 8. Aim for ~50 lines: abstract `Duck` base class with `Swim()` + `Display()`; `MallardDuck` and `RubberDuck` subclasses; `IFlyBehavior` interface with `FlyWithWings` and `FlyNoWay` implementations; ducks compose an `IFlyBehavior` reference (constructor-injected) and call `PerformFly()` that delegates to it. Demo: instantiate one of each, call `PerformFly()`, see the difference. (Tomorrow's apply will extend this with `IQuackBehavior` per the book's order.) Save to `progress/2026-04-30/working-folder/design-patterns/simuduck/` (split into multiple files; conventional C# layout is one type per file). Reference: `software-engineering/csharp-and-dotnet/04-interfaces-and-abstract-classes/demo.cs` has a working SimUDuck.
 
 **Prove it — answer in the Answers + explanations section at the bottom:**
 1. What specifically broke when they tried to put `fly()` on the Duck base class? What did inheritance promise it couldn't deliver?
@@ -205,7 +205,7 @@ Sprint starting — no prior day.
 
 **Today:**
 - [ ] **Step:** Read the Bicep *Modules* doc and the *Parameters and outputs* doc (~30–45 min total). Then start the MS Learn path *Structure your Bicep code for collaboration* (~60 min). Capture 3–5 takeaways in Notes including at least one **anti-pattern** you've personally seen (or now suspect you've written).
-- [ ] **Apply:** Take a Storage Account Bicep you've already written (or write a quick one). Refactor into a module taking `name`, `location`, `sku`, `tags`. Call it from `main.bicep` to deploy two storage accounts (e.g., `dev` and `prod` tier). Add a `bicepconfig.json` with the linter at `error` for `no-hardcoded-location`. Save to `progress/2026-04-30/working-folder/devops/bicep-modules/` (`main.bicep`, `modules/storage.bicep`, `bicepconfig.json`). Tear down the deployed RG when done (`az group delete -n <name> --yes --no-wait`).
+- [ ] **Apply (Bicep — devops tooling stays as-is):** Take a Storage Account Bicep you've already written (or write a quick one). Refactor into a module taking `name`, `location`, `sku`, `tags`. Call it from `main.bicep` to deploy two storage accounts (e.g., `dev` and `prod` tier). Add a `bicepconfig.json` with the linter at `error` for `no-hardcoded-location`. Save to `progress/2026-04-30/working-folder/devops/bicep-modules/` (`main.bicep`, `modules/storage.bicep`, `bicepconfig.json`). Tear down the deployed RG when done (`az group delete -n <name> --yes --no-wait`). (DevOps work stays in its native tools — Bicep, az CLI — not C#. Apply tasks switch to C# only for the other three sprint subjects.)
 
 **Prove it — answer in the Answers + explanations section at the bottom:**
 1. The Deep dive argues a parameter without two distinct callers using different values should probably be a constant. Look at one of your team's Bicep templates — pick a parameter that fails this test. What would you do instead, and why might the original author have added it?

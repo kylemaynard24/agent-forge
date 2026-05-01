@@ -23,6 +23,7 @@ The skill **enforces** that any area name resolves either to a repo learning dir
 | `devops` | (none — Azure-shop tooling: Bicep, GitHub Actions, Azure resources/portal, Docker) | yes | yes (default) | All topics link to official docs; deliverables drive implement |
 | `advanced-engineering` | `software-engineering/advanced-engineering/` | no | no | 6 sections: debugging, testing, perf, security, refactoring, incident response |
 | `super-beginner-javascript` | `software-engineering/super-beginner-javascript/` | no | no | 12 sections, JS from values up through a mini-capstone |
+| `csharp-and-dotnet` | `software-engineering/csharp-and-dotnet/` | no | no | 14 sections, C# / modern .NET; covers classes-onward in depth. The default language for sprint apply tasks. |
 
 When verifying a non-external area, confirm the **Repo path** exists on disk. For external-only areas (devops), skip the repo-path check; verify the `learning-syllabuses/<area>.md` exists instead. Do not invent areas; only accept registered names.
 
@@ -175,6 +176,8 @@ If the user is on `demo` or `implement` step (not `read`), shift the Reading mat
 #### C. Apply task
 
 A small, concrete coding exercise (~10–30 lines) that uses the day's concept. Must reference a concrete output: file path, line count, expected behavior.
+
+**Default implementation language:** C# / .NET 8+. The four sprint subjects' apply tasks should be written in C# unless the task explicitly involves another language (e.g., devops Bicep stays Bicep; a JavaScript-specific topic would stay JS). The user has the `software-engineering/csharp-and-dotnet/` track for language reference. Keep apply tasks tight — language choice should accelerate the conceptual learning, not become a yak-shave on its own.
 
 **For repo topics (agentic-workflows, architecture, devops):** the apply task can use a different setting from the linked README/demo. Goal is to build something *new* using the concept. Examples:
 - `read` day on `what-is-an-agent`: "Write a 20-line `tiny-agent.js` containing the four-piece anatomy: stub LLM, one tool, a loop, a goal."
