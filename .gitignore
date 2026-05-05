@@ -19,7 +19,10 @@ Thumbs.db
 # Salesforce
 .sfdx/
 
-# Personal scratch work — every day's working-folder is local-only.
+# Personal scratch work — every day's working-folder is local-only,
+# EXCEPT a README that anchors the folder so the directory shows up in
+# the repo across pushes (useful when studying from multiple machines).
 # State files and daily todos under progress/ ARE tracked.
 # Shared curriculum lives in learning-syllabuses/.
-progress/*/working-folder/
+progress/*/working-folder/*
+!progress/*/working-folder/README.md

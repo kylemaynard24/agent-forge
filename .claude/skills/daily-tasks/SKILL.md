@@ -115,7 +115,19 @@ This lets the skill distinguish: unstarted (`[ ]`), assigned-but-pending (`[~]`)
 
 ### Step 7 — Scaffold today's working folder
 
-Same as the previous version. Create `progress/<today>/working-folder/<subject>/` for each subject that today's slice touches. (Skip if today's todo already exists — the folders should already be there.)
+Create `progress/<today>/working-folder/<subject>/` for each subject that today's slice touches. (Skip if today's todo already exists — the folders should already be there.)
+
+Also write a top-level `progress/<today>/working-folder/README.md` if it doesn't already exist. The repo's `.gitignore` ignores everything inside `working-folder/` *except* this README, so committing it makes the date's working-folder visible in the repo even though its scratch contents stay local. This matters for multi-machine study: when the user pulls on the other laptop, the folder structure exists and they can pick up immediately.
+
+README content (only-create-if-missing — never overwrite a README that's already there):
+
+```markdown
+# Working area for <YYYY-MM-DD>
+
+Scratch space for today's daily slice. See [`../todo.md`](../todo.md) for the items being worked on.
+
+Everything in this folder is gitignored EXCEPT this README — that's why the folder shows up in the repo even when you push from a clean session. Subject subfolders (`agentic-workflows/`, `architecture/`, etc.) are scaffolded on demand based on what today's slice touches; their contents are local-only and won't appear on other machines.
+```
 
 ### Step 8 — Report to the user
 
