@@ -28,3 +28,15 @@ Support overlapping rooms (a user can be in two rooms simultaneously). Should th
 
 - [ ] No `User` holds a reference to another `User`.
 - [ ] Adding a "user typing" feature requires changes only inside the mediator.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility Principle + Functions Should Do One Thing
+
+The mediator's purpose is to be the single place that understands routing policy — but that single place can still be clean or messy depending on how that logic is organized internally. Applied cleanly, the mediator's methods each encode one routing rule (`broadcast`, `dm`, `notifyTyping`), and the class reads as a precise specification of the room's communication contract. Applied messily, a bloated mediator with a single `handleEvent(type, payload)` plus a long `switch` is a god-object in disguise — same structural role, but the responsibility has leaked from the pattern into the implementation.
+
+**Exercise:** After implementing `ChatRoom`, count its public methods and ask whether each one represents a distinct, nameable coordination responsibility. If two methods could be collapsed into one `handle(eventType, ...)` without loss, you have a naming problem — the individual names are carrying information that would otherwise be lost.
+
+**Reflection:** The homework constraint says adding "user typing" should only modify the mediator — but if the mediator has grown to 200 lines, is that still a win? At what size or complexity does "change only the mediator" stop being a clean-code argument and start being a warning sign?

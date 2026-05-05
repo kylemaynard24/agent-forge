@@ -71,3 +71,15 @@ This is the kind of work that separates a hobby agent from a production one.
 - [ ] Memory persists; identity continues across sessions.
 - [ ] You've handled at least one schema-migration scenario.
 - [ ] You can articulate when "long-running" is genuinely warranted vs. when "many short sessions" is the right framing.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; make the implicit explicit
+
+An unnamed checkpoint is an unnamed save point — if the agent crashes and restores, you need the checkpoint name to know whether you are resuming from `after_data_collection` or `after_partial_writes`. Checkpoint names like `plan_approved`, `all_sources_fetched`, and `report_draft_complete` encode the phase boundary, making the resume logic readable and the risk of partial-state corruption diagnosable without reading the full state blob.
+
+**Exercise:** Name every checkpoint in your long-running agent after the phase it completes (not after the step that triggers it), then verify that a restore log line using only the checkpoint name tells you exactly where execution will resume.
+
+**Reflection:** If a long-running agent is interrupted mid-run and a colleague needs to decide whether to resume it or restart it from scratch, does the checkpoint name alone give them enough information to make that call?

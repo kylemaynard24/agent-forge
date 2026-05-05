@@ -55,3 +55,15 @@ This is harder to implement but matches real production agents (long-running, wi
 - [ ] Each gate has a specific kind + structured fields.
 - [ ] You've measured approval rate; gates fire when they should.
 - [ ] You can articulate where HITL pays off vs becomes drag.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility; no unnecessary content
+
+A human approval prompt is a user interface, and the clean code principle of "no unnecessary content" applies directly: every field shown to the approver either enables a decision or it doesn't. A prompt that surfaces the agent's full internal state is like a function that takes 12 parameters — the consumer drowns in information and makes worse decisions. Name the gate kind precisely, show exactly the fields needed for that kind, and nothing else.
+
+**Exercise:** For each gate kind in your implementation, write down the minimum set of fields a human needs to make a correct approve/reject decision — then verify your actual prompt shows exactly that set and no more.
+
+**Reflection:** If your approval rate is above 95%, is that evidence that your gates are well-calibrated — or evidence that the prompts aren't giving humans enough information to say no?

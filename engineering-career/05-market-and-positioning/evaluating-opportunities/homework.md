@@ -49,3 +49,15 @@ Think about a job change (or a decision to stay put) that you made in the last 2
 5. What one piece of information, if you had known it before deciding, would have most changed your decision?
 
 The goal of this exercise is not regret but calibration. Understanding what you over- and under-weighted in the past makes you a better evaluator the next time.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Named dimensions; explicit scoring; no implicit assumptions
+
+A gut-feeling decision about a job offer is the career equivalent of an undocumented architectural choice — it may have been reasonable at the time, but it cannot be revisited, explained to others, or used to calibrate the next decision. A scorecard with named dimensions, explicit scores, and written evidence for each score is an auditable decision record: when the role turns out differently than expected, you can go back and identify which dimension you scored wrong and why.
+
+**Exercise:** Fill out the scorecard in Exercise 1 and then write one sentence of named evidence for each score — not a rating, but the specific data point that produced it — then identify which two dimensions you are most uncertain about and write the exact question you would ask to reduce that uncertainty.
+
+**Reflection:** Looking at your Exercise 4 retrospective, which dimensions did you leave unnamed or unscored in your past decision — and would a named scorecard have changed the outcome?

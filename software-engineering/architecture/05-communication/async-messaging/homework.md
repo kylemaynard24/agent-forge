@@ -29,3 +29,15 @@
 - [ ] 20 sign-ups complete in under 100ms total.
 - [ ] At least one retry visible in the log.
 - [ ] At least one dead-lettered job after enough failures.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — message schemas as durable contracts
+
+A message schema is a contract read by consumers who may have no access to the producer's codebase; a field named `ts` or `uid` forces every future reader to guess, while `enqueuedAt` and `recipientUserId` are self-documenting across a months-long gap. Because async messages outlive the sprint that created them, naming discipline here has a higher return than almost anywhere else in the codebase.
+
+**Exercise:** Review your `EmailJob` schema and rename every field to be unambiguous without the surrounding code — include the unit in time fields (`createdAtMs`), spell out abbreviations, and prefix boolean fields with `is` or `has`. Then open the dead-letter entry and verify a stranger could diagnose the failure from the payload alone.
+
+**Reflection:** If you received a dead-lettered `EmailJob` six months from now with no runbook, which fields would you wish you had named more clearly?

@@ -80,3 +80,15 @@ The agent must navigate the tree — drilling into sub-plans, completing them, a
 - [ ] Plans update in real time as steps complete or fail.
 - [ ] Replanning works for at least one tested failure scenario.
 - [ ] You can resume from a persisted plan after a restart.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names + Avoid Vague Abstractions
+
+Task names in a plan are identifiers: the agent and any human reading the audit trail must understand what a step does without executing it. A step named `action: "do research"` is the plan equivalent of a variable named `data` — it holds something, but gives no information about what. A step named `action: "search PubMed for RCTs on metformin and weight loss, retrieve top 5 abstracts"` is specific enough to be verified complete, skipped intelligently, or handed to a different agent without re-briefing.
+
+**Exercise:** Take the plan your agent generates for a goal of your choosing. Apply the "new person test" to every step: could someone who has never seen the project understand exactly what to do, what the deliverable is, and when the step is done — from the action string alone? Rewrite any step that fails the test, then measure whether the replanning rate drops.
+
+**Reflection:** The homework caps replans at 3 and terminates with `reason: "stuck"` if a new plan is nearly identical to the failed one. What clean code smell does a plan that keeps regenerating the same steps represent — and how would you detect it programmatically without hard-coding "similarity"?

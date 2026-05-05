@@ -29,3 +29,15 @@
 - [ ] All three routes work end-to-end.
 - [ ] Unauth'd requests return 401 from middleware, not from any backend.
 - [ ] Aggregated route demonstrably faster than sequential backend calls.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — routes as public contracts
+
+A gateway's route table is the most-read API contract in the system; `GET /products/:id/full` communicates intent far better than `GET /products/:id/data`, because "full" names what the caller receives, not just the resource type. Treat every path segment, HTTP method, and response field name with the same rigor you'd apply to a public library's method signatures.
+
+**Exercise:** Audit your three routes and their JSON response shapes. Rename any field that requires reading the backend service's source code to understand (e.g., rename `p` to `price`, `avail` to `availableQuantity`). Verify that the route names alone — without reading the handler — communicate what each endpoint does.
+
+**Reflection:** If a new engineer read only your route table (no handler code), could they correctly predict the response shape and the downstream services called for each route?

@@ -32,3 +32,15 @@ Compare the test ergonomics. This is often the deciding factor in real projects.
 - [ ] All three implementations behave the same from the user's perspective.
 - [ ] You can articulate the difference between "View observes Model" and "Presenter pushes to View."
 - [ ] You've measured which version had the cheapest unit tests.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Component Names Should Describe One Role and No More
+
+Each suffix in MV* — Model, View, Controller, Presenter, ViewModel — is a clean code contract about what the component does and what it does not do. A `TodoController` that computes business logic has stopped being a Controller; a `TodoPresenter` that directly queries the database has stopped being a Presenter. The suffix is the SRP declaration: when behavior drifts outside what the suffix promises, the name becomes a lie that misdirects every future developer who reads it.
+
+**Exercise:** After building all three variants, read each component's file name and then its full implementation. For each component, write the single sentence that its suffix promises — "A Controller handles user input and updates the model, nothing else" — and check whether any method in the file violates that promise. Any method that does is a candidate for extraction into either a Model (logic belongs with data) or a new named collaborator whose name describes exactly the displaced responsibility.
+
+**Reflection:** Many "MVC" frameworks are actually MVP because the controller acts as a presenter — yet developers continue calling them controllers. What does this widespread naming confusion cost in terms of onboarding new developers, and when does it become worth the effort to rename?

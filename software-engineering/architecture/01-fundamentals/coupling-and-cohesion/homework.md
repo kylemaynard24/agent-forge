@@ -31,3 +31,15 @@ Compute a coupling matrix: for each pair of modules, mark "depends on" / "depend
 - [ ] No module's name lies about its contents.
 - [ ] `createUser`'s import list is short and obvious.
 - [ ] Tests for `validateEmail` don't need a database.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Level of Abstraction + Meaningful Names at the Module Level
+
+Low coupling and high cohesion are what make a module name *trustworthy*: when a module is truly cohesive, its name predicts 100% of its contents, and every piece of code that reads the import line immediately knows why the dependency exists. A module named `UserManager` fails this test before you even open it — the word "Manager" signals that the author grouped things by proximity, not by purpose.
+
+**Exercise:** After splitting `UserManager`, apply the "stranger test": hand your module names (without any code) to someone unfamiliar with the codebase and ask them to predict what each module contains. Score each module by how many correct predictions they make. Any module that scores below 80% needs a sharper name — not more documentation.
+
+**Reflection:** When you named each cohesion group, did any name feel like a compromise because two slightly-different responsibilities couldn't be cleanly separated? What does that discomfort signal about the design?

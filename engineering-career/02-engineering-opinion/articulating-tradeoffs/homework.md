@@ -41,3 +41,15 @@ Think about the last design discussion or technical decision meeting you attende
 4. If the discussion was weak — lots of "it depends," lots of circular talk, no clear recommendation — what was missing?
 
 You do not need to have spoken in the meeting to do this analysis. You're building the pattern recognition for good versus weak trade-off articulation so you can apply it when you're the one speaking.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility per section; name everything that matters
+
+A trade-off analysis is clean code applied to decisions: each named option is a branch, each named dimension is a parameter, the recommendation is a named return value, and the caveats are the edge cases. "It depends" is a function that returns `undefined` — it acknowledges complexity without resolving it. Unnamed trade-offs are unmaintainable decisions because no one can revisit them when context changes.
+
+**Exercise:** Take the weak "it depends" answer from Exercise 2 and identify every implicit assumption you had to make to rewrite it — then name each assumption explicitly in the structured version, the same way you would name a magic number as a constant.
+
+**Reflection:** If you made a technical recommendation in a meeting six months ago and someone now wants to revisit it because context has changed, does your original analysis document which caveats would change your recommendation — or would you have to reconstruct the reasoning from memory?

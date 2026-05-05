@@ -38,3 +38,15 @@ Create a solution `library-stack` with **four projects**:
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/10-library-stack/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Namespace Structure as a Map of the Domain
+
+Namespaces are the highest-level names in a C# codebase — they are the first thing a new team member reads to understand what the system does. `Library.Domain`, `Library.Application`, and `Library.Infrastructure` are not folder labels; they are a statement about the architecture: here is the core model, here is the behavior built on it, here is the I/O layer that connects to the outside world. A namespace like `Library.Utilities.Helpers.Misc` communicates nothing about domain and everything about a codebase that grew without direction.
+
+**Exercise:** Before running `dotnet build`, draw the four-project dependency diagram on paper — arrows flowing only in one direction, from `Cli` down to `Domain`. Now look at each namespace in your solution and check whether its name reflects the domain concept it represents (e.g., `Library.Domain`) or a technical role that has leaked into the name (e.g., `Library.DataAccessObjects`). The domain-reflecting names will still make sense five years from now; the technical-role names will feel dated as technology changes.
+
+**Reflection:** `IBookRepository` lives in `Library.Application`, not `Library.Infrastructure`. Why does the interface belong in the layer that uses it, rather than the layer that implements it — and how does that placement reflect a rule about which layer should be "in charge" of the dependency direction?

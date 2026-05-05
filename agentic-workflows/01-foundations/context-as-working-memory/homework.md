@@ -56,3 +56,15 @@ If you don't have an API budget for this, simulate the symptom: hand-roll a stub
 - [ ] You can run a 30-step agent without the prompt exceeding your budget.
 - [ ] The agent uses `note_save` to persist information that would otherwise be lost in summarization.
 - [ ] You can explain the trade-offs of truncation vs summarization vs retrieval to a teammate.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Minimize Scope + Explicit State
+
+Context management is state management: the context window is a global variable that grows with every step, and the same discipline that warns against wide scope in code applies here — the more that lives in context, the harder it becomes to reason about what the agent "knows" at any point. The `[summary]` tag and the `[truncated, original N chars]` annotation are the agentic equivalents of naming a variable clearly and documenting a mutation — they make implicit state changes explicit and readable.
+
+**Exercise:** Audit your loop after a 10-step run and identify every piece of context that is still present but no longer needed for any future step. Write a `contextPrunePolicy(history, currentStep)` function that removes that stale state with a named rationale for each removal — treat it like cleaning up variables that have gone out of scope.
+
+**Reflection:** The homework requires the agent to explicitly call `note_load` rather than auto-injecting notes into context. What clean code principle does that enforce, and what would go wrong if notes were injected automatically — both in terms of correctness and in terms of how hard the agent would be to debug?

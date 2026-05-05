@@ -66,3 +66,15 @@ Apply it to observations before they're written to traces.
 - [ ] You have an aggregate metrics script.
 - [ ] You've debugged at least one issue from the trace alone.
 - [ ] PII is redacted from traces.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names (applied to span names)
+
+A span named `llm_call` describes the implementation; a span named `decide_next_tool_given_search_results` describes the decision being made, which is what you actually need to understand when debugging a bad run. Trace span names are the comments of your agent's execution history — vague ones leave you reading the implementation to understand the intent.
+
+**Exercise:** Audit every span name in your tracer and rewrite any that describe a method call rather than the decision or action the agent is taking at that step.
+
+**Reflection:** When you open a trace from a run that went wrong, can you find the bad decision in under 30 seconds by reading span names alone — or do you have to read the full prompt and observation content at every step?

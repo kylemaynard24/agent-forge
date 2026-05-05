@@ -31,3 +31,15 @@ Keep it under 60 lines.
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/00-syntax-warmup/Program.cs` if you're working through this as part of a daily-tasks sprint, or anywhere convenient otherwise.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Naming Conventions as Scope Signals
+
+C#'s naming conventions are not style preferences — they are information. `PascalCase` for a method or type tells you it is a publicly visible contract. `camelCase` for a local variable tells you it lives and dies inside this block. When you violate these conventions (e.g., writing `int ProductPrice` as a local variable), you send false signals about scope and visibility that readers have to consciously correct for.
+
+**Exercise:** In your `Program.cs`, locate every identifier and verify its casing matches its role: types and methods are PascalCase, locals and parameters are camelCase, and no name needs a comment to explain what it is. Then rename anything that currently requires a mental note to understand, paying particular attention to the `Dictionary` iteration — the variable names `key` and `value` are allowed but `productName` and `unitPrice` communicate far more about the domain.
+
+**Reflection:** When you wrote the `Sum` method, did you name the parameter `numbers`, `n`, or `arr`? What does each choice communicate about who the method is meant for and how confidently you understand what the parameter represents?

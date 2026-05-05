@@ -29,3 +29,15 @@
 - [ ] Cart state computed from a 10+ event log.
 - [ ] Historical state at 3 different points.
 - [ ] Invalid command rejected with no event appended.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — event names are permanent, so name them at the domain level
+
+`ItemAdded` is a name you can never take back once it enters a live event store; an ambiguous name like `CartUpdated` or an overly technical one like `CartItemInserted` becomes permanent technical debt that pollutes every read model, projection, and replay for the lifetime of the system. The clean code standard for event names is the same as for database column names: precise, domain-language, no abbreviations, no implementation words.
+
+**Exercise:** Write a one-sentence "event definition" for each of your four events (`ItemAdded`, `ItemRemoved`, `QuantityChanged`, `CartCheckedOut`) as if it were a glossary entry — the name, what business action caused it, and what a `cartState` fold must do when it sees it. If any event name makes that definition awkward to write, rename the event.
+
+**Reflection:** If you later discovered that `QuantityChanged` was sometimes emitted with a quantity of zero (meaning "remove"), what would it cost to fix the name and the semantics — and why does that cost justify careful naming upfront?

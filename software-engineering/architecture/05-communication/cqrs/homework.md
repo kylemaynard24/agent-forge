@@ -29,3 +29,15 @@
 - [ ] Commands rejected when they violate invariants.
 - [ ] Both read models populated from the same event stream.
 - [ ] One scenario where the read model lags the write — and you label that "eventual consistency".
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — commands describe intent, queries describe what is returned
+
+`OpenTicket` communicates a domain decision with consequence; `CreateTicketRecord` describes a database side-effect and leaks implementation detail. Equally, `GetAgentInbox` tells the caller exactly what shape to expect, while `FetchTickets` leaves the scope ambiguous. In CQRS the command and query names become the system's spoken language — they appear in logs, event streams, and UIs, so a weak name compounds across every layer.
+
+**Exercise:** List all four commands and both queries in your implementation. For each, ask: does the name describe the domain intent (command) or the returned data shape (query), with no implementation words like "fetch," "create," "record," or "data"? Rename any that fail this test.
+
+**Reflection:** If a support engineer reads only the command names in a production incident log, can they reconstruct the sequence of business events that led to the incident?

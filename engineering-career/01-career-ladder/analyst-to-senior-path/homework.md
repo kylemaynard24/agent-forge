@@ -41,3 +41,15 @@ Think about the last design discussion or planning conversation you were in. Ans
 3. What would it have looked like if you had stated a specific, reasoned position?
 
 The goal is to identify the pattern. If the answer to "why didn't I state my opinion?" is consistently "I didn't have one," invest more in `02-engineering-opinion/forming-opinions/`. If it's consistently "I did have one but didn't say it," invest more in getting comfortable sharing opinions in lower-stakes contexts first.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; no unnamed variables
+
+A career plan that says "I want to grow into a more senior role and take on more responsibility" is the career equivalent of a variable named `result` — it holds an intention but reveals no content. Named milestones with specific criteria ("by Q3, I will have owned and shipped one cross-team design doc that was accepted without major revision") are readable, testable, and useful in a way that aspirational language never is.
+
+**Exercise:** Rewrite your 12-month path from Exercise 2 so that every milestone has a specific name and a specific criterion for "done" — then verify that a year from now you could unambiguously answer whether you hit each one.
+
+**Reflection:** If you read your career plan a year from now and realized you had not followed it, would the plan tell you specifically where you diverged — or would it be vague enough to claim you roughly followed it regardless of what you actually did?

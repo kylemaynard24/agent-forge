@@ -28,3 +28,15 @@
 - [ ] Strategy is swappable without changing call sites.
 - [ ] Unhealthy backends are excluded automatically.
 - [ ] You can produce a P95 latency table across all strategies on the same trace.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — strategy names encode the selection criterion, not the implementation detail
+
+`LeastConnections` names the selection criterion (fewest in-flight requests); a custom strategy called `SmartBalancer` or `BetterLB` names nothing — a reader must open the implementation to understand the criterion. When you implement EWMA latency or Power of Two Choices, the class name `EwmaLeastLatency` or `PowerOfTwoChoices` makes the algorithm self-documenting at the call site where the strategy is configured.
+
+**Exercise:** Write a one-sentence docstring for each of your four strategy classes using the template: "Selects the backend with [selection criterion], preferring [tie-breaker] when [condition]." If you cannot complete that template from the class name alone, the name is not carrying enough information — revise it.
+
+**Reflection:** When the EWMA stretch strategy is added as a fifth option, how would you name it so that a developer configuring the load balancer in YAML can choose between `least-connections` and the EWMA variant without reading either implementation?

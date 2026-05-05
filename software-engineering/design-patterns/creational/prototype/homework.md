@@ -28,3 +28,15 @@ Make `clone()` polymorphic — when an `Enemy` subclass adds new fields, its `cl
 
 - [ ] A test mutates a clone's nested loadout and proves the template is untouched.
 - [ ] Two clones from the same template have independent state.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Encapsulation + Minimal Surface Area
+
+The `clone()` method is a promise: "I give you an independent copy and you don't need to know how I'm structured internally." Applied cleanly, `clone()` is the only place in the codebase that knows about the enemy's nested structure — calling code simply calls `registry.spawn('goblin')` and receives a fully independent object without any knowledge of `loadout`, `weapon`, or `durability`. Applied messily, a clone that returns a shallow copy forces callers to perform additional deep-copy steps themselves, which means the internal structure of `Enemy` has leaked into every call site that uses `spawn`.
+
+**Exercise:** Write a test that mutates every nested field on a spawned clone — `loadout`, `weapon.durability`, `stats.hp` — and then asserts the template is unchanged. The test is passing when `clone()` is the only code you had to write to make it pass; if you needed to add deep-copy logic anywhere outside `clone()`, the encapsulation is broken.
+
+**Reflection:** The constraint says no constructor with 12 parameters — but `clone()` is a constructor in disguise. What does this tell you about when a copy constructor is cleaner than a `clone()` method, and when `clone()` is the right abstraction?

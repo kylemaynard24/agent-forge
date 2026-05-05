@@ -28,3 +28,15 @@ Now add a new node type: `Power(base, exp)`. Notice how every existing visitor m
 
 - [ ] Both visitors run over the same AST and produce correct, distinct outputs.
 - [ ] Adding a `Differentiator` visitor doesn't touch the node classes.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility Principle + Meaningful Names
+
+Each `visit` method in a visitor is a single operation on a single element type — `visitAdd` in the `Evaluator` does exactly one thing: compute the sum of two evaluated sub-expressions. Applied cleanly, a visitor class reads as a complete, self-contained algorithm — you can read `Evaluator` top to bottom and understand the full evaluation semantics without touching any node class. Applied messily, a visitor whose `visitAdd` also handles logging, caching, and error formatting has collapsed the separation that makes the pattern valuable, and its method names no longer describe the operation honestly.
+
+**Exercise:** Read your `PrettyPrinter` class in isolation, covering the AST node files. The method names (`visitNumber`, `visitAdd`, `visitMultiply`, `visitNegate`) and their bodies should fully specify the pretty-printing algorithm — if understanding one method requires you to open a node class, the visitor isn't self-contained enough.
+
+**Reflection:** The stretch goal asks you to add a `Power` node and notice that every existing visitor must be updated — this is the expression problem in action. Given that trade-off, what naming or structural convention could you adopt that makes it immediately obvious to a future developer adding a new node type that they must update every registered visitor?

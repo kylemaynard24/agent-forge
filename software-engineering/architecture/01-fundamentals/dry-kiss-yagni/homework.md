@@ -36,3 +36,15 @@ For each scenario, name the principle being misapplied and the fix:
 - [ ] You can articulate the difference between "code duplication" and "knowledge duplication" in one sentence.
 - [ ] Refactored `processRecord` callers each call a function whose name they trust.
 - [ ] No function in the refactor has 7 booleans.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Don't Repeat Yourself / Keep It Simple, Stupid / You Aren't Gonna Need It — and the line between simplicity and negligence
+
+DRY, KISS, and YAGNI are not just architectural principles — they are clean code in its purest form, and the line between simplicity and negligence is crossed the moment a "simple" design makes the *next correct change* harder than it needs to be. Removing error handling is KISS applied negligently; the simplicity served the author's comfort, not the system's correctness.
+
+**Exercise:** Take the refactored `processRecord` functions and apply a stress test: for each function, describe the *next three most likely change requests* from a real business stakeholder. Does the clean, simple version accommodate each change without requiring you to touch unrelated functions? If yes, the simplicity was correct; if no, name the hidden complexity you've deferred rather than eliminated.
+
+**Reflection:** YAGNI says don't build it until you need it — but security boundaries, audit logs, and migration paths are cases where you almost certainly will need it. What distinguishes "future-proofing that's YAGNI" from "future-proofing that's responsible design"?

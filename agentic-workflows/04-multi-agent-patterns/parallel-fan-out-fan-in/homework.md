@@ -51,3 +51,15 @@ Add a real concern: rate-limited APIs.
 - [ ] Width is bounded.
 - [ ] Aggregation produces a structured final result.
 - [ ] You've measured the wall-clock speedup vs. serial.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Separation of Dispatch and Aggregation
+
+Fan-out and fan-in are two distinct operations with two distinct responsibilities: dispatch decides what work to send to which workers and how wide; aggregation decides how to combine results into a coherent output. Bundling both in one function produces a component that changes for two different reasons — just as a class that both fetches data and formats it for display changes when the API changes and when the UI changes. A clean fan-out/fan-in system can swap aggregation strategies (majority vote vs LLM synthesis vs simple merge) without touching dispatch logic.
+
+**Exercise:** Take your fan-out runner and enforce the separation by making aggregation a named, replaceable function: `aggregate(workerResults: WorkerResult[]): FinalOutput`. Write two implementations — one that takes a majority vote and one that concatenates — and verify that swapping them requires changing exactly one line in the runner.
+
+**Reflection:** Each parallel worker has "single-purpose description" in this pattern. What breaks — both in behavior and in debuggability — if a worker is given a multi-purpose prompt that tries to both research and evaluate its own findings, rather than separating those responsibilities across the fan-out and fan-in layers?

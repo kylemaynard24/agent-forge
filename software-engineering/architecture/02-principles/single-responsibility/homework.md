@@ -29,3 +29,15 @@ Pick TWO responsibilities that you intentionally keep together (despite SRP) and
 - [ ] Each class has one stakeholder.
 - [ ] No method's name surprises you given the class name.
 - [ ] You've articulated one place SRP would have been wrong, and why.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Class Names Predict Their Contents — the "and" Test
+
+SRP is the clean code principle at the class level, and the sharpest test for it is the name: if describing what a class does requires the word "and," it has two responsibilities and therefore two potential reasons to change. `OrderConfirmationEmailer` is a single responsibility; `OrderServiceAndMailer` announces the violation before you open the file.
+
+**Exercise:** Take each class you created from the `Order` split and apply the "and-free description" test: write a one-sentence description of the class that names its stakeholder, its responsibility, and what it will never do. Then check every method name against that description — any method that surprises you relative to the class name either belongs in another class or reveals that your description was too narrow. Tighten either the description or the class until there are no surprises.
+
+**Reflection:** You were asked to keep `Order` as pure data with zero behavior. But domain experts often say an order *validates itself* or an order *knows its total* — at what point does adding behavior back to `Order` strengthen the model rather than violate SRP, and who is the stakeholder for that decision?

@@ -29,3 +29,15 @@
 - [ ] Rolled-back orders produce no events ever.
 - [ ] All committed orders produce at least one event.
 - [ ] Duplicate deliveries are absorbed by an idempotent consumer.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — the outbox table schema is a contract read cold
+
+An outbox column named `type` is ambiguous between event type, message type, and entity type; `event_type` is clearer but `event_type_name` plus a separate `aggregate_type` column makes the distinction between "what happened" and "to what entity" unambiguous to a developer reading the table dump during an incident. Every column in the outbox is documentation that must survive the engineer who wrote it leaving the company.
+
+**Exercise:** Write out your outbox table schema as a `CREATE TABLE` statement with a one-line comment on each column explaining what it holds, what values are valid, and what a NULL means. If any column comment requires more than one sentence, the column name is not doing enough work — rename it.
+
+**Reflection:** If a relay developer joined the team and could only read the outbox table schema (no application code), could they implement a correct relay from the column names and comments alone?

@@ -35,3 +35,15 @@ Implement one. Measure the difference.
 - [ ] An outage of notifications doesn't break orders.
 - [ ] You've measured the extra latency of one HTTP call vs the in-process baseline.
 - [ ] You can articulate at least one thing that got *worse* — and why it might still be worth it.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Service Names Should Map to Domain Capabilities, Not Technical Roles
+
+A microservice's name is a bounded context declaration: `NotificationService` announces a domain capability and implies a specific team, schema, and deployment boundary. A service named `MessageProcessor` or `EventHandler` names a technical role — and a technical role name signals that the service boundary was drawn around an implementation pattern rather than a domain concept, making it harder to reason about ownership, failure, and evolution.
+
+**Exercise:** Look at the service name `NotificationService` and the API you defined (`POST /notifications`, `GET /notifications/:userId/unread`). Now write a two-sentence "service charter" — what domain capability this service owns, and what it explicitly does NOT own. Check whether your HTTP route paths and JSON field names match that charter: any route or field name that sounds like infrastructure (`/events`, `/messages`, `type: "email"`) rather than domain capability (`/notifications`, `status: "unread"`) is a naming inconsistency between the service name and its surface.
+
+**Reflection:** The N+1 Stretch exercise offers a batch endpoint (`POST /notifications/batch-counts`) as one fix. This endpoint is named from the *caller's* perspective (batch is a performance concern, not a domain concept). What would a domain-perspective name look like, and does changing the name change how you think about whether the endpoint belongs in `NotificationService` at all?

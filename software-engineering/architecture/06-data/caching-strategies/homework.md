@@ -30,3 +30,15 @@
 - [ ] Three strategies implemented with the same interface.
 - [ ] Stats printed for each.
 - [ ] Write-behind data-loss scenario reproduced and explained.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — cache keys encode identity and scope
+
+A cache key like `"price"` or `"user_123"` forces every reader to open the caching logic to understand scope, TTL intent, and invalidation boundaries; a key like `"pricing:sku:ABC-99:v1"` encodes the namespace, the entity type, the identifier, and the schema version in a single readable string. Treating cache keys as opaque strings is the caching equivalent of naming a variable `x` — it works until someone needs to debug a stale-value incident at 2am.
+
+**Exercise:** Define a key-builder function for each of your three strategies that encodes at minimum: the service namespace, the entity type, and the entity identifier. Then write a comment above each strategy's `invalidate` call documenting exactly which keys are invalidated and why, so the invalidation logic is self-explanatory.
+
+**Reflection:** If a second developer added a new caching layer for the same `priceService` without looking at your implementation, what in your cache keys would prevent a key collision — and what would not?

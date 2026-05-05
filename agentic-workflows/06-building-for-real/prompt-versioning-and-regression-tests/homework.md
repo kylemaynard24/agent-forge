@@ -57,3 +57,15 @@ Then: starting from the last known-good version, bisect to find which commit int
 - [ ] You have a CHANGELOG with at least 3 entries.
 - [ ] You've run evals on two prompt versions and compared.
 - [ ] You can articulate a release flow appropriate for your scale.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; no implicit knowledge
+
+A prompt version named `v2` is the naming equivalent of a commit message that says "changes" — it records that something happened, not what or why. `v2_add_structured_output_for_citations` tells a future maintainer exactly what changed and why a regression in citation formatting should be investigated at this boundary. Regression test names carry the same obligation: `test_agent_does_not_summarize_when_asked_to_extract` protects a specific behavior, not just "something that used to work."
+
+**Exercise:** Rewrite your CHANGELOG entries and regression test names so that each one, read in isolation, names the behavior that changed or the behavior being protected — without requiring the reader to open the prompt diff.
+
+**Reflection:** If a regression appears in a fixture three versions after it was introduced, can your version names and CHANGELOG entries tell you which specific change to bisect to — or do you have to read every diff?

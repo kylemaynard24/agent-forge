@@ -56,3 +56,15 @@ Find a real system design blog post or architecture breakdown from an engineerin
 5. How would you have answered the system design prompt for this system in an interview context?
 
 This exercise connects real engineering decisions to the interview format, which makes the interview feel less artificial.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; explicit contracts at component boundaries
+
+System design clarity in an interview is clean code at the architecture level: a diagram with boxes named "service" and "database" communicates no more than a codebase with variables named `x` and `data`. Named components with explicit contracts ("the notification service receives a `SendNotificationRequest` with a deduplicated `idempotency_key` and guarantees at-least-once delivery") show the interviewer that you think in interfaces, not just in boxes.
+
+**Exercise:** In your Exercise 1 design, name every component, every data store, and every API boundary — then verify that every connection between components has an implied or stated contract about what is sent, in what shape, and what happens on failure.
+
+**Reflection:** If the interviewer asked you to name the single most important design decision in your system and explain the trade-offs you accepted, could you answer in two sentences using only names you have already introduced — or would you need to introduce new concepts to answer?

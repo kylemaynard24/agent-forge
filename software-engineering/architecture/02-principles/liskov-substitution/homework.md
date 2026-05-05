@@ -39,3 +39,15 @@ Now design the same domain with an `interface Flyable` and `interface Eater` (sm
 - [ ] No subclass throws "not supported" for a parent method.
 - [ ] `feedAndRelease(penguin)` no longer makes sense to write — the type system or the function signature prevents it.
 - [ ] You can articulate "preconditions can't strengthen; postconditions can't weaken" in your own words.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Names Are Contracts — Don't Let Subtypes Make the Name Lie
+
+LSP is fundamentally a naming contract: when a type is called `Bird` and `Bird` has a `fly()` method, every subtype named as a `Bird` is implicitly promising that it can fly. `Penguin extends Bird` makes the name `Bird` a lie for all callers who reasonably expect flight — the type name and the behavior have diverged. Clean code at the type hierarchy level means the name of a parent type describes *only* the behavioral contract that every subtype will keep.
+
+**Exercise:** After your fix, read the type names in your hierarchy aloud as behavioral promises: "A `FlyingBird` will always be able to fly," "A `Bird` will always be able to eat." For each type, write the promise as a one-sentence assertion and verify that every concrete implementation in your system would pass it. If any concrete type would fail the assertion, the type name is still lying.
+
+**Reflection:** The `Square extends Rectangle` example is broken because `setWidth` and `setHeight` are independent on a Rectangle but coupled on a Square — the subtype can't keep the parent's mutation contract. Where in your current or past codebases have you seen this same pattern: a subtype that can't keep a parent's *mutation* promise (not just a capability promise)?

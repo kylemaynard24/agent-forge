@@ -30,3 +30,15 @@ Show a matching reader chain that reverses the writer chain. Why is `new Buffere
 
 - [ ] All 6 permutations either round-trip cleanly or fail with a clear reason.
 - [ ] Adding a `Base64Stream` decorator requires zero edits to existing code.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Single Responsibility Principle
+
+Each decorator's name is an additive claim — `GzipStream` says "this is a stream that also compresses," and the name should describe the one thing the decorator adds, not the full stack. Applied cleanly, a stack like `new EncryptedStream(new GzipStream(new BufferedStream(base)))` reads as a layered specification from the outside in, and each decorator's single responsibility is visible in its name without opening any class. Applied messily, a decorator named `SecureBufferedStream` that does both buffering and encryption has merged two responsibilities into one, making it impossible to reorder, swap, or omit one layer independently.
+
+**Exercise:** For each of your three decorators, write a one-sentence contract: "This decorator adds X to any `ByteStream` it wraps, and changes nothing else." If the sentence requires "and" for a single decorator, split it. Then verify that the construction order `new Encrypted(new Gzip(new Buffered(stream)))` maps naturally onto those three independent contracts.
+
+**Reflection:** The stretch goal asks why `new Buffered(new Gzip(new Encrypted(stream)))` is fundamentally different from `new Encrypted(new Gzip(new Buffered(stream)))` — but from the perspective of clean names, both stacks are equally readable. What does this tell you about the limits of naming as a design tool when order-of-composition carries semantic meaning that the names cannot express?

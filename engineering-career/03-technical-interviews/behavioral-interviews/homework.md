@@ -60,3 +60,15 @@ The failure story is the one most engineers skip or soften until it's not a fail
 - You can describe what you would do differently with specific changes to your behavior, not just "I would have been more careful"
 
 The purpose is not to damage yourself in an interview. It is to demonstrate self-awareness, honesty, and growth — which are exactly what interviewers are trying to assess with this category of question.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility; specificity in the action layer
+
+A STAR story is structured writing, and the Action section carries the same obligation as a function body: it should be specific enough that a reader who was not there knows exactly what you did, step by step. "I coordinated with the team and we resolved the issue" is a function body that says `return result` — it names a conclusion without showing the work. Specific actions ("I identified the bottleneck using the slow query log, proposed an index, got it reviewed in a 20-minute sync, and deployed it during the maintenance window") are readable, credible, and hard to fake.
+
+**Exercise:** Take your STAR write-up from Exercise 2 and rewrite the Action section so that each sentence describes one concrete thing you did — then verify that no sentence contains "we" where "I" is accurate.
+
+**Reflection:** If an interviewer probed your Action section with "what specifically did you do at that step?", would each sentence in your answer hold up to one more level of detail — or would you be forced to generalize?

@@ -30,3 +30,15 @@
 - [ ] You can reconstruct the full call tree of any single request from its trace.
 - [ ] You can compute P95 latency from your metrics without scanning logs.
 - [ ] No metric label can blow up cardinality.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Comments and naming — log quality is clean code for the operations layer
+
+A log line reading `"error occurred"` at the `INFO` level with a concatenated string like `"user " + userId + " failed"` is the observability equivalent of a function named `doStuff` — it records that something happened without revealing what, to whom, or at what severity. Structured log fields (`{ "event": "checkout_payment_failed", "userId": "u_123", "amountCents": 4500, "reason": "card_declined" }`) apply the same meaningful-names discipline to operations that clean code applies to variables.
+
+**Exercise:** Review every log statement in your checkout flow and apply three rules: (1) the `message` field must be a past-tense sentence describing a specific business event, not a generic status; (2) every log level must be justified — demote anything at `INFO` that an on-call engineer would not act on; (3) no string concatenation — every dynamic value must be a named structured field. Count how many log lines needed changes.
+
+**Reflection:** If you searched your logs for all `checkout_payment_failed` events in the last hour to investigate a spike, what structured fields would you need to be present to answer "which payment provider caused it, and for which user cohort?"

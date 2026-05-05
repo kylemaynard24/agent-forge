@@ -62,3 +62,15 @@ Write your conclusion in 3 sentences.
 - [ ] You can compose two different agents from shared blocks.
 - [ ] You have an eval that detects regressions when blocks change.
 - [ ] You can articulate the difference between "the prompt as instruction" and "the prompt as program."
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Function Structure + Positive Assertions over Negative Guards
+
+A system prompt is a function definition: the role section is the signature (what this function is), the rules section is the contract (what it guarantees), and the output format section is the return type. Just as a function that says "don't return the wrong thing" is weaker than one with a typed return signature, a prompt that says "don't make stuff up" is weaker than one that says "only state facts present in the logs; mark unknowns as 'not in logs'" — the positive form is specific enough to be tested.
+
+**Exercise:** Take your refactored incident-summary prompt and write a unit test for each rule section: given a sample log, assert that the output satisfies the constraint expressed in that rule. If a rule is too vague to write a test for, rewrite the rule until it is testable.
+
+**Reflection:** The homework asks you to replace negative instructions with affirmative ones. In regular code, what is the equivalent of a negative-only guard clause — and what refactoring patterns do developers use to convert them to something more expressive and testable?

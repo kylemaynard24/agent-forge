@@ -50,3 +50,15 @@ Answer honestly:
 4. What would need to be true to have a stronger position in 6 months?
 
 The goal is not to make you anxious about your career. It is to make the question "what is my leverage right now?" a thing you know the answer to, rather than something that surprises you when you need it.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Named evidence; explicit reasoning chains
+
+A compensation negotiation backed by "I feel like I'm worth more" is an assertion without evidence — it fails the same way an undocumented architectural decision fails. A negotiation backed by "Levels.fyi shows the P50 for my level and stack at $X in my metro; I am at $Y, which is 18% below market; I have two named recent accomplishments that exceed my level's expectations" is structured communication with named sources, named comparisons, and named conclusions that are auditable and persuasive.
+
+**Exercise:** Write your negotiation case as if it were a structured argument: name your data sources, name the specific figures, name the gap, and name the evidence from your own work that justifies closing it — then remove any sentence that contains "I think" or "I feel" without a named fact behind it.
+
+**Reflection:** If your manager asked you to justify your compensation request in a three-minute summary, would your preparation produce a structured argument with named evidence — or would you be assembling it on the spot?

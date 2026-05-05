@@ -54,3 +54,15 @@ This is harder than it sounds — usually we resist demotions because they feel 
 - [ ] You've documented one promotion plan with measurable criteria.
 - [ ] You've executed one promotion and observed it.
 - [ ] You can articulate when promotion is right vs premature.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; avoid positional identifiers
+
+Autonomy levels named `level_1`, `level_2`, `level_3` are positional identifiers — you cannot understand the policy by reading a call site. `auto_allow`, `require_approval`, and `always_deny` name what the level does to an action, making every audit log entry and configuration value self-explanatory. The policy becomes readable wherever it appears, not just in the file where the levels are defined.
+
+**Exercise:** Replace every numeric or positional autonomy level in your code with a name that describes the gate behavior — then read a policy assignment out loud and verify it sounds like a decision, not an index lookup.
+
+**Reflection:** If you log every action with its autonomy level and a new team member reads those logs, can they understand the policy the agent is operating under without reading your documentation?

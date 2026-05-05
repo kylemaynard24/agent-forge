@@ -39,3 +39,15 @@ Aim for 100-150 lines total.
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/01-bank-basics/` (multiple `.cs` files — convention is one type per file).
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Class Names as Domain Vocabulary
+
+A class name is the most important name in the file — it is the concept you are introducing into your codebase's vocabulary. `BankAccount`, `Money`, and `AccountRegistry` each describe a real thing in the banking domain. A reader who knows banking already has a mental model before they read a single method. If your class were named `AccountHandler` or `BankingHelper`, you would be describing what the code does rather than what the concept is, and that is a weaker vocabulary word.
+
+**Exercise:** After implementing your four types, write a one-sentence plain-English definition for each class name as if you were writing a glossary for a new team member — without mentioning any code. If you struggle to write a clean definition for `AccountRegistry` or `Money`, that difficulty reveals whether the class name is genuinely describing a domain concept or just a bag of code. The cleaner the definition, the better the name.
+
+**Reflection:** The four class forms you used (`record`, `record struct`, classic `class`, `static class`) each signal something different to a reader. Did the names you chose reinforce those signals, or did any name make you wonder whether you chose the right form?

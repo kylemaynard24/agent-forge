@@ -49,3 +49,15 @@ Read it for the *structure* as much as the content:
 After completing the exercises, write one paragraph on: "What is the hardest part of writing a design doc for me?" Is it framing the problem? Writing a fair options section? Making a recommendation you'll be accountable for? Open questions you don't want to surface?
 
 The hardest part is usually the part that most needs practice.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility per section; explicit recommendation
+
+A design doc is clean code applied to technical writing: the Problem Statement section has one job (frame the problem), the Options section has one job (present viable alternatives fairly), and the Recommendation section has one job (state a clear conclusion grounded in the requirements). A doc where the recommendation is buried in the options section, or where the problem statement does double duty as justification, is as hard to review as a function that does several things at once.
+
+**Exercise:** Read your completed design doc from Exercise 1 and check that each section does exactly one thing — if any section is doing two things, split it; if any section is hedging instead of concluding, make it conclude.
+
+**Reflection:** If someone reads only your Recommendation section and the Problem Statement, do they have everything they need to understand what you decided and why — or does the recommendation only make sense if you read the whole document?

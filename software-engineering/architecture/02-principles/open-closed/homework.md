@@ -28,3 +28,15 @@ What if two discounts apply at once? Decide and document a stacking rule (highes
 - [ ] `BUNDLE_DEAL` is added without touching any existing file except by import.
 - [ ] No `if (type === ...)` chain remains.
 - [ ] You can explain why OCP without polymorphism is just wishful thinking.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Extension Points Should Be Self-Documenting Through Naming
+
+OCP is only working when a new `Discount` implementation can be written by someone who has never seen the existing implementations and needs no explanation beyond the interface name and its method signature. If your `Discount` interface requires reading `StudentDiscount` or `BlackFridayDiscount` to understand what `apply(order)` is supposed to return, the extension point is not clean — it has undocumented behavioral expectations that live only in examples.
+
+**Exercise:** Write the `BundleDealDiscount` class as if you are a developer who has seen only the `Discount` interface definition and the `DiscountResult` type — nothing else. If you get stuck or have to make assumptions, those assumptions reveal gaps in the interface's self-documentation. Add a JSDoc comment to the interface that makes every one of those assumptions explicit, so the next implementer needs zero prior knowledge.
+
+**Reflection:** The `Checkout` class applies discounts "in order" without referencing them by name — but "in order" is itself a policy decision. If a future discount needs to know whether another discount has already been applied, does it belong in `Checkout` or in a new abstraction, and how would you name that abstraction?

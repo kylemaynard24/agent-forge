@@ -72,3 +72,15 @@ Build a smarter repetition detector that flags "exploring trivial variants" as a
 - [ ] Transient errors retry; app errors flow to the LLM; loops terminate.
 - [ ] Three error observations meet the marker/cause/hint quality bar.
 - [ ] You can articulate when to retry vs surface vs fail vs escalate.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Error Messages + Don't Swallow Exceptions
+
+An agent that returns "I couldn't complete the task" after a tool failure is doing what a catch block that swallows an exception does in code: the error happened, the caller has no idea what it was, and debugging is now guesswork. The three-part error observation format — marker, cause, hint — is the agentic equivalent of an exception that carries a type, a message, and a suggested recovery: it names what went wrong at a glance, makes the cause explicit, and reduces the search space the model has to explore to recover.
+
+**Exercise:** Take three error messages you've encountered in real tools you use (not from this exercise) and score them against the marker/cause/hint rubric. Rewrite any that fail the rubric as if they were observations returned to an LLM — the rewrite constraint will force you to be specific in a way that also improves them for human readers.
+
+**Reflection:** The error classifier defaults to `app` when the error type is unknown, meaning "let the LLM handle it." In exception handling, what is the equivalent principle — and when does defaulting to the caller rather than handling locally produce better software?

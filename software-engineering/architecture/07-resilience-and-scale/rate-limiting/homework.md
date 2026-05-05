@@ -28,3 +28,15 @@
 - [ ] Each plan's effective rate matches its configured limit (verifiable in the simulator output).
 - [ ] Rejected responses tell the client when to retry.
 - [ ] Memory does not grow unboundedly under churn.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — rate limit configuration names must encode scope explicitly
+
+A config field named `limit: 100` is dangerously ambiguous — per second? per minute? per user? per endpoint? — while `maxRequestsPerKeyPerMinute: 100` encodes the scope, the unit, and the subject in a single read. Rate limit configuration is the one place where an ambiguous name can directly cause an engineer to accidentally apply a per-user limit globally, causing cross-user interference that is hard to debug under production load.
+
+**Exercise:** Rename every config field in your `RateLimiter` to be fully qualified: include the subject (key, tenant, global), the metric (requests), and the time window (PerMinute, PerSecond). Then verify that the `admit` return object's field names are equally explicit (`remainingRequestsThisWindow`, not just `remaining`).
+
+**Reflection:** If your rate limiter config was read by a new engineer deploying it in a different context (per-IP instead of per-API-key), which of your current field names would lead them to configure it correctly — and which might they misread?

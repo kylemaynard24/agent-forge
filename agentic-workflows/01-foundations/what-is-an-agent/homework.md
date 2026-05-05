@@ -40,3 +40,15 @@ Swap `ruleLLM` for an actual call to the Anthropic API (or use the Claude Agent 
 - [ ] You can swap rule LLM for a fully canned LLM and the loop is unchanged.
 - [ ] You added a third tool and the rule LLM picks correctly between counts.
 - [ ] You can articulate the four pieces of an agent without re-reading the README.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Meaningful Names
+
+Each of the four agent components — model, tools, loop, and memory — maps cleanly to a single responsibility; when any one of them starts doing two things (e.g., a tool that also updates state, or a loop that also parses LLM output), the whole architecture blurs in the same way a function named `processAndSave` does. The names you give each component are load-bearing: a function called `ruleLLM` tells a reader exactly which layer is responsible for decisions, while a function called `handler` could mean anything.
+
+**Exercise:** Write a one-sentence responsibility statement for each of the four components in your `ruleLLM` agent (e.g., "The loop is responsible for advancing state; it neither decides what to do nor executes side effects"). If any statement contains the word "and," split that component.
+
+**Reflection:** If you had to expose the four components as a public API with named interfaces, what would you call each one — and would those names still hold when you swap the stub LLM for a real model?

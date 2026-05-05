@@ -44,3 +44,15 @@ Build a small log-analysis tool that uses LINQ for filtering, grouping, aggregat
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/06-logs/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** LINQ Chains as Readable Sentences; Named Intermediate Variables for Complex Queries
+
+A well-written LINQ chain reads like a description of the problem: `logs.Where(isError).GroupBy(byService).OrderByDescending(byCount)` narrates its intent. When a chain grows past three or four clauses, or when the lambda expressions become multi-line, it starts to resist reading. At that point, breaking the chain into named intermediate variables — `var errorLogs = logs.Where(...)`, `var groupedByService = errorLogs.GroupBy(...)` — gives each step a name that explains what it produces, not just what operation was applied.
+
+**Exercise:** Take your `ErrorCountByService` method and write it as a single LINQ expression chain with no intermediate variables. Then rewrite it by assigning each meaningful step to a named variable. Read both versions aloud. In the named version, each variable name should describe the result of the step, not the operation (e.g., `errorsByService`, not `grouped`). Compare how fast a reader can follow each version.
+
+**Reflection:** In `AverageTimeBetweenErrors`, you needed to materialize and sort the sequence before using `.Zip`. What would have happened if you had left it lazy — and what does that pitfall reveal about the difference between a LINQ chain that is easy to read and a LINQ chain that is easy to reason about correctly?

@@ -29,3 +29,15 @@ Add a fourth iterator that yields only leaf values. Add a fifth that yields valu
 
 - [ ] All three traversals produce the correct order for a known tree.
 - [ ] Two concurrent iterators produce independent, complete sequences.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Separation of Concerns (intention-revealing interfaces)
+
+An iterator's value to clean code is not just encapsulation — it's that consumer code can be written in the language of the domain rather than the language of the data structure. Applied cleanly, a loop over `tree.inOrder()` reads as a statement about the domain ("process values in sorted order"); applied messily, the consumer manually tracks a stack, checks for null children, and manages traversal state, hiding the domain intent under structural noise.
+
+**Exercise:** Write the same tree traversal twice: once using your iterator and once by directly walking nodes. Count the number of lines in each version that describe *what you want* versus lines that describe *how the tree is structured*. The ratio tells you exactly how much clean-code value your iterator is delivering.
+
+**Reflection:** Your iterator method is called `inOrder()` — if you renamed it to `getInOrderTraversalIterator()`, it would be more descriptive but less readable in a for-of loop. Where is the line between a name that reveals intent and a name that over-explains?

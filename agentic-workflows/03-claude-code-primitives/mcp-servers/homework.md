@@ -61,3 +61,15 @@ Write it up in 1-2 pages.
 - [ ] You've built a minimal MCP server with 2-3 tools.
 - [ ] You've defined permissions and documented your rationale.
 - [ ] You can articulate when MCP wins over a custom tool and when it doesn't.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names + Narrow Tool Interfaces
+
+An MCP tool name is the entire documentation available at the point of use — there is no surrounding codebase to browse, no IDE to interrogate, and the description may not be read if the name already commits the model to a choice. A tool named `render_template` communicates its contract; a tool named `process` or `handle` does not. Because MCP tools are consumed by any client that connects — not just the one you built them for — the naming standard is the same as for a public library API: the name must survive context loss.
+
+**Exercise:** Take the 2–3 tools in your minimal MCP server and apply the "remove the description" test: with only the tool name and input schema visible, can a new LLM-based client predict what the tool does, what it returns, and when not to call it? For any tool that fails the test, rename it and tighten the schema field names until it passes.
+
+**Reflection:** MCP standardises the interface between clients and tool servers. The homework notes that MCP tools are reusable across clients while custom tools are private to one. What is the clean code principle that governs when to extract a private helper into a shared library — and does the same heuristic apply to the decision of when to promote a custom tool to an MCP server?

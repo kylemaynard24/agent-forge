@@ -60,3 +60,15 @@ The baseline is committed in the repo; updates require explicit approval.
 - [ ] You have at least 3 distinct check types.
 - [ ] You can articulate what your evals do and don't catch.
 - [ ] You have a baseline measured; you can detect regressions.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names
+
+An eval named `test_1` tells you nothing about what failure it catches; an eval named `verify_agent_does_not_call_delete_on_read_only_review` is self-documenting and makes a regression immediately obvious in CI output. Every fixture name is a contract — it says "this behavior must always be true," so name it like one.
+
+**Exercise:** Rename every fixture in your eval suite so that a failing fixture name, read in isolation in a CI log, tells you exactly what regressed without needing to open the file.
+
+**Reflection:** If a new team member reads your fixture names without looking at the fixture bodies, can they reconstruct what your agent is supposed to do? If not, what does that tell you about the names?

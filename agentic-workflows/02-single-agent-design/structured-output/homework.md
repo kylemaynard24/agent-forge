@@ -69,3 +69,15 @@ Your schema evolves. v2 adds an optional `priority` field. v1 callers shouldn't 
 - [ ] Validation rejects malformed output with specific errors.
 - [ ] Retry-on-failure works for at least one tested case.
 - [ ] You can articulate when you'd use free text and when you'd structure it.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Expressive Interfaces + Consistent Empty State
+
+A structured output schema is an interface definition: each field name is a method signature that the caller depends on, and renaming `what` to `description` mid-stream is a breaking change in exactly the same way renaming a public method is. The empty-state exercise directly parallels the interface-design rule that says "pick one representation for absent values and apply it consistently" — a schema that returns `null` in some places and `[]` in others for the same logical concept forces every consumer to handle two representations of the same thing.
+
+**Exercise:** Take your meeting-summary schema and write its field names as if they were method names on a `MeetingSummary` interface — `getDecisions()`, `getActionItems()` — and check whether the names still make sense. If a field feels wrong as a method name, it may be named from the implementation's perspective rather than the caller's; rename it to express what the caller will do with it.
+
+**Reflection:** The retry loop feeds specific validation errors back to the LLM when output is malformed. In test-driven development, what is the analog of this pattern — and why is "your output was wrong, try again" the agent equivalent of a failing test with no assertion message?

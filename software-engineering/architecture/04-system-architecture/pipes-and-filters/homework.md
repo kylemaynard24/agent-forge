@@ -34,3 +34,15 @@ Make the pipeline streaming: instead of `[row, row, ...]`, use Node's async iter
 - [ ] You can rearrange, drop, or insert a filter without editing other filters.
 - [ ] Adding a new validation rule is a new file.
 - [ ] Each filter has its own one-line unit test.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Function Names Describe One Transformation Precisely — Single Responsibility at the Filter Level
+
+Each filter in a pipeline is SRP applied to pure functions: `dropBlanks` does exactly one thing and its name proves it. A filter called `cleanAndValidate` or `parseAndCoerce` has collapsed two stages into one, destroying both the reusability and the testability that the pattern promises — and the "and" in the name is the same warning sign as "and" in a class description. A filter that does two transformations should be two filters, each with a name that a future pipeline author can trust without reading the implementation.
+
+**Exercise:** For each filter you wrote, apply the "pipeline substitution test": could you swap this filter into a completely different pipeline (not the order CSV pipeline) and have its name still be accurate? `dropBlanks` passes — it works on any tabular data. `validateOrders` would fail — it is specific to orders. Any filter whose name encodes the pipeline's domain rather than the transformation it performs is a candidate for either renaming (if the logic is general) or splitting (if the logic is genuinely order-specific and the general version deserves its own filter).
+
+**Reflection:** The Stretch exercise makes the pipeline streaming with async generators, where each filter yields one row at a time. Does the streaming form change what a "good filter name" means — specifically, does a filter that buffers rows to deduplicate by ID (`dedupeById`) deserve a name that signals it breaks the single-row-in/single-row-out contract?

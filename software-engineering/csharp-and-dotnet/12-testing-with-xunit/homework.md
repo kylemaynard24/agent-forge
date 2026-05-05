@@ -59,3 +59,15 @@ Build a small feature-with-tests pair. The point is to practice TDD-style discip
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/12-orders-tests/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Test Names as Living Specifications
+
+A test named `Test3` or `CalculateTotal_Works` is documentation that tells you nothing. A test named `CalculateTotal_WhenTaxRateIsZero_ReturnsPureSubtotal` is a specification: it names the condition, the input context, and the expected outcome — and if the test fails two years from now, the failure message already tells you what contract was broken before you open the file. The full set of `[Fact]` and `[Theory]` names in your test class should read like a requirements list for `OrderTotaller`.
+
+**Exercise:** Read all your test method names as a list, without opening their bodies. Can you reconstruct the full behavior spec of `OrderTotaller` — every edge case, every validation rule, every normal-path guarantee — just from the names? If any behavior is missing from the name-list, either you are missing a test or your existing test name is not specific enough. Add or rename until the list is a complete spec.
+
+**Reflection:** In the exercise where you deliberately tested through a private field (implementation detail), then refactored to go through the public API only — what would have happened to that first test if you renamed the private field as part of a refactor? That fragility is the exact cost of testing implementation rather than behavior.

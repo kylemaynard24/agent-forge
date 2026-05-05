@@ -60,3 +60,15 @@ This is your "did we just break our budget?" alarm.
 - [ ] You've applied at least two levers and measured the impact.
 - [ ] You have a budget cap that terminates runaway runs.
 - [ ] You can articulate which lever bought you the most, and why.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Named constants over magic numbers
+
+A budget cap written as `{ max_tokens: 4096, max_seconds: 60, max_dollars: 0.50 }` scattered across three agents is a maintenance hazard — change the policy and you hunt for every literal. `AGENT_MAX_TOKENS_PER_CALL`, `AGENT_TIMEOUT_SECONDS`, and `AGENT_BUDGET_DOLLARS` are policy names, not just values; they make the intent visible and make a policy change a one-line edit.
+
+**Exercise:** Find every numeric limit in your agent code (token caps, timeouts, retry counts, observation truncation sizes) and extract each one into a named constant whose name states the constraint it enforces, not just the thing being limited.
+
+**Reflection:** If the cost model for your LLM provider changes and you need to halve your per-call token budget, how many places in your codebase would you need to update — and how would you know you found all of them?

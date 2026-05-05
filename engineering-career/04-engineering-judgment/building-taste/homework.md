@@ -47,3 +47,15 @@ Write:
 4. What would make it better?
 
 Doing this exercise regularly converts intuition into vocabulary. Vocabulary makes it possible to communicate taste to others — which is what code review and design review require.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Name the smells; convert intuition to transferable vocabulary
+
+Engineering taste that lives only as a feeling is like a function that works but cannot be tested — it produces correct outputs but you cannot explain why, and you cannot teach it. Naming the pattern you recognize ("this is a violation of the single responsibility principle; this function is both parsing the input and making the API call") converts taste from personal intuition into transferable judgment that can be written into code review comments, shared in design reviews, and built on by teammates.
+
+**Exercise:** For each code smell you identify in Exercise 4, write it as a named pattern ("implicit temporal coupling", "abstraction at the wrong level", "single responsibility violation") before writing your preferred fix — the name forces precision about what is actually wrong.
+
+**Reflection:** When you give code review feedback, do you name the structural property that makes you uncomfortable — or do you describe the symptom? If you describe the symptom, what named principle would make the feedback more useful to the author?

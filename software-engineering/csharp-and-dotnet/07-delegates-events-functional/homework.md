@@ -44,3 +44,15 @@ Build a small event-driven system that uses delegates, events, and the functiona
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/07-events/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Event Names in Past Tense; Strategy Parameters Named for Their Role
+
+Events describe something that already happened — `StartedRunning` and `StoppedRunning` are facts that the `Stopwatch` is broadcasting after the state change occurred. A name like `OnStart` or `StartEvent` is ambiguous: is this fired before or after the transition? Past tense removes the ambiguity entirely. The same discipline applies to the `OrderProcessor` strategy parameters: `validator`, `pricer`, and `auditor` are named for what they do and when they are called, not for their type (`func1`, `action1`).
+
+**Exercise:** In your `OrderProcessor`, rename the three `Func<>`/`Action<>` parameters to the vaguest possible names (`f1`, `f2`, `a1`), then call the processor with three different lambda combinations and try to read the call sites. Now restore the meaningful names and read the same call sites again. Notice how the parameter names at the call site — `validator: strictCheck, pricer: discountedPrice` — make the composition self-documenting without needing a comment.
+
+**Reflection:** After the `using` scope exits and `StopwatchDisplay` unsubscribes, the stopwatch still runs and still raises events — they just go unheard. What does this behavior reveal about the responsibility boundary between the event source and its subscribers, and how does the naming of each reflect that separation?

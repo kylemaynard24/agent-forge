@@ -46,3 +46,15 @@ Build a small file-processing utility that exercises proper exception handling, 
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/09-config/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Exception Messages as Actionable Documentation; No Swallowed Exceptions
+
+An exception message is the most important string in a failure path — it is the first thing an engineer reads when something goes wrong in production. "Parse error" is a lie by omission. "Line 7: expected 'key=value', got 'keyvalue' — check that each config line contains exactly one '=' sign" is documentation that saves an hour of debugging. Swallowed exceptions (`catch (Exception) { }`) are even worse: they replace a true statement about what went wrong with silence, making the program appear to succeed when it did not.
+
+**Exercise:** Look at your `ConfigParseException` and read the message it produces as if you are an engineer who has never seen this codebase. Does the message tell you what was wrong, where it was wrong, and what you would need to fix to make it right? If any of those three elements is missing, rewrite the message until all three are present. Then look at every `catch` block in your code and verify none of them swallow the exception without at minimum logging it.
+
+**Reflection:** Your `TryLoad` method returns `false` and an error string instead of throwing — and your `Load` method throws. Both call the same underlying parse logic. Which surface did you find easier to write tests for, and does that tell you anything about when each pattern genuinely belongs?

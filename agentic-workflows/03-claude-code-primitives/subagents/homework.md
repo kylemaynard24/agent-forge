@@ -67,3 +67,15 @@ Document one case where this nested pattern was worth it.
 - [ ] You've experienced the difference between a bad brief and a good one.
 - [ ] You've compared subagent vs no-subagent on the same task.
 - [ ] You can articulate when to spawn a subagent and when not to.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Precise Interface Contracts
+
+A subagent's `description` field is both a dispatch key and a scope declaration — it tells the harness when to offer this agent and tells the agent itself what it is authorised to do. A vague description like "useful for code review" leaves both boundaries undefined: the harness may offer the agent too broadly, and the agent itself has no clear stopping point. A description like "reviews a single diff for security vulnerabilities and returns structured findings; does not suggest style changes or refactors" is a responsibility statement precise enough to audit against the output.
+
+**Exercise:** Take your specialist agent's description and derive from it a list of three things the agent should do and three things it explicitly should not do. Add an explicit "What you do not do" section to the agent body if it doesn't already have one. Then check whether the agent's actual outputs ever cross a "should not" line — if they do, the description boundary needs tightening.
+
+**Reflection:** You compared a bad brief ("Review this") to a good brief (context, concerns, output shape). Why does a vague brief produce a lower-quality output even when the agent's own system prompt is excellent — and what does that say about the relationship between a function's implementation and the quality of the arguments passed to it?

@@ -60,3 +60,15 @@ Build a generic in-memory cache with constraints, eviction, and statistics.
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/05-cache/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Generic Type Parameter Names as Lightweight Documentation
+
+`T` is acceptable in a trivial container with one type parameter, but `TKey` and `TValue` in `Cache<TKey, TValue>` tell the reader exactly what role each parameter plays before they read a single method. The constraints — `where TKey : notnull` and `where TValue : class` — are equally communicative: they are compile-enforced documentation of your assumptions, far stronger than a comment that says "keys must not be null."
+
+**Exercise:** Read the signature `Cache<TKey, TValue>` aloud and then read `Cache<T, U>` aloud. Notice which one narrates itself. Now look at the `GetOrSet` extension method: the parameter type `Func<TValue>` tells you the factory produces a value of the cached type. Rename the type parameters to single letters (`T`, `U`) and observe how each method signature becomes a puzzle you have to solve from context.
+
+**Reflection:** The constraint `where TValue : class` means the `Get` method can return `TValue?` to signal a cache miss without a separate boolean. What design decision does that constraint communicate to callers about how the cache signals "not found" — and would the API be as clear if value types were allowed?

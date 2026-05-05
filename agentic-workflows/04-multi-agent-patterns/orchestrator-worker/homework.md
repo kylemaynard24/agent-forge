@@ -45,3 +45,15 @@ This previews `critic-reviewer` (next topic).
 - [ ] Each is briefed self-contained.
 - [ ] The orchestrator synthesizes a structured final output.
 - [ ] You can articulate when this pattern wins vs. when it's overkill.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Separation of Concerns
+
+The orchestrator's job is coordination — it briefs workers, collects their outputs, and synthesizes a result. The moment the orchestrator also contains the logic for extracting requirements, or scoring gaps, or generating questions, it has two responsibilities: it is simultaneously a coordinator and a domain expert. That is the same violation as a controller class that contains business logic: each responsibility has a different reason to change, and bundling them makes both harder to test and maintain independently.
+
+**Exercise:** Audit your orchestrator's synthesis step. If the synthesis prompt contains any logic that "belongs" to one of the workers (e.g., it re-interprets the gap-analyzer output rather than trusting its structured result), extract that logic back into the worker's system prompt. The orchestrator's synthesis should be purely combinatorial — merging well-structured outputs, not re-doing domain work.
+
+**Reflection:** The homework requires workers to be briefed "self-contained" — they cannot see each other or the orchestrator's context. What clean code principle does this enforce, and what would go wrong in a codebase if modules could access each other's private state in the same way an orchestrator-aware worker could?

@@ -34,3 +34,15 @@ Take a second bug in the same system and show how much faster the debugging loop
 - [ ] At least one strong hypothesis was falsified
 - [ ] Your final fix addresses the cause, not just the output
 - [ ] You added one regression guard: test, metric, alert, or invariant check
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful names, small functions, single responsibility
+
+Code that is hard to debug is almost always code that is hard to read first — tangled responsibilities, opaque variable names, and 300-line methods don't just slow feature work, they make every failure investigation start from scratch. Investing in clean code is investing in a shorter debugging loop before the incident even happens.
+
+**Exercise:** Take the OrderService scenario from this homework and identify three specific places where a clean code violation — a method doing too much, a poorly named variable, an inline anonymous callback — directly lengthens the time to locate the root cause. Rewrite just those three spots and note how the hypotheses list from the exercise shrinks.
+
+**Reflection:** In a codebase you work in regularly, what is the single messiest function, and how much of your recent debugging time was spent inside or around it?

@@ -29,3 +29,15 @@
 - [ ] Replication lag visible in stale-read scenario.
 - [ ] 10,000 keys spread roughly evenly across 4 shards.
 - [ ] One demonstrable cross-shard query.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — shard key names and routing function names must eliminate ambiguity
+
+A shard router function named `getNode(id)` is ambiguous about which `id` is the shard key, what the return value represents, and whether it is stable under re-sharding; `shardForUserId(userId): ShardId` encodes the key domain, the key type, and the return type in the name, making a misuse visible at the call site. An ambiguous shard key name is not a style issue — it is a production incident waiting to happen when a developer passes the wrong identifier.
+
+**Exercise:** Rename your shard routing function and every variable that holds a shard identifier so that the key domain and the return type are explicit in the name. Then add a single JSDoc/docstring comment to the routing function documenting the one field that is the shard key, why it was chosen, and what the consequence is of changing it after data exists.
+
+**Reflection:** If a new engineer added a cross-shard query that accidentally used `productId` instead of `userId` as the routing key, what in your current naming would catch the mistake — and what would not?

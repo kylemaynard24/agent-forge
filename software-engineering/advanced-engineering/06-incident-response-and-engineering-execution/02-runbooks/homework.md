@@ -27,3 +27,15 @@ Work through a small scenario involving a recurring failure that is always re-di
 - you can explain the value of Runbooks without using buzzwords
 - the result is concrete enough that another engineer could inspect it
 - your written note makes the trade-off visible
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility + imperative, atomic steps
+
+Runbook steps should be atomic and named as commands rather than descriptions. "Run: az containerapp update --name api --min-replicas 0" is cleaner than "Update the container app to scale down" because it removes all interpretation — the reader executes one specific command and observes one specific outcome. A step that requires judgment is a step that will be performed differently in each incident.
+
+**Exercise:** Review the runbook steps in your scenario and rewrite any that contain the words "configure," "update," or "adjust" without a specific command. Each step should be executable by an on-call engineer who has never seen the service before, at 2am, with no additional context.
+
+**Reflection:** If a step in your runbook says "restart the service if needed" — who decides if it is needed, and what happens when two engineers on the same incident make different calls?

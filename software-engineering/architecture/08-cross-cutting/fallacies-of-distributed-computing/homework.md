@@ -30,3 +30,15 @@
 - [ ] All 8 fallacies are addressed and labeled in code.
 - [ ] Under chaotic conditions (drops, latency, MITM), the client still produces correct results or an explicit error.
 - [ ] You can articulate, in plain language, what *each* defense costs (latency, complexity, dollars).
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — each fallacy has a corresponding code smell with a clean alternative name
+
+Code that believes the network is reliable looks like `await fetch(url)` with no timeout or error handling; the clean name for the defense is not just "add a timeout" but `fetchWithDeadline(url, deadlineMs)` — a function name that makes the constraint visible at every call site. Naming the defense by what it guarantees (not merely what it does) is the clean code discipline that makes fallacy-hardened code self-documenting.
+
+**Exercise:** For each of the 8 fallacies in your audit document, write the "code smell name" (the pattern you'd find in naive code) and the "clean code name" (the function, class, or constant name that makes the defense explicit). For example: smell = `fetch(url)`, clean = `fetchWithDeadlineMs(url, timeoutMs)`. These pairs become your team's vocabulary for code review.
+
+**Reflection:** Which of your eight defenses has a name that would still be understood by a developer who has never read the fallacies list — and which defenses are only clear if you already know the fallacy they address?

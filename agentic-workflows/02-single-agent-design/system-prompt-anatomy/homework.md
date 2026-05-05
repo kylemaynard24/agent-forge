@@ -65,3 +65,15 @@ Add a version line at the top of each block (`<!-- version: 1.2 -->`). When you 
 - [ ] You have at least one prompt in your repo built from reusable blocks.
 - [ ] A block edit propagates to two or more agents.
 - [ ] You can argue for or against having an "examples" section in any specific prompt.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Separation of Concerns
+
+A system prompt that mixes role, rules, output format, and examples in one undivided paragraph is the exact equivalent of a class that handles persistence, business logic, and presentation — each concern is technically present but none is clearly bounded, and editing one risks breaking another. The 7-section anatomy enforces separation of concerns at the prompt level: section 4 (rules) is where constraints live, always, not buried in the role paragraph where they hide from reviewers and drift across versions.
+
+**Exercise:** Take a prompt you've written before (or the kitchen-sink incident prompt from the previous topic) and label every sentence with a section number (1–7). Count how many sentences appear in the wrong section — constraints in the role, format details in the rules. Move each to its correct section and note whether the total word count changed.
+
+**Reflection:** A prompt built from reusable blocks (like `rules-cite-everything.md`) is analogous to what in software design — and what breaks if one block is edited by someone who doesn't know which agents consume it?

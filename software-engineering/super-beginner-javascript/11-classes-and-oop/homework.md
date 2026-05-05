@@ -27,3 +27,15 @@ Create a small script related to modeling a bank account, game character, or sho
 - you can run the script successfully
 - you can predict the output before running it
 - you can explain the code in plain language
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Class Names Are Nouns; Method Names Are Verbs; Single Responsibility
+
+A class should be so focused that its name is easy: `BankAccount`, `ShoppingCart`, `GameCharacter`. When a class is hard to name — when you find yourself writing `AccountManagerHandlerUtil` — it is almost always doing too much. Methods tell you what the object can do: `deposit()`, `addItem()`, `takeDamage()`. A method named `process()` or `handle()` is a sign that it is doing something the class cannot clearly describe.
+
+**Exercise:** After writing your class, try to name it with a single concrete noun and name every method with a single action verb. If you cannot do this without lying (the name does not reflect what the code actually does), that is your signal to split the class or rename the method to be honest. Write down the final names and check: do the method names sound like things this specific object should be able to do?
+
+**Reflection:** Does your class have any method that feels like it belongs to a different object? For example, does your `BankAccount` class also print receipts, or send emails? What would those responsibilities look like as separate classes?

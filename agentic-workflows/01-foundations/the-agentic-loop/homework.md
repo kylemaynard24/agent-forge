@@ -47,3 +47,15 @@ Variant: change the loop so the *first* step asks the LLM for a numbered plan, a
 - [ ] You can run a "broken" agent (deleted `finish` from the script) and the loop exits cleanly via a non-completion reason.
 - [ ] You have a JSON trace file you'd be willing to share with a teammate.
 - [ ] You can describe what happens when a tool throws, when the LLM hallucinates a tool, and when the agent loops — without re-reading the README.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Do One Thing + Intention-Revealing Names
+
+The agentic loop is a function with three named steps — think, act, observe — and like any well-written function it should do exactly one thing: advance the agent one cycle at a time. The moment termination logic, retry policy, and trace recording are all tangled inside a single `while` block, you have the agent equivalent of a 200-line function: correct perhaps, but unmaintainable and hard to test in isolation.
+
+**Exercise:** Refactor your loop so each of the three phases (think, act, observe) is a named function that could be tested independently. Then write one test per phase without invoking the other two; if you can't, the phases are too coupled.
+
+**Reflection:** Your loop returns `{ status, answer, reason, steps }` — each field is a named output. If you had to add a sixth termination condition tomorrow, could a new teammate locate exactly where to add it without reading the whole loop? What does that answer tell you about how well-named and structured the loop is?

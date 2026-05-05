@@ -33,3 +33,15 @@ Sketch a strangler-style migration plan for the next two seams after the one you
 - [ ] New code depends on the seam, not directly on the old mess
 - [ ] Existing behavior is preserved
 - [ ] You can name the next safe move without promising a total rewrite
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Expressive code + incremental improvement
+
+Refactoring is the act of applying clean code principles to existing code — the goal is not just to make the system work, but to make its intent legible to the next person who reads it. A behavior-preserving refactor that leaves the code harder to understand has achieved nothing; the test is whether a reader can now see why the code does what it does.
+
+**Exercise:** After completing your refactor, read the changed code aloud as if explaining it to a colleague. Note any sentence where you have to say "it actually means..." or "what this is really doing is..." — each of those is a signal the names or structure still need work.
+
+**Reflection:** Did the refactor make the intent of the code clearer, or did it only make the structure different? How would you tell the difference?

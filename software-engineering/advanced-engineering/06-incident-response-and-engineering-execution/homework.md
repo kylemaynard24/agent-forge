@@ -34,3 +34,15 @@ Add a short ADR or design note for the highest-leverage follow-up and explain wh
 - [ ] Your incident note is readable by someone outside the team
 - [ ] Facts and guesses are clearly separated
 - [ ] The postmortem results in at least two specific next actions
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Expressive writing + single responsibility per artifact
+
+Engineering execution documents — runbooks, ADRs, design docs — are code for humans, and the same clean code principles apply: each document should have one clear purpose, every section should earn its place, and the names of things (alerts, severity levels, follow-up actions) should be specific enough to be actionable without additional explanation.
+
+**Exercise:** Take one artifact from your incident drill — the timeline, the status update, or the postmortem — and apply a clean code review to it: flag every vague term, every section that tries to do two things, and every action item that cannot be assigned to a specific person with a specific outcome. Revise until each sentence says exactly one thing clearly.
+
+**Reflection:** If an engineer who was not involved in the incident read your documents, could they understand the situation, the decisions made, and the next actions without asking a single clarifying question?

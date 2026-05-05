@@ -51,3 +51,15 @@ The hardest one. Write an LLM-as-judge that, given the original goal and the age
 - [ ] Each termination has a specific reason.
 - [ ] You have tests that reproduce each failure and verify the right reason fires.
 - [ ] You can map each reason to a real-world alert / dashboard.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; make the implicit explicit
+
+A termination reason of `"error"` is the failure-mode equivalent of a variable named `x` — it holds information but reveals none. `context_window_exceeded`, `tool_timeout`, and `hallucinated_tool_call` are names you can write alert rules against, filter in dashboards, and hand to an on-call engineer who immediately knows what they are looking at. Unnamed failure modes are failure modes you cannot monitor for.
+
+**Exercise:** For each failure mode you implemented, write the exact alert rule or log query you would use in production to page an engineer — the exercise forces you to verify the name is specific enough to query.
+
+**Reflection:** If a failure mode fires in production and pages an engineer at 2 AM, does the reason field in your trace give them enough information to act without opening the code?

@@ -31,3 +31,15 @@ If most of your work in the last quarter was invisible (in PRs that got merged w
 Write one paragraph on: "What is one concrete thing I can start doing this week that is more consistent with the level above me?"
 
 Do not make it aspirational. Make it specific and actionable enough that you could report back next week on whether you did it.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; no vague adjectives
+
+A self-assessment that says "I have strong communication skills and good technical judgment" is documentation that could apply to any engineer at any level — it names categories, not evidence. A clean self-assessment names specific artifacts: "I wrote the design doc for the auth service migration, which was accepted with two revisions" is readable, verifiable, and falsifiable in the same way a well-named function is.
+
+**Exercise:** Rewrite your answers to Exercise 1 and Exercise 3 so that every claim is backed by a named artifact or a named decision — remove any sentence that would still be true if you swapped your name for a colleague's.
+
+**Reflection:** If you handed your self-assessment to your manager and they could not name a single specific thing you did this quarter from reading it, what does that tell you about the quality of the evidence you captured?

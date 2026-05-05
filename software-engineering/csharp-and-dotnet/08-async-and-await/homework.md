@@ -38,3 +38,15 @@ Build a small async file processor that exercises sequential vs concurrent waits
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/08-files/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Async Method Names End in `Async`; `CancellationToken` Makes Intent Explicit
+
+The `Async` suffix is a promise to every caller: "this method will not block your thread." It is also a searchable signal — a reader scanning for async entry points can find them instantly. `CancellationToken ct` in every method signature is a different kind of documentation: it says "this operation respects cancellation, and if you have a token, you should pass it." A method that accepts work but silently ignores a `CancellationToken` is a method that lies about its cancellation behavior.
+
+**Exercise:** Look at your `CountLinesInManyAsync_Sequential` and `CountLinesInManyAsync_Concurrent` side by side. The only structural difference is `await` vs `Task.WhenAll`, but that difference means everything about throughput. Now rename both methods to make the difference obvious in the name itself — something like `...Sequential` and `...Concurrent`. Confirm that the names now tell a caller which version to reach for without reading the body.
+
+**Reflection:** In the sequential version, if the second file's `CancellationToken` fires, the first file's result is already complete and its lines counted. In the concurrent version, cancellation can abandon mid-flight tasks. Does your current method name communicate this behavioral difference to a caller — and should it?

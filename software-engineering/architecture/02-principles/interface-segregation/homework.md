@@ -28,3 +28,15 @@ Define a `MultifunctionPrinter` that genuinely implements all four. Show that ca
 - [ ] No "not supported" exceptions remain.
 - [ ] Callers list only the capabilities they need.
 - [ ] Adding a label printer doesn't touch other printers' code.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Interfaces Should Be Named for Exactly One Capability
+
+A well-segregated interface is evidence of ISP, but a well-*named* interface is evidence that ISP was understood: `Printable`, `Scannable`, and `Faxable` each promise exactly what they say and nothing more, while a retained `Printer` interface covering all three tells callers they depend on everything even when they need one thing. The name of the interface is the contract summary — if you can't summarize it in one capability-noun, the interface does too much.
+
+**Exercise:** For each interface you created, try writing the name as both a noun (`Printer`) and an adjective (`Printable`). Notice how the adjective form forces you to commit to a single capability, while the noun form tempts you to expand scope over time. Settle on the form that most clearly communicates "you may depend on exactly this and nothing else," and apply it consistently across all interfaces in the split.
+
+**Reflection:** ISP says don't force clients to depend on methods they don't use — but when a `MultifunctionPrinter` genuinely has all capabilities, is it clean to compose it from all four interfaces, or does that composition start to look like a workaround for not having the original fat interface?

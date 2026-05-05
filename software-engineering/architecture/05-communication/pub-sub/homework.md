@@ -29,3 +29,15 @@
 - [ ] One publish triggers four handlers.
 - [ ] Killing any one handler does not affect the others.
 - [ ] Correlation ID appears in every log line.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — topic names are the pub-sub system's API surface
+
+A topic named `user-events` tells consumers nothing about versioning, what triggered the event, or what fields to expect; a topic named `users.v1.registered` communicates the domain entity, the schema version, and the specific business fact in a single glance. Because topics are subscribed to by name across service boundaries, a vague topic name is the pub-sub equivalent of a method named `doStuff` in a public library.
+
+**Exercise:** Rename your `UserRegistered` topic to follow a `<domain>.<version>.<pastTenseVerb>` convention (e.g., `users.v1.registered`). Then add a second topic `users.v2.registered` with one additional field and verify that your v1 subscriber continues to work without modification — demonstrating that the version in the name is enforcing a real boundary.
+
+**Reflection:** If you needed to add a breaking field to the event payload, what would change in the topic name — and how does that name change protect the four existing subscribers?

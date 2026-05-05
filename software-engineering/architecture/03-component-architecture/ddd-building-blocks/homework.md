@@ -29,3 +29,15 @@ Add a `Reservation` value object that tracks *which order* a reservation belongs
 - [ ] Reserving more than available throws and leaves state untouched.
 - [ ] You can fetch an item, mutate it through its methods, save it, and re-fetch it consistently.
 - [ ] Value objects are equal-by-value and cannot be mutated after construction.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Ubiquitous Language — Code Uses the Domain's Exact Words
+
+DDD's ubiquitous language is clean code applied at the model level: when a warehouse manager says "receive stock," "reserve units," and "ship reserved items," those exact words should appear as method names in the code with no translation layer in between. A method named `incrementQuantity` instead of `receive` is a naming failure that forces every developer to maintain a mental dictionary between code concepts and domain concepts.
+
+**Exercise:** Read the four `InventoryItem` method names — `receive`, `reserve`, `release`, `ship` — to a non-developer who understands warehouse operations. Ask them to predict what each method does and what it prevents. If they can answer correctly without seeing the code, the ubiquitous language is working. Then audit `StockLevel`'s `available()` method: is "available" the exact word a warehouse manager uses, or is it a developer's approximation of "on-hand minus reserved"?
+
+**Reflection:** The `Reservation` stretch exercise asks where to put the complexity of tracking *which order* a reservation belongs to. The answer turns on whether "a reservation belonging to an order" is a concept the domain expert uses — does your domain expert actually say "release the reservation for order #42", or do they say something simpler? How does their vocabulary tell you where the complexity belongs?

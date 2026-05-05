@@ -46,3 +46,15 @@ Now run the loop on 5 different tasks. Does the loop terminate quickly enough? A
 - [ ] Bounded loop terminates correctly.
 - [ ] You can articulate when single-pass suffices vs when revise pays off.
 - [ ] You've measured: how often does revise produce a real improvement?
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Precise Interface Contracts + Meaningful Field Names
+
+The critic's output schema — `{ verdict, issues: [{ severity, message }] }` — is the interface between reviewer and author: every field name is a contract that the producer will act on in the next revision pass. A field named `issues` is specific; a field named `feedback` or `notes` is not — the producer must guess whether it is actionable, blocking, or merely informational. Naming fields from the consumer's perspective (what does the producer need to know to act?) produces a cleaner interface than naming them from the critic's perspective (what did I observe?).
+
+**Exercise:** Audit your critic's output schema and rename each field by asking "what will the producer do with this?" — if the answer is "revise," name it `required_changes`; if the answer is "note for the record," name it `advisory_notes`; if the answer is "stop iterating," name it `blocking_issues`. Then check whether your retry runner logic simplifies once the fields have action-oriented names.
+
+**Reflection:** The verdict enum has four values: `accept`, `accept_with_notes`, `revise`, `reject`. Each value is a named action, not a named quality level — the critic reports what to do next, not how good the artifact is. What clean code principle does that distinction reflect, and where else in software design do you see the same difference between status codes and action codes?

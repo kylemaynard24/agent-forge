@@ -28,3 +28,15 @@
 - [ ] Slow tenant cannot push other tenants past their normal latency.
 - [ ] No globally shared waiting line — each tenant has its own.
 - [ ] You can verify the isolation by chart or printed numbers.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — bulkhead names encode the boundary they protect, not their sequence
+
+A bulkhead named `Bulkhead1` or `pool_a` forces every engineer who reads the configuration to cross-reference code to understand what is being isolated; `AnalyticsTenantBulkhead` or `EnterpriseQueryPool` makes the isolation boundary obvious in the config file, the monitoring dashboard, and the incident ticket. Resource limit names should be equally explicit: `maxConnectionsPerTenantSlice` beats `max` or `cap`.
+
+**Exercise:** Rename your `TenantBulkhead` configuration map so that the key is the tenant tier or tenant name, and the value uses named fields (`{ maxSlots, queueDepth }`) rather than positional values. Then verify that your per-100ms queue-depth printout includes the bulkhead name so the output is self-explanatory without the surrounding code.
+
+**Reflection:** When the slow tenant's bulkhead configuration needs to be tightened at 3am, could an on-call engineer identify and change the right config value from the name alone — without reading the bulkhead implementation?

@@ -33,3 +33,15 @@ Add one mutation or fault-injection pass mentally: what tiny production change s
 - [ ] You can explain why each test exists
 - [ ] The suite covers rule, boundary, and contract
 - [ ] You documented what you deliberately chose not to test
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single responsibility, meaningful names, don't repeat yourself
+
+Test code is production code with a different audience: it will be read by engineers diagnosing failures, not by compilers, and it deserves the same naming, structure, and single-responsibility discipline as the code it covers. A test suite full of `test1`, shared setup that silently couples unrelated cases, and assertions that test five behaviors in one method is a maintenance liability that erodes the value of having tests at all.
+
+**Exercise:** Review the checkout test suite from this homework and apply three clean code rules to the test files specifically: (1) every test name must describe the scenario and expected outcome in plain language, (2) every test must have exactly one logical assertion cluster, and (3) any setup shared between tests must be named to describe what state it creates, not how it creates it. Count how many tests need to be renamed or split.
+
+**Reflection:** If a build fails at 2 a.m. and only the test name appears in the alert, would the on-call engineer know which business behavior broke — and if not, what is the test name actually communicating?

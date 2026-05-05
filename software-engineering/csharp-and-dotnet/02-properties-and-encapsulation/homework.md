@@ -43,3 +43,15 @@ Build a `Temperature` value type that demonstrates each property form deliberate
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/02-weather/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Encapsulation as a Clean Boundary
+
+Encapsulation is not about hiding things for secrecy — it is about giving callers a clean surface to work with so they do not need to understand the internals. `WeatherStation.Readings` returns `IReadOnlyList<Temperature>` because callers should not need to know it is backed by a `List<T>`, and they definitely should not be able to mutate it. Every property with more access than it needs is a door left open that future code will eventually walk through uninvited.
+
+**Exercise:** For each property in `Temperature` and `WeatherStation`, write next to it the most restrictive accessor that would still make the class work correctly. If you have any `{ get; set; }` properties, challenge yourself: could they be `{ get; init; }`, or just `{ get; }` with the value set only in the constructor? Every `set` you remove is a guarantee you are making to every caller about what can change after construction.
+
+**Reflection:** When you tried to call `station.Readings.Add(...)` from `Program.cs` and got a compile error, what did that error actually protect you from? Think about what a sneaky bug would look like if that method call had silently succeeded.

@@ -48,3 +48,15 @@ In any console project (a fresh one is fine):
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/11-nuget/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Dependencies as Accepted Contracts; Narrow Over Broad
+
+Every NuGet package you add is a contract your project accepts — and a surface area another team controls. A package that pulls in fifteen transitive dependencies is not just one dependency; it is sixteen contracts with sixteen different maintainers and sixteen different release schedules. Clean code at the dependency level means being intentional: prefer narrow packages that do one thing over broad frameworks that do many, and know exactly what you are accepting before you add a `<PackageReference>`.
+
+**Exercise:** After completing Exercise 1, look at the transitive dependency list produced by `dotnet list package --include-transitive`. For each transitive package, ask: do I know what this package does? If a transitive dependency is doing something your own code could do in ten lines, note it — that is a smell that the direct dependency is broader than it needs to be. Then look at `Bogus` before and after removal and confirm exactly which transitive packages it brought in and then took back out.
+
+**Reflection:** Central package management in Exercise 2 means version decisions live in one file. What does it say about a project's discipline if package versions are scattered across ten `.csproj` files, each potentially pinned to a slightly different version of the same library?

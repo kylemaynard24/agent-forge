@@ -29,3 +29,15 @@
 - [ ] No call ever hangs longer than `timeoutMs * maxAttempts + budget`.
 - [ ] Retrying a non-idempotent operation is impossible by construction (think interface).
 - [ ] You can demonstrate the difference in failure rate between "no retry" and "retry with jitter".
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — timeout constants name the operation and the reason for the value
+
+A constant named `TIMEOUT = 250` is a magic number; `MAX_PRICING_API_WAIT_MS = 250` names the operation it governs, communicates the unit, and signals that the value is a deliberate upper bound — not an arbitrary guess. When the pricing team tells you their SLA is 200ms, a well-named constant makes it trivial to find every timeout in the codebase that references their API and update it consistently.
+
+**Exercise:** Replace every numeric literal in your retry and timeout configuration with a named constant whose name encodes: (1) the operation it governs, (2) the unit (Ms, Seconds), and (3) whether it is a per-attempt limit or a total budget (`PER_ATTEMPT_PRICING_TIMEOUT_MS` vs `TOTAL_PRICING_CALL_BUDGET_MS`). Add a one-line comment to each constant explaining why that value was chosen.
+
+**Reflection:** If the downstream pricing API upgraded its infrastructure and cut its P99 from 800ms to 200ms, which of your timeout constants would need to change — and how does a well-named constant make finding all the relevant values faster than a generic search for `250`?

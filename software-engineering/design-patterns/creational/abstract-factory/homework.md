@@ -29,3 +29,15 @@ Add a `HighContrast` theme. Application code must require zero edits to support 
 
 - [ ] Login screen renders identically against both factories.
 - [ ] Adding a third theme requires no edits to `renderLoginScreen`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Interface Segregation Principle
+
+The factory method names are the public commitment — `createButton()` tells the consumer exactly what product family member it is getting, while a generic `create()` or `make()` forces them to check the return type to understand what was produced. Applied cleanly, the abstract factory interface reads like a product catalog: every method name makes the product obvious, the interface is narrow enough that a new theme only requires implementing what the product family actually contains, and `renderLoginScreen` reads as pure domain logic with no conditional on theme. Applied messily, a factory that keeps gaining methods over time (`createTooltip`, `createSpinner`, `createBadge`...) becomes a coupling magnet — every new widget forces all factory implementations to update.
+
+**Exercise:** Write out the abstract `UiFactory` interface and read it as a contract: every method you list is a promise that every theme must fulfill. Remove any method from the interface that isn't actually used by `renderLoginScreen` — unused interface surface is a maintenance cost with no benefit.
+
+**Reflection:** The constraint says `renderLoginScreen` must never name a concrete class like `DarkButton` — but it does name the abstract types like `Button`. What would have to change in your design if even the abstract product names needed to be hidden from the renderer?

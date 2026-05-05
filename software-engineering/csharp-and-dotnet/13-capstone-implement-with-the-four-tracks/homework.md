@@ -106,3 +106,15 @@ In `Summarizer.App/Program.cs`:
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/13-capstone-summarizer/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** The Whole System as a Readable Conversation
+
+At the capstone scale, clean code is not about individual variable names — it is about whether the entire system communicates its intent to a new C# developer. The interface names (`IDocumentSource`, `ISummarizer`, `ISummaryStore`) form a vocabulary. The class names (`SummarizerService`, `LoggingSummarizer`, `JsonFileSummaryStore`) extend that vocabulary with implementations. A new developer should be able to read `Program.cs`, follow the composition root, and understand the complete behavior of the system without asking you a single question.
+
+**Exercise:** Hand your `Program.cs` and interface definitions (but not the implementations) to a hypothetical new C# teammate — or just read them yourself as if seeing them for the first time. Can they answer: what does this service do, what are its dependencies, and what would they need to swap out to test it in isolation? If any of those answers require reading an implementation file rather than an interface or name, that is your refactor target.
+
+**Reflection:** The `LoggingSummarizer` decorator wraps the real `ISummarizer` without the service knowing. If you had not used the decorator pattern and had instead added logging directly inside `SummarizerService`, what would the class name have to become to honestly reflect that dual responsibility — and how would that name signal the design has gone wrong?

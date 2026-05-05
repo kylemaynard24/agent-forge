@@ -30,3 +30,15 @@
 - [ ] Five concurrent retries produce one order, one bill, one shipping label.
 - [ ] Same key + different body is rejected with a clear error.
 - [ ] Replays return the original response unchanged.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — idempotency key names must make the scope of "same operation" unambiguous
+
+A key field named `key` or `id` in the `IdempotencyStore` reveals nothing about what uniqueness it enforces; `clientIdempotencyKey` distinguishes the client-supplied deduplication token from the server-assigned order ID, making it impossible to confuse the two in a code review or a database dump. The "same key + different body = client bug" rule is only enforceable if the key's name communicates that it is a client-controlled deduplication token, not a server identity.
+
+**Exercise:** Audit every variable and store field name related to idempotency in your implementation. Rename them so that `clientIdempotencyKey`, `requestBodyHash`, `cachedResponseBody`, and `cachedResponseStatus` are clearly distinguishable from each other and from the order's own `orderId`. Then verify the error message for "same key, different body" names both fields explicitly.
+
+**Reflection:** If a mobile client accidentally used the user's session token as the idempotency key for all their order requests, what would the observable symptom be — and what in the key's name could have made that misuse more obvious to the client SDK author?

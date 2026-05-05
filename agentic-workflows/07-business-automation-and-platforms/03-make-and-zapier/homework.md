@@ -34,3 +34,15 @@ For each one, explain:
 - you can explain the difference between "fast to build" and "cheap to own"
 - the examples do not sound interchangeable
 - one migration threshold is explicit
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names for a non-technical audience
+
+In Make and Zapier, automation step names are the only documentation that non-technical operators will ever read — there is no source code to fall back on. The clean code principle of naming for the reader applies with even greater force here: `filter_orders_over_500_dollars` is self-explanatory to an operations manager; `Filter` is meaningless without context. Clean naming in no-code tools is not a cosmetic choice — it is the entire documentation layer.
+
+**Exercise:** Rename every step in your automation designs so that a business owner unfamiliar with the platform could read the step list top-to-bottom and describe the workflow's business logic in plain language.
+
+**Reflection:** When this automation breaks at 11 PM and a non-technical operator is the first to notice, will the step names tell them where to look — or will they have to call a developer to interpret what failed?

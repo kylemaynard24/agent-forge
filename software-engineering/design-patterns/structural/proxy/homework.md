@@ -30,3 +30,15 @@ The order of stacking matters. What happens if you put `Cache` outside `AccessCo
 
 - [ ] Calling render() on the full stack: enforces auth, caches result, defers fetch until needed.
 - [ ] You can articulate why proxy ≠ decorator in *purpose* even though their UML looks the same.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility Principle + Transparent Interfaces
+
+The proxy is clean precisely when it is invisible — the caller uses the `Image` interface and cannot tell whether it is talking to the real object or a proxy, which means the proxy must forward everything it does not intercept without transformation or opinion. Applied cleanly, `CachingProxy` intercepts only `render()`, memoizes the result, and forwards the call identically on a cache miss — the only code that exists is the one concern (caching) and everything else is a transparent pass-through. Applied messily, a proxy that modifies return values, swallows errors silently, or adds logging alongside access control has merged multiple responsibilities into one class, making it impossible to remove a proxy from the stack without auditing every method it intercepts.
+
+**Exercise:** For each proxy in your stack, list the methods it intercepts and the methods it forwards untouched. The intercepted list should contain only the single concern named in the class (`LazyLoadingProxy` intercepts `render()` to defer the fetch — nothing else). If a proxy intercepts more than one method for more than one reason, it is doing too much.
+
+**Reflection:** The stretch goal shows that `Cache` outside `AccessControl` serves cached results to unauthorized users — a security bug caused by stacking order, not by any individual proxy's code. If the correct order is not enforced, the proxies are individually clean but collectively wrong. What does this tell you about the limits of single-responsibility naming when the semantics of a design depend on composition order?

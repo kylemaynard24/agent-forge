@@ -34,3 +34,15 @@ For each, decide CAP behavior during a partition and PACELC behavior in steady s
 - [ ] Each feature has a documented policy and behavior matches it.
 - [ ] You can demo "CP refuses, AP serves stale" on the same partition for two different features.
 - [ ] You can articulate, in one sentence per feature, the price the user pays for the choice.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Comments as documentation — CAP/PACELC choices belong in the code as ADR-style comments, not in a wiki
+
+The cleanest code for a distributed system component is one where the CAP/PACELC choice is documented at the declaration site — a comment that reads "CP: inventory decrement must not serve stale; we reject during partition rather than risk an oversell" is more durable than a Confluence page that diverges from the implementation over time. Clean code treats undocumented architectural decisions as technical debt equal to undocumented function behavior.
+
+**Exercise:** Add a structured comment block at the top of each of your three feature simulators documenting: the chosen CAP behavior, the PACELC behavior, the user-visible consequence of each choice, and the trigger that would make you reconsider. Use a consistent format across all three so the comments are comparable at a glance.
+
+**Reflection:** Six months after shipping, a new engineer needs to change the inventory decrement consistency policy. What in your current code would tell them what the original decision was and why — and what would force them to guess?

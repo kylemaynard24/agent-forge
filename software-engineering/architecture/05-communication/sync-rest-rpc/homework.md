@@ -28,3 +28,15 @@
 - [ ] Three SKU prices fetched and totaled.
 - [ ] Timeouts trigger when `--latency=500`.
 - [ ] 404 and 500 paths exercised in your test run.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — REST endpoints use nouns for resources, HTTP methods for actions
+
+`GET /price/:sku` follows the clean code rule for REST: the noun (`price`) names the resource, and the HTTP verb (`GET`) names the action, so no redundancy like `GET /getPrice/:sku` or `POST /fetchPrice` creeps in. The response shape `{ sku, price, currency }` is equally disciplined — `currency` is unambiguous, `price` is a noun not a verb, and no field is abbreviated.
+
+**Exercise:** Imagine adding two more endpoints: one to update a price and one to bulk-fetch prices for multiple SKUs. Write out the path, HTTP method, request body, and response shape for each — applying REST naming rules strictly — before writing any code. Check that no path segment contains a verb and that every response field is a noun that stands alone.
+
+**Reflection:** Where does the REST naming convention break down for operations that are inherently actions rather than resources (e.g., "apply a discount code") — and what is the conventional clean code resolution?

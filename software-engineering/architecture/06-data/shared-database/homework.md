@@ -29,3 +29,15 @@
 - [ ] Both services work pre-migration.
 - [ ] One returns wrong / undefined data post-migration without throwing.
 - [ ] You can articulate, in writing, the exact moment this design starts costing more than it saves.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — table naming conventions are the only enforced boundary in a shared schema
+
+When two services share a single database, a table named `invoices` is owned by no one; a table named `billing_invoices` carries the owning service's name as a prefix, making ownership visible to every developer who runs a query or reads a migration file. Naming conventions in a shared schema are not cosmetic — they are the last line of defense against accidental cross-service coupling when no module boundary exists.
+
+**Exercise:** Extend your shared `db` to include a second logical domain (e.g., add a `reporting_snapshots` table). Apply a strict prefix convention (`billing_` and `reporting_`) to every table. Then write a lint rule (even a comment-level convention document) that explains the prefix scheme and what constitutes a violation, so the convention survives beyond the engineers who invented it.
+
+**Reflection:** When the billing team renames `billing_invoices.amount_cents`, what would a prefix-plus-documentation convention have made visible that a bare table name `invoices` would not?

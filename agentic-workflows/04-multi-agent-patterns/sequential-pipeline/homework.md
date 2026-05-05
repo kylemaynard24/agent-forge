@@ -46,3 +46,15 @@ Show that swapping is one CLI flag — no other stages change.
 - [ ] Each stage's output persists; you can inspect them after a run.
 - [ ] Resume from a partially-completed run works.
 - [ ] You can articulate when this beats a single agent and when it doesn't.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Stable Named Transformations
+
+Each pipeline stage should have a name that describes the transformation it performs — not the resource it touches or the agent it calls. "Diff parser," "Analyzer," and "Reporter" are good names because each names a transformation with a clear input and output type; a stage named "Stage 2" or "Processor" names a position, not a responsibility, which is the pipeline equivalent of a function named `step2()`. When a stage name requires reading the schema to understand what it does, the name is not doing its job.
+
+**Exercise:** Take your three pipeline stages and write a type signature for each in the form `(InputSchema) => OutputSchema` with the schema types named after what they represent (e.g., `ParsedDiff`, `IssueList`, `ReviewReport`). If any type name feels generic (`Result`, `Data`, `Output`), rename it. The named types become the inter-stage contracts — their names should make the pipeline's data flow legible without reading any stage's implementation.
+
+**Reflection:** The homework requires stages to "not peek at each other's internals" — they communicate only through structured artifacts. What module design principle does this enforce, and why is "stages with vague names are pipeline smell" actually a symptom of this principle being violated?

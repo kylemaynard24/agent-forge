@@ -29,3 +29,15 @@ Make illegal transitions **literally inexpressible**: e.g., `Idle` should not ev
 - [ ] A clean coin → select → dispense flow works.
 - [ ] Inserting a coin while dispensing is rejected with a clear reason.
 - [ ] Restocking from `OutOfStock` returns to `Idle`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Single Responsibility Principle
+
+The state class name is a precise claim about what machine condition is active — `HasMoney` is more honest than `State2` or `WaitingState` because it names the distinguishing fact, not a position in a sequence. Applied cleanly, opening any state class tells you immediately which machine behaviors are legal right now, because every method is either a valid action or an explicit rejection — and the class contains nothing else. Applied messily, a monolithic `VendingMachineState` with a `currentState` enum field and one large switch per method is structurally the same as having no State pattern at all.
+
+**Exercise:** For each of your four state classes, write a one-sentence contract: "In this state, the machine guarantees X and rejects Y." If you can't write that sentence without mentioning another state's concerns, the class boundary is in the wrong place.
+
+**Reflection:** The stretch goal asks whether illegal transitions should be inexpressible at the type level or caught at runtime — how does your answer to that question change the *names* you give to the state interface's methods?

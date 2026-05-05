@@ -30,3 +30,15 @@ Write a unit test that demonstrates singleton state **leaks between tests** (the
 - [ ] Two importing modules call `getInstance()` and observe shared counters.
 - [ ] `new RateLimiter()` throws.
 - [ ] You can articulate why "must be one" is often a lie (multi-tenant, sharded, test harness).
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Single Responsibility Principle (vs. global mutable state)
+
+The clean singleton has one named entry point (`RateLimiter.getInstance()`) that makes the shared nature of the object explicit at every call site — callers cannot accidentally create a second instance, and the name announces the singleton's identity without requiring documentation. Applied cleanly, the singleton manages one shared resource and its name describes that resource precisely; applied messily, the singleton becomes a grab-bag of global state — the singleton class is not the anti-pattern, but using it to bundle unrelated shared concerns into one class is.
+
+**Exercise:** Write a list of every piece of state your `RateLimiter` singleton holds. If any two items on that list could change for independent reasons (e.g., rate-limit buckets vs. audit logging vs. config), the singleton has multiple responsibilities — extract each independent concern into its own class, even if each class is still a singleton.
+
+**Reflection:** The constraint says the instance must live as a private static field rather than a global variable — structurally these are nearly identical, but what does calling `RateLimiter.getInstance()` at every call site communicate to the reader that a bare `rateLimiter` global variable does not?

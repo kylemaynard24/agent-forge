@@ -27,3 +27,15 @@ Create a small script related to tracking a player name and score in a tiny game
 - you can run the script successfully
 - you can predict the output before running it
 - you can explain the code in plain language
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names
+
+A variable name is the first piece of documentation anyone reads. When you write `let x = 0` instead of `let playerScore = 0`, you force every future reader — including yourself in two weeks — to decode what `x` is before they can understand what the code does.
+
+**Exercise:** Write your player name and score script twice. In the first version, use single-letter or vague names (`n`, `s`, `val`). In the second, give every variable the clearest possible name. Read both versions aloud. Notice how the second version narrates itself and the first one demands mental translation.
+
+**Reflection:** Did you pick a shorter name anywhere because it was faster to type? Would a teammate scanning the code understand that variable's purpose in under three seconds?

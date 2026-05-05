@@ -58,3 +58,15 @@ Run a 50-edit session under each. Count the times the behavior didn't happen as 
 - [ ] You've tested it through both successful and failing scenarios.
 - [ ] You can articulate why it's a hook and not a prompt.
 - [ ] You've measured (or estimated) the latency it adds.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Do One Thing
+
+A hook that runs a formatter, then a linter, then a secret scanner in one script is three functions that happen to share a file: each has different triggering logic, different failure modes, and a different reason to change. Bundling them violates the single-responsibility principle in the same way a `validateAndSaveAndNotify()` function does — when the linter logic needs to change, you have to reason about the formatter and the scanner code at the same time.
+
+**Exercise:** Take your hook and write a one-sentence responsibility statement for it starting with a single verb (e.g., "Blocks commits that lack a JIRA ticket reference"). If the statement requires "and" or "also", split the hook into two separate matchers in `settings.json`, each with its own narrow responsibility and its own failure handling.
+
+**Reflection:** The homework asks you to document inline why this is a hook and not a prompt. What is the equivalent comment you'd write in code to explain why a particular check is a guard clause rather than a test — and what does that documentation practice tell you about how to make the system's enforcement boundaries legible to future maintainers?

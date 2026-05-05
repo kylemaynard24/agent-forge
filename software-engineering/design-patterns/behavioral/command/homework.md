@@ -29,3 +29,15 @@ Serialize the command log to JSON. On reload, replay the log to reconstruct the 
 
 - [ ] Demo draws three shapes, undoes twice, redoes once, and the canvas state matches expectations.
 - [ ] A macro of 3 draws can be undone in one step.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Single Responsibility Principle
+
+A command's name is a verb phrase that describes the action from the user's perspective — `DrawCircle`, `MoveSelection`, `DeleteShape` — not an implementation label like `Command2`. Applied cleanly, the command history log reads like a readable audit trail of user intent; applied messily, `undo()` logic bleeds into the `History` or `Canvas`, making it impossible to answer "what does undoing this specific action mean?" without tracing across multiple files.
+
+**Exercise:** Write out your `History` stack after a three-step sequence as a list of command names. Read it aloud — if it sounds like a story of what the user did, the names are clean. If it sounds like machine output, rename until it reads naturally.
+
+**Reflection:** If the `undo()` logic for `MoveSelection` lived in the `History` class instead of the command itself, what would have to change in `History` every time you added a new command type — and what does that tell you about where responsibility belongs?

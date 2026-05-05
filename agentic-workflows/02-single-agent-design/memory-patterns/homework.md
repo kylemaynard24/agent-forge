@@ -63,3 +63,15 @@ Compare the recall quality on 5 example queries. Where does substring search fai
 - [ ] GC has run and dropped some entries; you have logs proving it.
 - [ ] The multi-session demo works without context-window memory.
 - [ ] You've articulated when you'd reach for vector memory and when you wouldn't.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Minimize Shared Mutable State + Explicit Mutation
+
+Persistent memory is shared mutable state — it outlives any single agent session and can be read or written by any future invocation — which means all the discipline that applies to global variables applies here: be explicit about what is stored, name keys clearly enough that their purpose is obvious in six months, and make staleness visible rather than silent. The `last_updated` and `last_recalled` fields in your schema are exactly what clean code asks for when shared state must exist: a record of every mutation, named for what it tracks.
+
+**Exercise:** Review every key you wrote to memory in your multi-session demo. Apply the same naming standard you'd use for a public API field: the key name alone should communicate what the entry contains, who set it, and roughly when it matters. Rename any key that requires reading the content to understand its purpose.
+
+**Reflection:** The GC step drops entries older than 90 days — a hard-coded policy embedded in the implementation. In software design, where would you put that policy so it could be changed without touching the GC logic itself, and what does that tell you about the relationship between configuration and code in stateful systems?

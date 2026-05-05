@@ -59,3 +59,15 @@ Give a 30-minute talk to colleagues about your agent. Their questions are your d
 - [ ] Retrospective is written.
 - [ ] You can defend every design choice in conversation.
 - [ ] Optional: stretch goals attempted.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; single responsibility per component
+
+The capstone is where every clean code principle converges at the design level: each tool name should make its caller's intent obvious at the call site, each system prompt section should have exactly one purpose, and each output schema field should name what it carries. A design document with vague component names and a prompt with undifferentiated sections produces an agent that is hard to debug — because the design itself is the first thing you read when a run goes wrong.
+
+**Exercise:** Before writing any code, write out every tool name, every system prompt section heading, and every output schema field name — then read them as a list and ask whether a new engineer could reconstruct the agent's responsibilities from the names alone.
+
+**Reflection:** Looking at your finished capstone design, which of your naming choices would you change now that you know how the agent actually behaves in practice?

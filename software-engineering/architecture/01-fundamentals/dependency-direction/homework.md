@@ -36,3 +36,15 @@ Map your dependency graph as a directed graph. Find any cycles. There should be 
 - [ ] `grep -r 'Stripe' src/billing/` returns nothing.
 - [ ] Your billing tests run with no network and no SDK.
 - [ ] You can articulate the difference between "import depends on" and "calls at runtime."
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names at the Interface Boundary
+
+A dependency arrow in an architecture diagram is a named code contract, and the name of that contract should come from the *high-level module's vocabulary*, not the low-level module's. Naming the interface `StripeGateway` instead of `PaymentGateway` is a clean code failure: the high-level policy is forced to speak the language of its own dependency, embedding the vendor's name in the contract it owns.
+
+**Exercise:** Look at your `PaymentGateway` interface and read each method name aloud from the perspective of `BillingPolicy`. Do the method names sound like billing policy operations (`charge`, `refund`, `authorize`) or like SDK operations (`createPaymentIntent`, `confirmCharge`)? Rename any method that sounds like it belongs in a vendor README rather than a billing policy document.
+
+**Reflection:** Why does it feel *natural* to put interfaces in a shared `/interfaces` folder rather than next to the policy that owns them — and what does that impulse reveal about how most developers think about ownership?

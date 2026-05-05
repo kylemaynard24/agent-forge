@@ -34,3 +34,15 @@ This contract is what survives if you ever extract `users` into its own service.
 - [ ] No cross-module file reaches past `users/index.js`.
 - [ ] CI fails if someone tries to.
 - [ ] You can describe the `users` module to a new hire by handing them only `index.js`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** The Public API as a Named Contract — `index.js` Is the Interface, Not a File
+
+In a modular monolith, `users/index.js` is the clean code boundary made tangible: it is a named, explicit contract that says "these four exports are everything `users` promises to the world," exactly as a well-designed class interface promises exactly what callers may depend on and hides everything else. A module that leaks DB types through its public API (`User extends Knex.Model`) has committed the same error as a class that exposes its private fields — the implementation detail becomes part of the contract, and the module can never change its internals without breaking callers.
+
+**Exercise:** Read `users/index.js` as if you are `billing` — a module that has no access to `users/_internal/`. Write down every assumption `billing` must make about `users` based solely on the public API surface. Then check whether any of those assumptions encode infrastructure details (e.g., that `getUserById` returns a synchronous result, that `User` has a specific DB shape). Each infrastructure assumption in the public API is a coupling that will make the eventual service extraction harder than it needs to be.
+
+**Reflection:** The homework notes that `users/index.js` is better than `users/UserService.js` as the module's public face because callers don't know what kind of thing they imported. What does this reveal about the difference between *hiding the implementation* and *hiding the implementation type* — and why does the latter matter more as a module grows?

@@ -29,3 +29,15 @@
 - [ ] Under sustained downstream failure, downstream call rate drops to roughly zero (proven via a counter).
 - [ ] Recovery is automatic — no human resets the breaker.
 - [ ] State transitions are observable (logs or metrics).
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — use the canonical state machine vocabulary (CLOSED, OPEN, HALF_OPEN)
+
+`CLOSED`, `OPEN`, and `HALF_OPEN` are an industry-wide shared vocabulary documented in every circuit breaker paper and library; renaming them `HEALTHY`, `FAILED`, `TESTING` in your implementation means every engineer joining the team must learn a private dialect before they can read the code or the logs. Using the canonical names is the clean code principle of "don't be clever" applied at the architecture vocabulary level.
+
+**Exercise:** Search your implementation for any string or constant that represents a circuit breaker state. Ensure all three canonical names are used exactly as written (`CLOSED`, `OPEN`, `HALF_OPEN`) in state variables, log messages, and any exported metrics. Then verify that your state-transition log lines include both the previous and next state by name, not by a numeric code.
+
+**Reflection:** If an engineer unfamiliar with circuit breakers saw a log line reading `state: 2 → 0`, how long would it take them to understand what happened — and how does using `OPEN → CLOSED` change that?

@@ -74,3 +74,15 @@ Note: what did the safety net catch? what didn't it? Tighten your real settings 
 - [ ] You've tuned for a week and your settings feel earned.
 - [ ] You have a project `settings.json` reviewable as code.
 - [ ] You can articulate the safety hierarchy (prompt < skill < hook < permission deny).
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Principle of Least Privilege + Explicit over Implicit
+
+A broad permission like `allow: Bash` is the settings equivalent of a public mutable global variable — it grants access to everything without naming what is actually needed, which means that any future tool call inherits the permission even if it was never intended to. A narrow permission like `allow: npm test, git status, cat` is the settings equivalent of a function that declares exactly which dependencies it takes as parameters: the scope is visible, reviewable, and bounded.
+
+**Exercise:** Take each entry in your project `settings.json` `allow` list and rewrite it as a comment: "This allows `<operation>` because `<specific scenario>` and it is safe because `<constraint>`." Any entry you cannot complete that sentence for should be moved to `ask` until you can justify it — treat the exercise as a code review of your own permission policy.
+
+**Reflection:** The homework separates user, project, and local settings. In software design, what layer architecture does this mirror — and why is the rule "project settings are in the repo, personal overrides are gitignored" the same principle that separates shared configuration from environment-specific secrets?

@@ -58,3 +58,15 @@ Sketch the file structure and how they hand off to each other. Build it small.
 - [ ] You've written a real `.claude/skills/<name>/SKILL.md` that loads when intended.
 - [ ] You've tested at least 5 user phrasings and tuned the description.
 - [ ] You can articulate when a slash command becomes a skill becomes an agent.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility + Descriptive Trigger Conditions
+
+A skill is a reusable function that auto-loads based on its description — which means the description doubles as both the function's docstring and its dispatch condition. A skill described as "be a careful coder" violates the single-responsibility principle in the same way a function named `handleEverything` does: it has no boundary, its trigger is anything, and there is no way to test whether it applied correctly. A description that reads "applies when the user requests a refactor and needs a before/after comparison" is specific enough to unit-test: either the trigger fired or it didn't.
+
+**Exercise:** Write the trigger condition for your skill as a boolean predicate function — `shouldApplySkill(userMessage): boolean` — and implement it with real logic rather than a keyword match. If the function body is longer than 3 conditions, the skill probably has more than one responsibility; split it.
+
+**Reflection:** You tested 5 phrasings and tuned the description to reduce false triggers. In software, what pattern does this resemble — and what does it tell you about the relationship between a skill's description and a function's type signature?

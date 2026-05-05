@@ -43,3 +43,15 @@ Write:
 2. What alternatives did they consider?
 3. Do you agree with their reasoning? What would you have done differently and why?
 4. What is one thing this reading changed or added to your mental model?
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Make the implicit explicit; evidence-backed assertions
+
+"I believe this approach is better" is the opinion equivalent of an undocumented function — it asserts a result without showing the reasoning. "I believe X because I observed Y in three codebases and it caused Z each time" is a named claim with named evidence, which is both more persuasive and more useful to challenge productively. Engineering opinions with named evidence are auditable in the same way well-commented code is.
+
+**Exercise:** Take your strongest technical opinion from Exercise 1 and rewrite it so that every claim is backed by a named piece of evidence — a specific codebase, a specific incident, a specific post-mortem — and remove any sentence that is only a feeling.
+
+**Reflection:** If a colleague pushed back on your opinion and asked "what's that based on?", would you have specific named evidence ready — or would you be reaching for generalities?

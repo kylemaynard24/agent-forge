@@ -29,3 +29,15 @@
 - [ ] Two services with truly private stores.
 - [ ] Composer endpoint produces a unified product view.
 - [ ] Inventory schema change does not break pricing.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — schema and store names encode ownership boundaries
+
+Naming the inventory service's internal store `inventoryStore` rather than a generic `db` or `store` makes the ownership boundary visible at the point of declaration; when a developer sees `pricingStore` and `inventoryStore` side by side, the boundary is enforced by reading, not only by module access control. The clean code principle is that names should reveal intent — and in a database-per-service design, the most important intent to reveal is who owns this data.
+
+**Exercise:** Review every variable name and method name in your two services that refers to a data store or a DTO. Ensure the service name is part of the identifier (`inventoryRecord`, not just `record`; `pricingStore`, not just `store`). Then verify the composer uses neither store's naming vocabulary — it should speak in terms of the composed output only.
+
+**Reflection:** When you add the `warehouseId` field to `InventoryService`, what names in `PricingService` would have to change if the two services shared a single DTO type — and what does that tell you about naming and coupling?

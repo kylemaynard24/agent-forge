@@ -50,3 +50,15 @@ Example: a `/review-this-file` command that spawns a security agent and a readab
 - [ ] You've written a real `.claude/commands/<name>.md` and run it.
 - [ ] Output is consistent across 3+ runs.
 - [ ] You can articulate when to write a command vs an agent vs a hook.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names + Narrow Interfaces
+
+A slash command name is the user-facing API surface: it is typed before any description is read, so it must communicate intent from the name alone. A command named `/review-this-file` tells the user (and Claude) what will happen; a command named `/helper` tells them nothing. The body of the command is the function body, `$ARGUMENTS` is the parameter, and the `description` frontmatter is the docstring — all three should be as deliberate as the equivalent parts of a well-written function.
+
+**Exercise:** Take the slash command you built and try invoking it with only the name visible — no body, no description. Write down what a new teammate would assume it does. Compare that assumption to what it actually does. If there is a gap, rename the command or tighten the first sentence of the description until there isn't.
+
+**Reflection:** The homework says a slash command "lives in version control" — what does that mean for how you maintain it, and what would a code review of a slash command body look for that a review of a regular file might not?

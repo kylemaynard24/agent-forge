@@ -38,3 +38,15 @@ This is why most "should be P2P" pitches downgrade to "P2P for the bandwidth-hea
 - [ ] You can list 3 failure modes per design.
 - [ ] You've made a defensible choice for the actual game.
 - [ ] You understand why "fully decentralized" is rare in commercial products.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Names Should Reflect Actual Behavior, Not Aspirational Roles
+
+System topology assigns names to participants — client, server, peer, coordinator, authority — and those names are behavioral contracts that should match what each node actually does. Calling a node a "peer" when it depends on a central tally service for trust and ranking is a naming lie that misleads both developers and operators about failure modes; the node is really a "semi-trusted client," and naming it accurately surfaces the architectural reality that the design is a hybrid, not true P2P.
+
+**Exercise:** For your hybrid Design B, name every distinct participant role in the system (not just "client" and "server") based on what each node *actually does* in normal operation and in failure scenarios. For example, a peer that signs results and submits to a tally is doing something different from a peer that just plays the match — give each distinct behavioral role a distinct name. Check whether your names would still be accurate if the central tally service went offline.
+
+**Reflection:** The Stretch exercise shows that "fully decentralized" requires solving Sybil attacks, double-spend, and NAT traversal. How does acknowledging these constraints upfront — by naming the relevant participant roles precisely — help a design document communicate risk more honestly than a diagram that just labels everything "peer"?

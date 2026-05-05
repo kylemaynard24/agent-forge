@@ -29,3 +29,15 @@ Make all handlers async (return promises). A thrown error in `auth` should skip 
 
 - [ ] Adding a `cors` handler at any position works without editing other handlers.
 - [ ] An auth failure short-circuits cleanly with the correct response.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility Principle + Meaningful Names
+
+Each handler in a chain should do exactly one thing, and its name should announce that thing without a comment — `RateLimitHandler` tells you everything, `Handler3` tells you nothing. Applied cleanly, the chain reads like a policy document: rate-limit, authenticate, log, route. Applied messily, a single "ValidationHandler" quietly does auth, logging, and business-rule checks, making the chain impossible to reorder or test in isolation.
+
+**Exercise:** Take your `auth` handler and audit it: list every decision it makes. If you find more than one reason it could change (e.g., "the auth scheme changes" AND "the error format changes"), split it. Name each piece after its single job.
+
+**Reflection:** If you renamed every handler in your chain to `Handler1`, `Handler2`, etc., could a new teammate still understand the pipeline's policy from reading the wiring code alone — and if not, what does that tell you about the names you chose?

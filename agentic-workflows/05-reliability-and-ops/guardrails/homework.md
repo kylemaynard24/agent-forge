@@ -60,3 +60,15 @@ This is your evidence for why the guardrail caught a bad case (or wrongly blocke
 - [ ] Rejections have specific reasons surfaced clearly.
 - [ ] You can articulate which threats each layer addresses.
 - [ ] You've tested at least 5 attack scenarios — at least 3 are caught.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names; single responsibility
+
+A guardrail named `safety_check` could mean anything; `prevent_file_writes_outside_working_directory` states exactly what threat it neutralizes, making it auditable, testable, and possible to disable surgically without guessing at side effects. Each guardrail should have one precisely named job — a broad guardrail that does several things at once is as hard to reason about as a function that does several things at once.
+
+**Exercise:** Rename every guardrail in your implementation so that the name answers the question "what specific harm does this prevent?" — not "what does this check?"
+
+**Reflection:** If a guardrail fires unexpectedly on legitimate input, does the name alone tell you where to look to tune it — or do you have to read the implementation to understand what it was trying to protect?

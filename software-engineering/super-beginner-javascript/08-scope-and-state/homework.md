@@ -27,3 +27,15 @@ Create a small script related to tracking score correctly without losing or leak
 - you can run the script successfully
 - you can predict the output before running it
 - you can explain the code in plain language
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Minimize Scope; Keep State Close to Where It Is Used
+
+Every variable declared at a wider scope than necessary is state that travels further than it needs to. The further state can travel — readable and writable from many places — the harder it becomes to answer the question "where was this changed?" Clean code keeps state as local as possible: declared inside the function that needs it, not leaked to the outer scope where unrelated code might accidentally touch it.
+
+**Exercise:** Write your score-tracking script with all variables declared at the top of the file as globals. Then rewrite it so every variable lives in the tightest possible scope — inside the function or block where it is actually needed. Count how many variables moved inward. Each one that moved is a piece of state that can no longer be accidentally modified by unrelated code.
+
+**Reflection:** Were there any variables that genuinely needed to live at a wider scope to work correctly? What was it about those specific values that required a broader lifetime — and does that feel like a necessary design choice or an accidental one?

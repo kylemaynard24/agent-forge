@@ -46,3 +46,15 @@ Build a small payment-processing system that uses both interfaces (for the contr
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/04-payments/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Interface Names Describe Capabilities, Not Implementations
+
+`IPaymentProcessor` names a capability — something that can process payments — not a specific technology or mechanism. This matters because `PaymentRouter` depends on `IPaymentProcessor`, and that dependency reads as "I need something that can process payments," which is the correct statement of intent. If the interface were named `AbstractBasePaymentHandler` or `StripeCompatibleProcessor`, it would be leaking implementation details into what should be a pure contract.
+
+**Exercise:** For each interface and abstract class in your payment system, write its name on one side of a piece of paper, and on the other side write what you would tell a caller who asks "what can you do?" — without mentioning how. If that capability description is clean and technology-agnostic, the name is good. If it sounds like "I can process payments the way Stripe does," the name is carrying too much implementation.
+
+**Reflection:** `PaymentRouter` takes `IReadOnlyList<IPaymentProcessor>`, not `IReadOnlyList<PaymentProcessorBase>`. What would a caller lose — or have to know — if the parameter type were the abstract base class instead of the interface? What does that difference reveal about which abstraction is actually the right boundary?

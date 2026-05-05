@@ -48,3 +48,15 @@ This is the core trade-off of tool design — write your conclusion in 3 sentenc
 - [ ] Each description tells the LLM when to use, when not to use, and what's returned.
 - [ ] You've documented at least three failure scenarios and the design choice that prevents each.
 - [ ] You can articulate when you'd compose tools vs grow a higher-level one.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names + Single Responsibility
+
+A tool name is the only documentation available to the model at the moment it decides which tool to call — there is no hover-over, no IDE autocomplete, no colleague to ask. A tool named `process` or `handle_data` forces the LLM to read the entire description to understand intent, the same way a function named `doStuff` forces a human reader to read the body; a tool named `fetch_url` communicates its contract before the description is ever read.
+
+**Exercise:** Take your 4–6 research-agent tools and cover up every description. Can you predict — from the name alone — what each tool does, what it takes as input, and what it returns? For any tool where you can't, rename it until you can.
+
+**Reflection:** The homework forbids a `do_research(action, ...)` super-tool. What is the clean code smell that pattern violates, and where else in software design have you seen the same temptation to collapse multiple operations into one flexible entry point?

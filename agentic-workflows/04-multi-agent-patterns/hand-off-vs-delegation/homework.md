@@ -51,3 +51,15 @@ Some real systems mix: the user starts with a router; the router hands off to a 
 - [ ] You've built one delegation flow and one hand-off flow.
 - [ ] You've run them on a multi-turn scenario and compared.
 - [ ] You can articulate when to use each.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Explicit Contracts + Ownership Clarity
+
+Hand-off and delegation are different ownership contracts, and that difference should be declared explicitly in each agent's description — not inferred from runtime behavior. An agent that receives a delegation returns a result and expects the caller to remain responsible for the outcome; an agent that receives a hand-off owns the rest of the conversation. Leaving the ownership model implicit is the agentic equivalent of a function that mutates a parameter without documenting it: the caller cannot know whether it still owns the value, which produces bugs that are only visible at runtime.
+
+**Exercise:** For each agent you built — the research orchestrator and the router — add a single sentence to the top of its system prompt that explicitly declares its ownership model: either "I own this outcome end-to-end and report back to my caller" (delegation worker) or "I own this conversation from the point of hand-off; the router has no further role" (hand-off recipient). Then check whether the agent's actual behavior matches that declaration.
+
+**Reflection:** The homework notes that "bidirectional control swapping is usually a smell." In software design, what pattern does bidirectional control resemble — and why does making ownership one-directional and explicit generally produce systems that are easier to test and reason about?

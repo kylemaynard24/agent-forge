@@ -60,3 +60,15 @@ Why does this matter? Because the agent might retry on transient errors and you 
 - [ ] One write tool is idempotent and tested.
 - [ ] You've documented the predicted LLM failure modes and how the descriptions defend against each.
 - [ ] You've decided on a versioning strategy and documented the migration of one tool.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-Revealing Names + Command-Query Separation
+
+Tool design IS clean code for agent APIs — every principle that applies to function design applies here with higher stakes, because the LLM selects tools by name before it reads the description. A tool name that requires its description to be understood (`task_op`, `manage_item`, `process`) is a leaky abstraction: the name promises nothing and offloads all disambiguation to text the model may not attend to carefully. Clean tool design means the name alone narrows the LLM's decision to one plausible action.
+
+**Exercise:** Take your 5–7 task-manager tools and stress-test the names by asking: "If I deleted every description, could the LLM still make the correct tool choice for 'mark this task as finished'?" If `complete_task` and `update_task` both survive the description-free test, the names are not disambiguating enough — rename one until only the correct choice passes.
+
+**Reflection:** The homework requires one write tool to be idempotent via a `client_id`. In REST API design, which HTTP method carries the same idempotency contract — and why does that same guarantee matter even more for LLM-called tools than for human-called APIs?

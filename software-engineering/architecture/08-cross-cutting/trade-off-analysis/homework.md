@@ -35,3 +35,15 @@ Pick one:
 - [ ] Two-page doc with constraints, diagram, pattern table, CAP/PACELC table, and risks.
 - [ ] Every choice references at least one constraint by name.
 - [ ] At least one section says "we are not building X yet, here's the trigger that would change that."
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Clarity — a trade-off document is clean code for decision-making
+
+A trade-off written as "we chose Postgres because it is reliable" is the documentation equivalent of a comment that says `// increment i` above `i++` — it restates the obvious without explaining the reasoning. The clean code standard for a trade-off document is: state the alternatives considered, name the constraint that dominated the decision, and record the consequence you are accepting — so a new engineer can evaluate whether that constraint still holds without reconstructing the original debate.
+
+**Exercise:** Take the single hardest choice in your architecture document and rewrite it using this template: "We chose [X] over [Y] because [named constraint]. The consequence we accept is [specific downside]. We would revisit this if [trigger condition]." Then verify every other trade-off in the document meets the same bar — each one should name at least one alternative and one constraint.
+
+**Reflection:** Which section of your document would be hardest for a new engineer to challenge — not because the decision is obviously correct, but because the reasoning is missing — and what would adding that reasoning cost you in words?

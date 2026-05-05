@@ -70,3 +70,15 @@ You should see a noticeable drop with the structured strategy. If not, your trun
 - [ ] Errors are recognizable from the first line.
 - [ ] Large arrays produce concise structural summaries with re-fetch hints.
 - [ ] You measured (or estimated) the prompt-size savings on a real run.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Explicit Return Types
+
+A tool result schema is a return type contract: every field name the LLM reads becomes part of how it interprets the outcome and decides the next action. A field named `data` tells the model nothing; a field named `matching_files` or `error_cause` communicates the semantics without requiring additional explanation — the same reason a function that returns `{ result }` is harder to use than one that returns `{ invoice_total, line_items }`. The `ERROR:` and `TOOL_EXCEPTION:` prefixes in your formatter are the agentic equivalent of typed exceptions: the caller knows what category of failure it is before reading the message.
+
+**Exercise:** Review the hint catalog you built and check whether each hint key (e.g., `ENOENT`, `rate_limit`) is named from the caller's perspective or from the implementation's perspective. Rename any key that describes the internal error code rather than the situation the LLM needs to respond to, then update the catalog entries to match.
+
+**Reflection:** The homework says "if you can read a tool's observation aloud and not be sure whether it succeeded, the format is wrong." What is the clean code equivalent of this rule for function return values — and what naming or typing convention enforces it?

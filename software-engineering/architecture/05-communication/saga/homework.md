@@ -29,3 +29,15 @@
 - [ ] Happy path: all 4 steps succeed; no compensations run.
 - [ ] Failure at step 3 triggers compensation of steps 2 and 1 in reverse.
 - [ ] Calling the saga twice with the same order ID does not double anything.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names — saga step and compensation names reveal domain intent
+
+A step named `step3` or `allocate()` hides what domain action is being taken; `AllocateShippingLabel` is unambiguous in the run log and the compensation name `VoidShippingLabel` immediately communicates what is being undone and why. When a saga fails at 3am, the on-call engineer reads the run log — clean step names turn a fifteen-minute incident into a two-minute diagnosis.
+
+**Exercise:** Review your four `do`/`undo` operation pairs and apply the rule: the `undo` name must make the `do` name obvious without looking at the code (e.g., `ReserveInventory` / `ReleaseInventoryReservation`). Rename any pair where the compensation name could be confused with a different step's undo.
+
+**Reflection:** If the run log showed `step2 compensation failed` versus `ChargePayment compensation failed — RefundPayment`, which would an on-call engineer be able to act on without reading the source code?

@@ -33,3 +33,15 @@ Compare P50 and P95 rather than only average latency. Explain why tail behavior 
 - [ ] You have a clear baseline
 - [ ] You improved a real bottleneck, not a guessed one
 - [ ] The write-up includes both gain and cost
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Don't optimize prematurely, name your intent, make trade-offs visible
+
+Premature optimization is a clean code violation because it trades readability for a performance gain that was never measured — the code becomes harder to understand in service of a problem that may not exist. When you do optimize a real bottleneck, the optimization deserves the same naming discipline as any other change: a function called `fetchOrdersWithEagerLoadedItems` tells the reader why it is written the way it is, while `fetchOrders2` hides the intent and the cost.
+
+**Exercise:** For the bottleneck you improve in this homework, write a code comment — at most three sentences — that explains: what the original code did, why it was slow under the measured workload, and what trade-off the optimized version makes. Then evaluate whether the optimized function or query name alone (without the comment) communicates that a performance trade-off was made, and revise the name if it does not.
+
+**Reflection:** In a performance optimization you have shipped, was the trade-off (readability sacrificed, complexity added, staleness introduced) documented in the code — or was it only visible in the commit message that most engineers will never read?

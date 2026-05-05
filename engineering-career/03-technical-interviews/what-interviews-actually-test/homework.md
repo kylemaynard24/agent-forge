@@ -44,3 +44,15 @@ After:
 3. What behavior made you unsure, regardless of whether the answer was right?
 
 Seeing what it looks like from the evaluator's perspective is one of the fastest ways to change your behavior as a candidate.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Test-driven development applied to preparation
+
+Writing tests before the implementation forces you to name the behavior you want before you build it — and the same discipline applies to interview preparation. If you write down the specific signals you want to demonstrate before you prepare, preparation becomes a coverage exercise: does my story library cover "handles ambiguity"? does my system design practice cover "makes explicit trade-offs"? Undeclared signals are like untested code paths — you find out they're missing at the worst possible moment.
+
+**Exercise:** Before your next mock or real interview, write down five specific signals you intend to demonstrate — not categories like "good communicator" but behaviors like "restates the problem in my own words before writing code." After the interview, score yourself against each one.
+
+**Reflection:** Looking at the signal map you wrote in Exercise 1, how many of those signals would your current preparation actually demonstrate — and how would you know if one of them was not covered?

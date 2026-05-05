@@ -45,3 +45,15 @@ Pick a service, a function, or a component you own or work on that currently has
 2. Ideally: a metric (a counter or a latency measurement) that would have helped detect the last bug you fixed in this area
 
 After adding it, ask: "If this component started failing silently right now, how long would it take me to know?" If the answer is "hours" or "when a user reports it," the observability is insufficient.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Precision in technical writing; intention-revealing descriptions
+
+Post-mortem writing must be precise, and the contributing factors section is where vagueness does the most damage. "The system was slow" is a contributing factor that cannot be acted on; "checkout p99 latency exceeded 3 seconds due to an unindexed foreign key scan on the orders table, introduced in commit a3f9c2" is a contributing factor that generates a migration ticket, a monitoring alert, and a code review checklist item. Imprecise post-mortems are technical debt in written form.
+
+**Exercise:** Take your mini post-mortem from Exercise 2 and rewrite every contributing factor so that each one names the specific system, the specific behavior, the specific threshold exceeded, and the specific code or configuration that caused it — then verify that each factor, read alone, suggests a concrete action.
+
+**Reflection:** If an engineer who was not involved in the incident reads your post-mortem's contributing factors six months from now, could they write a monitoring alert or a code fix for each one without asking you a single clarifying question?

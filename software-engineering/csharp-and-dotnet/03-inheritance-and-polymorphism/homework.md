@@ -57,3 +57,15 @@ Build the refactored version. Show two different decorator chains in `Program.cs
 ## Save to
 
 `progress/<today>/working-folder/csharp-and-dotnet/03-notifications/` and `.../03-loggers/`.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Hierarchy Depth as a Complexity Signal; Prefer Composition for Behavior Combinations
+
+A deep inheritance tree is hard to read because understanding any one class requires reading all its ancestors. The loggers refactor illustrates the clean code payoff directly: `new TimestampDecorator(new JsonDecorator(new ConsoleLogger()))` tells you the entire behavior stack in one line, left to right. The original four-level hierarchy required tracing through `Log` overrides across four files to answer the same question.
+
+**Exercise:** Look at Part 1's `Notification` hierarchy and Part 2's refactored loggers side by side. For each hierarchy, answer in one sentence: "Why is this hierarchy the right shape?" If the answer for Part 2 still sounds like "because logging builds on logging," that is a sign the refactor has not fully clicked — try explaining instead why a `PushNotification` genuinely *is a* `Notification`, while a JSON logger does not genuinely *have to be* a timestamped logger.
+
+**Reflection:** In Part 2's decorator chain, every combination is achievable without writing a new class. How would the original inheritance hierarchy have grown if someone asked for five different combinations of timestamp, JSON, database, and filtering? At what point does class explosion become the real maintenance problem?

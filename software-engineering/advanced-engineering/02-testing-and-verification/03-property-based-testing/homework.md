@@ -27,3 +27,15 @@ Work through a small scenario involving a parser or calculator whose edge cases 
 - you can explain the value of Property-Based Testing without using buzzwords
 - the result is concrete enough that another engineer could inspect it
 - your written note makes the trade-off visible
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Reveal intent, tests as specification, meaningful names
+
+In property-based testing, the property name is the specification: `sortedArrayContainsAllOriginalElements` and `parserRoundTripsAnyValidInput` are self-documenting invariants, while `prop1` and `testProperty` tell the next engineer nothing about what behavior the system is supposed to guarantee. Because property tests generate hundreds of cases automatically, the property name carries even more weight than an example test name — it is the only human-readable summary of what the entire generated test suite is verifying.
+
+**Exercise:** For the parser or calculator scenario in this homework, write four property names and the invariant each expresses in plain English. For each property, ask: if this property failed on a randomly generated input, would the name alone let an engineer explain the bug to a product manager without reading the assertion code? Revise any name where the answer is no.
+
+**Reflection:** Could you list, from memory and property names alone, every behavioral invariant your most complex module is currently tested against — and if not, what gap does that reveal in your test specification?

@@ -67,3 +67,15 @@ Keep it in sync with the implementation. (You'll fail at this; that's the point 
 - [ ] At least one mutating tool has an idempotency key and a passing retry test.
 - [ ] You've versioned at least one tool through a real transition.
 - [ ] You can articulate the trade-offs of each error code in your enum.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Intention-revealing names at the call site
+
+Tool API design is clean code — the tool name must make the caller's intent obvious where it is invoked, not just where it is defined. `search_documents(query)` tells you what the caller is trying to do; `run_retrieval_pipeline(query)` tells you about the implementation. The LLM choosing a tool is making a semantic decision from the name alone, so the name is the entire interface at the moment of selection.
+
+**Exercise:** Read every tool call site in your agent loop and ask: does the tool name, without its description, make the action unambiguous? If you need to read the description to understand why the agent called it, the name needs work.
+
+**Reflection:** If you removed all tool descriptions and left only tool names, would your agent still call the right tools for the right tasks — and would a code reviewer still understand what the agent was doing?

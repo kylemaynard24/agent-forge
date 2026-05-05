@@ -28,3 +28,15 @@ Add a second adapter for a `JsonPaymentProvider` (different shape again). The tw
 
 - [ ] Modern caller uses the adapter without ever seeing XML.
 - [ ] Swapping the JSON adapter in is a one-line change.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Meaningful Names + Single Responsibility Principle
+
+The adapter's name is a translation contract expressed in a single identifier — `XmlPaymentAdapter` tells the reader exactly what is being translated and in which direction, while `PaymentAdapter` or `Adapter1` leaves the translation opaque. Applied cleanly, the adapter is a thin, named seam: all XML appears exactly once (inside this class), and every other file in the codebase uses only the modern interface vocabulary. Applied messily, an adapter that grows business logic — input validation, retry policy, currency conversion — is no longer translating an interface; it has become a service class that happens to also translate, and the naming problem is a symptom of the responsibility problem.
+
+**Exercise:** Open your `XmlPaymentAdapter` and mark each line as either "translation" (converting data between formats) or "logic" (making decisions or adding behavior). Every "logic" line is a candidate for extraction — the adapter should be so thin that translation is all there is to read.
+
+**Reflection:** The constraint says the adapter must be the only place XML appears — but that constraint is really a clean-code rule in disguise. What coupling does it prevent, and what would a codebase look like six months later if that constraint were relaxed?

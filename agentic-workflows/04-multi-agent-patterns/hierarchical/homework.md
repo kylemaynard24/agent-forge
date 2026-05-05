@@ -45,3 +45,15 @@ Implement the second. Document the cost: which information is lost.
 - [ ] Failure of one worker doesn't kill the run.
 - [ ] You can defend the existence of the middle level — explain what it adds.
 - [ ] You've counted total LLM calls and decided whether the cost was justified.
+
+---
+
+## Clean Code Lens
+
+**Principle in focus:** Single Responsibility per Layer + Explicit Authority Boundaries
+
+In a hierarchy, each level must have a one-sentence description of its authority that could not describe any other level. If the top agent's authority statement and the manager agent's authority statement could be swapped without breaking anything, the hierarchy has no real structure — it is just repeated delegation with extra latency. The clean code equivalent is a layered architecture where each layer has a named responsibility and the rule "layer N does not skip to layer N+2" is enforced by the design, not convention.
+
+**Exercise:** Write a one-sentence authority statement for each of your three levels beginning with "This agent is responsible for..." — the statement must name what the level owns, what it synthesises, and what it does not do. Then verify the statements are non-overlapping: no two levels should be able to claim the same sentence.
+
+**Reflection:** The homework warns that a manager that doesn't synthesise is "dead weight" — it just passes through. In software architecture, what is the equivalent layer that adds overhead without adding value — and what is the test for whether a given layer is synthesising or merely routing?
