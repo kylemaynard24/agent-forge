@@ -17,7 +17,20 @@ Real engineers have ~1-3 hours per working day for self-directed learning. The p
 
 Today's date is `currentDate` from system context. Use ISO `YYYY-MM-DD`.
 
-### Step 1 — Find the active sprint
+### Step 1 — Sync with remote
+
+Sprint state and daily todos live in git. The user studies from multiple machines (work laptop, home), so pulling first prevents stale-state drift — otherwise yesterday's slice from the other machine won't be visible and we'd generate a redundant todo.
+
+Run `git pull --ff-only` from the repo root.
+
+Outcomes:
+- **Up-to-date or fast-forwarded cleanly:** continue silently to Step 2.
+- **Not in a git repo / no remote / no upstream tracking branch / network or auth failure:** print a one-line warning ("`/daily-tasks` couldn't sync with remote: \<reason\>; working from local state") and continue. Don't block the slice over a missing or unreachable remote.
+- **Refused (uncommitted local changes block it, or branches diverged):** STOP. Surface git's error verbatim and ask the user how to proceed (commit/stash the dirty file, or rebase/merge the divergence) before re-running. `--ff-only` is intentional — don't merge or rebase silently, since that can scramble the carefully-shaped sprint files (items.md state, prior daily todos).
+
+Don't push at the end of the run — push is a separate explicit ask. Pull-on-start is automatic; push-on-finish is not.
+
+### Step 2 — Find the active sprint
 
 List `progress/sprints/` (skipping `README.md`). Find the most recent sprint folder by date that has an `items.md` with at least one unchecked `[ ]` item.
 
@@ -25,17 +38,17 @@ If no sprint folders exist OR all sprints are fully complete: STOP. Tell the use
 
 If found: read `progress/sprints/<sprint-date>/items.md`. Identify all unchecked items (lines starting with `- [ ]`).
 
-### Step 2 — Resolve focus area (optional)
+### Step 3 — Resolve focus area (optional)
 
 If the user passed an area name as an argument (`/daily-tasks architecture`), filter the unchecked items to that subject only. Otherwise use all unchecked items.
 
 If filtering produces zero items: tell the user "No unchecked items remain for `<area>` in the active sprint."
 
-### Step 3 — Today's-todo handling
+### Step 4 — Today's-todo handling
 
 If `progress/<today>/todo.md` does NOT exist:
 - Pick the next 2-3 unchecked items from the filtered list (in their order in items.md). Aim for a total estimated time of ~60-120 minutes — three short items, or one big + one small.
-- Continue to Step 4 to generate the file.
+- Continue to Step 5 to generate the file.
 
 If `progress/<today>/todo.md` DOES exist:
 - Read it.
@@ -50,7 +63,7 @@ If `progress/<today>/todo.md` DOES exist:
   - `yes_done` → mark items as `[x]` in items.md, show today's todo, stop.
   - `no_show` → show today's existing todo, stop.
 
-### Step 4 — Generate / append the slice
+### Step 5 — Generate / append the slice
 
 Each chosen item gets a section in today's todo. Format per item:
 
@@ -94,17 +107,17 @@ When you finish all of today's items, check the boxes and re-run `/daily-tasks` 
 _(Free space — jot insights, blockers, things to revisit. Persists across rounds today.)_
 ```
 
-### Step 5 — Mark items as in-progress in items.md
+### Step 6 — Mark items as in-progress in items.md
 
 For each item that went into today's slice, change its checkbox in `progress/sprints/<sprint-date>/items.md` from `- [ ]` to `- [~]` (in-progress). When the user marks it done in their todo (or answers `yes_more` / `yes_done` on the next /daily-tasks run), the skill updates `[~]` → `[x]`.
 
 This lets the skill distinguish: unstarted (`[ ]`), assigned-but-pending (`[~]`), done (`[x]`).
 
-### Step 6 — Scaffold today's working folder
+### Step 7 — Scaffold today's working folder
 
 Same as the previous version. Create `progress/<today>/working-folder/<subject>/` for each subject that today's slice touches. (Skip if today's todo already exists — the folders should already be there.)
 
-### Step 7 — Report to the user
+### Step 8 — Report to the user
 
 Show:
 - Path to today's todo.

@@ -13,8 +13,8 @@ When you finish an item in your daily todo, mark it `[x]` here too. Or let `/dai
 
 ## Agentic workflows — `what-is-an-agent` (read step)
 
-- [~] **S-01** — (~30 min) Read `agentic-workflows/01-foundations/what-is-an-agent/README.md` (132 lines). Capture 3–5 takeaways. See sprint section "Agentic workflows". (assigned 2026-05-01 round 1; carried forward to 2026-05-04 round 1)
-- [~] **S-02** — (~90 min) Apply: Build `TinyAgent.cs` with `ILlm` interface + `StubLlm` + `CountLines` tool + 3-iteration loop. Save to `progress/<today>/working-folder/agentic-workflows/TinyAgent.cs`. See sprint section "Agentic workflows" → Apply. (assigned 2026-05-01 round 1; carried forward to 2026-05-04 round 1)
+- [~] **S-01** — (~30 min) Read `agentic-workflows/01-foundations/what-is-an-agent/README.md` (132 lines). Capture 3–5 takeaways. See sprint section "Agentic workflows". (assigned 2026-05-01 round 1; carried forward to 2026-05-04, again to 2026-05-05)
+- [~] **S-02** — (~90 min) Apply: Build `TinyAgent.cs` with `ILlm` interface + `StubLlm` + `CountLines` tool + 3-iteration loop. Save to `progress/<today>/working-folder/agentic-workflows/TinyAgent.cs`. See sprint section "Agentic workflows" → Apply. (assigned 2026-05-01 round 1; carried forward to 2026-05-04, again to 2026-05-05)
 - [ ] **S-03** — (~20 min) Answer agentic Q1 + Q2 in writing in your daily todo's Notes (or in the sprint's Answers section). Questions are in sprint section "Agentic workflows" → Prove it.
 
 ## Software architecture — `separation-of-concerns` (read step)
