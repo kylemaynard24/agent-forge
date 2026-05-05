@@ -194,6 +194,24 @@ You are not trying to finish every file. You are trying to reach a point where y
 
 **Agentic Workflows:** you can explain how an agent behaves, what controls it, where it can fail, and what makes it safe or unsafe to trust.
 
+## Phase 3 — Career engineering track (run concurrently from Month 1)
+
+The [`engineering-career/`](engineering-career/) section is a fourth concurrent track, but it operates differently from the three technical classes. It does not have demos or code exercises. It has reading and written reflection exercises designed to build the professional intelligence that technical skills alone do not produce.
+
+This track is designed to run in one session per week alongside the technical curriculum — roughly 1-2 hours.
+
+| Area | When to prioritize |
+| --- | --- |
+| [`01-career-ladder/`](engineering-career/01-career-ladder/) — levels, the analyst-to-senior path | Month 1: understand the framework you are building toward |
+| [`02-engineering-opinion/`](engineering-career/02-engineering-opinion/) — forming opinions, articulating trade-offs, design docs | Months 2-4: invest heavily here; these skills are the fastest path to senior-level visibility |
+| [`04-engineering-judgment/`](engineering-career/04-engineering-judgment/) — building taste, learning from production | Months 3-8: concurrent with the architecture and advanced engineering work; the feedback loops compound |
+| [`03-technical-interviews/`](engineering-career/03-technical-interviews/) — what interviews test, system design, behavioral | Months 5-8: begin interview preparation when you have enough architecture and design patterns coverage to make system design interviews tractable |
+| [`05-market-and-positioning/`](engineering-career/05-market-and-positioning/) — market awareness, evaluating opportunities | Month 6+: relevant any time, urgent before any job change or negotiation |
+
+The homework in the career track is written exercises, not code. Treat them as real: the behavioral story library from `03-technical-interviews/behavioral-interviews/homework.md` is only useful if you write it before you need it, not during an active job search.
+
+---
+
 ## Final advice
 
 Keep the three classes connected. The best learning in this repo happens when you notice that the same ideas recur at different scales:
