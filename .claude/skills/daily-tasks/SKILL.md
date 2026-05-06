@@ -72,7 +72,7 @@ Each chosen item gets a section in today's todo. Format per item:
 
 **Time:** ~<minutes> min · **Subject:** <subject> · **Sprint section:** "<section title>" in [sprint.md](../sprints/<sprint-date>/sprint.md)
 
-<inline brief — 5-10 lines summarizing what to do, pulled from the sprint section. Goal: the user can act on this without flipping to the sprint file. If the item is "answer questions," include the question text inline. If the item is "read README," include the primer + the link to the README.>
+<inline brief — 5-10 lines summarizing what to do, pulled from the sprint section. Goal: the user can act on this without flipping to the sprint file. If the item is "answer questions," include the question text inline. If the item references a file to read (README, sprint section, etc.), include a relative markdown link to it. Since today's todo lives at `progress/<today>/todo.md`, paths two levels up land at the repo root — e.g., a README at `software-engineering/foo/bar/README.md` becomes `[bar](../../software-engineering/foo/bar/README.md)` (use the containing directory name as the link text, not "README.md"). Always use a relative path so the link is clickable in any markdown viewer.>
 
 **Done when:** <2-3 specific completion criteria>
 
