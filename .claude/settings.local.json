@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(start *)",
+      "Bash(chmod +x /c/Users/jmaha8s/studying/agent-forge/.claude/hooks/check-homework-clean-code.sh)",
+      "Bash(echo \"exit: $?\")",
+      "PowerShell(git commit *)",
+      "Bash(py *)",
+      "Bash(git pull *)"
+    ]
+  }
+}
