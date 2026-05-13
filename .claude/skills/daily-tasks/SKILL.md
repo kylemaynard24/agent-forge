@@ -28,7 +28,7 @@ Outcomes:
 - **Not in a git repo / no remote / no upstream tracking branch / network or auth failure:** print a one-line warning ("`/daily-tasks` couldn't sync with remote: \<reason\>; working from local state") and continue. Don't block the slice over a missing or unreachable remote.
 - **Refused (uncommitted local changes block it, or branches diverged):** STOP. Surface git's error verbatim and ask the user how to proceed (commit/stash the dirty file, or rebase/merge the divergence) before re-running. `--ff-only` is intentional — don't merge or rebase silently, since that can scramble the carefully-shaped sprint files (items.md state, prior daily todos).
 
-Don't push at the end of the run — push is a separate explicit ask. Pull-on-start is automatic; push-on-finish is not.
+After the run completes (Step 8 done), push changes back to the remote (Step 9).
 
 ### Step 2 — Find the active sprint
 
@@ -130,6 +130,22 @@ Show:
 - Items added this round (id + summary + time).
 - Sprint progress: "N of M items complete (X% through the sprint)."
 - One-line reminder: "Run `/daily-tasks` again today if you finish, or tomorrow for a new slice."
+
+### Step 9 — Push to remote
+
+After reporting to the user, stage and commit any files changed during this run (today's todo, items.md, working-folder README, any state bootstrapping), then push.
+
+```
+git add progress/
+git commit -m "daily-tasks: <YYYY-MM-DD> slice — <item-id(s)>"
+git push
+```
+
+Outcomes:
+- **Pushed cleanly:** print one line: "Synced to remote."
+- **Nothing to commit:** skip the commit; still attempt `git push` in case a previous commit was un-pushed, then print "Nothing new to commit; remote already up to date."
+- **No remote / no upstream / network failure:** print a one-line warning and do not block the user. The slice is already written locally.
+- **Push rejected (remote has diverged):** print git's error verbatim and tell the user to resolve on their next run; do not force-push.
 
 ## Sprint completion
 
