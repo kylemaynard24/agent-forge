@@ -1,8 +1,8 @@
-# 2026-05-12 — Today's slice
+# 2026-05-13 — Today's slice
 
 > **Active sprint:** [progress/sprints/2026-04-30/sprint.md](../sprints/2026-04-30/sprint.md)
 > **Sprint progress:** 0 of 13 items complete · 12 remaining after today's slice
-> **Working folder:** `progress/2026-05-12/working-folder/agentic-workflows/` (scaffolded; gitignored)
+> **Working folder:** `progress/2026-05-13/working-folder/agentic-workflows/` (scaffolded; gitignored)
 
 ## Round 1 (~30 min)
 

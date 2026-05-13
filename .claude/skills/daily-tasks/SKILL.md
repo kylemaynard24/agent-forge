@@ -46,8 +46,16 @@ If filtering produces zero items: tell the user "No unchecked items remain for `
 
 ### Step 4 — Today's-todo handling
 
+Before deciding whether to generate a new slice, reconcile stale dated folders in `progress/`:
+
+- Inspect existing `progress/<date>/` directories (date-shaped folders only, excluding `sprints/`, `sessions/`, and subject state folders).
+- Treat a dated folder as **no work completed** when its `todo.md` still has no checked `- [x]` items and the Notes section is still untouched template text, with no meaningful scratch files beyond the scaffolded `working-folder/README.md`.
+- Delete stale dated folders older than yesterday when they meet that "no work completed" test. They are redundant copies of an unfinished slice.
+- If **yesterday's** dated folder exists and also has no work completed, **move it forward to `progress/<today>/` instead of creating a brand-new todo**. Update the moved files so headings, dates, and working-folder references say `<today>`.
+
 If `progress/<today>/todo.md` does NOT exist:
-- Pick the **next 1 unchecked item** from the filtered list (in its order in items.md).
+- If yesterday was carried forward into `progress/<today>/`, read that todo and show it as today's current slice. Do **not** pull a new item.
+- Otherwise, pick the **next 1 unchecked item** from the filtered list (in its order in items.md).
 - Continue to Step 5 to generate the file.
 
 If `progress/<today>/todo.md` DOES exist:
