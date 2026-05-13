@@ -65,7 +65,7 @@ Sprint starting — no prior day.
 > - **C# topic 04: interfaces-and-abstract-classes** — today's `TinyAgent.cs` apply task hinges on the `ILlm` interface + `StubLlm` implementation pattern; the topic 04 README explains the deeper "depend on the smallest abstraction" reasoning behind why the agent takes `ILlm` rather than `StubLlm` directly. README + demo + questions at `software-engineering/csharp-and-dotnet/04-interfaces-and-abstract-classes/`.
 
 **Today:**
-- [ ] **Step:** Read `what-is-an-agent/README.md` (132 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
+- [ ] **Step:** Read `what-is-an-agent/README.md` (252 lines, ~30 min). Capture 3–5 takeaways in Notes, including at least one item from "Why agents work (and why they fail)."
 - [ ] **Apply (C#):** Build `TinyAgent.cs` containing the four-piece anatomy in C#: an `ILlm` interface with a `StubLlm` implementation that returns canned next-actions, one tool (a static `CountLines(path)` method), a loop (max 3 iterations), and a goal. Print each iteration. ~50 lines. Save to `progress/2026-04-30/working-folder/agentic-workflows/TinyAgent.cs`. New to C#? See `software-engineering/csharp-and-dotnet/01-classes-basics/` and `04-interfaces-and-abstract-classes/`. Run with `dotnet new console -n agentic-day-1 && cd agentic-day-1 && (replace Program.cs with the file) && dotnet run`.
 
 **Prove it — answer in the Answers + explanations section at the bottom:**

@@ -10,7 +10,7 @@
 
 **Time:** ~30 min · **Subject:** Agentic workflows · **Sprint section:** "Agentic workflows" in [sprint.md](../sprints/2026-04-30/sprint.md)
 
-Read [what-is-an-agent](../../agentic-workflows/01-foundations/what-is-an-agent/README.md) (~132 lines). This is the vocabulary anchor for the whole curriculum — the README gives a precise working definition of an agent (LLM + tools + loop + goal) and the key test: *who decides what to do next at runtime?* Chatbot = user. Workflow = developer (at design time). Agent = LLM (at runtime, every step).
+Read [what-is-an-agent](../../agentic-workflows/01-foundations/what-is-an-agent/README.md) (~252 lines). This is the vocabulary anchor for the whole curriculum — the README gives a precise working definition of an agent (LLM + tools + loop + goal) and the key test: *who decides what to do next at runtime?* Chatbot = user. Workflow = developer (at design time). Agent = LLM (at runtime, every step).
 
 Key things to look for as you read:
 - The **autonomy gradient** (0–4 scale from "human acts on every output" to "acts unsupervised in prod")
