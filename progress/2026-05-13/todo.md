@@ -54,3 +54,4 @@ _(Free space — jot insights, blockers, things to revisit. Persists across roun
     - How will I know this helps in real use?
     - What breaks if I remove it?
 
+4. There is a bunch of great information at the end of the readme... Human-in-the-loop is used as a first-class pattern
