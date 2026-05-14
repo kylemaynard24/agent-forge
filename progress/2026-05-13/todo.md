@@ -33,3 +33,24 @@ When you finish all of today's items, check the boxes and re-run `/daily-tasks` 
 ## Notes
 
 _(Free space — jot insights, blockers, things to revisit. Persists across rounds today.)_
+
+1. Definitions that are important:
+- LLM - the decision-maker. Reads context, returns either an action or a final answer
+- A tool set - concrete capabilities (read a file, run a command, query a DB,send an email). Without Tools, an agaent is just a chatbot. - not an MCP - MCP is the standard way to expose/invoke capabilities
+- a loop - a runtime that asks the LLM "what now?", executes the chosen action, feeds the result back, and asks again
+- A goal (or task) - the user's intent, supplied as a prompt or task definition
+
+2. Why Agents work and why they fail
+    - the difference between an llm and a human branch - nondeterminate vs determinate,
+        cleaner version: 
+            - LLM Branch - the next step is chosen by the model, so it's probabilistic and may vary run to run.
+            - Human branch: the next step is chose by a person, so itsa manual/external decision point
+    - analysis paralysis vs too sparse (ambiguity)- so this has become an art?
+
+
+3. Questions to carry with you when evaluating an agentic system: 
+    - What failure is this preventing?
+    - Where is autonomy allowed vs constrained?
+    - How will I know this helps in real use?
+    - What breaks if I remove it?
+
