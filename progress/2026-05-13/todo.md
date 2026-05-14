@@ -24,7 +24,7 @@ Capture 3–5 takeaways in the Notes section below, including at least one item 
 2. You've written at least 3 takeaways in Notes
 3. At least one takeaway is from the failure/success section
 
-- [ ] Mark this item complete here AND in `progress/sprints/2026-04-30/items.md` when finished.
+- [x] Mark this item complete here AND in `progress/sprints/2026-04-30/items.md` when finished.
 
 ---
 
