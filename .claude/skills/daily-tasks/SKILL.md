@@ -1,6 +1,6 @@
 ---
 name: daily-tasks
-description: Use to get today's single item (~30-90 min) from the currently active learning sprint. Designed for sustainable daily progress alongside a full-time job — pulls one chewable task at a time. Re-run on the same day after finishing to pull the next item and keep moving.
+description: Use to get today's single item (~30-90 min) from the currently active learning sprint, plus a fresh daily reading list of 3 articles from curated engineering blogs. Designed for sustainable daily progress alongside a full-time job — pulls one chewable task at a time, and keeps the learning loop alive even on days when the sprint task can't be finished. Re-run on the same day after finishing to pull the next item and keep moving.
 ---
 
 This skill is the **execution** half of the sprint loop. `/next-sprint` is the **planning** half — it generates the comprehensive sprint plan that this skill consumes from. If no active sprint exists, this skill stops and prompts the user to run `/next-sprint` first.
@@ -10,8 +10,9 @@ This skill is the **execution** half of the sprint loop. `/next-sprint` is the *
 Real engineers with busy jobs need a floor that's easy to hit. One item per run keeps the habit alive even on hard days — and re-running is always an option when there's more time.
 
 - A **sprint** (made by `/next-sprint`) covers one step (`read`, `demo`, or `implement`) for each of the four subjects, broken into ~10-14 discrete items totaling 10-15 hours. A sprint takes ~1-2 weeks of part-time work.
-- A **daily slice** (made by this skill) is **1 item**. You get one fresh item per `/daily-tasks` call.
-- Re-run on the same day if you finish — the skill asks "did you finish?" and either pulls the next item (yes) or shows you what you already have (no).
+- A **daily slice** (made by this skill) is **1 sprint item + a 3-article reading list**. You get one fresh sprint item per `/daily-tasks` call, plus a fresh set of 3 articles every calendar day (refreshed even if yesterday's sprint item carried forward).
+- The reading list is the floor-of-the-floor: if the sprint item is too heavy for today, you can still learn by reading. As long as you can read, you can learn — even if you can't get the work done.
+- Re-run on the same day if you finish — the skill asks "did you finish?" and either pulls the next item (yes) or shows you what you already have (no). Articles are not re-fetched mid-day.
 
 ## Run order
 
@@ -28,7 +29,7 @@ Outcomes:
 - **Not in a git repo / no remote / no upstream tracking branch / network or auth failure:** print a one-line warning ("`/daily-tasks` couldn't sync with remote: \<reason\>; working from local state") and continue. Don't block the slice over a missing or unreachable remote.
 - **Refused (uncommitted local changes block it, or branches diverged):** STOP. Surface git's error verbatim and ask the user how to proceed (commit/stash the dirty file, or rebase/merge the divergence) before re-running. `--ff-only` is intentional — don't merge or rebase silently, since that can scramble the carefully-shaped sprint files (items.md state, prior daily todos).
 
-After the run completes (Step 8 done), push changes back to the remote (Step 9).
+After the run completes (Step 9 done), push changes back to the remote (Step 10).
 
 ### Step 2 — Find the active sprint
 
@@ -51,7 +52,7 @@ Before deciding whether to generate a new slice, reconcile stale dated folders i
 - Inspect existing `progress/<date>/` directories (date-shaped folders only, excluding `sprints/`, `sessions/`, and subject state folders).
 - Treat a dated folder as **no work completed** when its `todo.md` still has no checked `- [x]` items and the Notes section is still untouched template text, with no meaningful scratch files beyond the scaffolded `working-folder/README.md`.
 - Delete stale dated folders older than yesterday when they meet that "no work completed" test. They are redundant copies of an unfinished slice.
-- If **yesterday's** dated folder exists and also has no work completed, **move it forward to `progress/<today>/` instead of creating a brand-new todo**. Update the moved files so headings, dates, and working-folder references say `<today>`.
+- If **yesterday's** dated folder exists and also has no work completed, **move it forward to `progress/<today>/` instead of creating a brand-new todo**. Update the moved files so headings, dates, and working-folder references say `<today>`. **Also strip any existing `## 📚 Today's reading (...)` section from the moved todo** — Step 6 will repopulate it with a fresh set of articles dated today. (The reading list is the one part of the slice that does *not* roll forward: even when the sprint item carries, the articles are always fresh for today.)
 
 If `progress/<today>/todo.md` does NOT exist:
 - If yesterday was carried forward into `progress/<today>/`, read that todo and show it as today's current slice. Do **not** pull a new item.
@@ -96,6 +97,10 @@ The slice file structure:
 > **Sprint progress:** N of M items complete · K remaining after today's slice
 > **Working folder:** `progress/<today>/working-folder/<subject>/` (scaffolded; gitignored)
 
+## 📚 Today's reading (<today>)
+
+_(Populated by Step 6 — 3 articles from the reading-source pool.)_
+
 ## Round 1 (~<total-min> min)
 
 ### <item-id>: ...
@@ -109,13 +114,50 @@ When you finish all of today's items, check the boxes and re-run `/daily-tasks` 
 _(Free space — jot insights, blockers, things to revisit. Persists across rounds today.)_
 ```
 
-### Step 6 — Mark items as in-progress in items.md
+The "## 📚 Today's reading" section sits **above** the sprint round so the reading list is glanceable first — important for days when you can read but can't get the sprint work done.
+
+### Step 6 — Refresh today's reading list
+
+Goal: ensure `progress/<today>/todo.md` has a `## 📚 Today's reading (<today>)` section with 3 articles, dated for today.
+
+**Skip condition.** If the file already contains a `## 📚 Today's reading (<today>)` heading (note: the date in the heading must match today), the section is current — do nothing and move to Step 7.
+
+**Fetch flow.**
+
+1. Read source list from `.claude/skills/daily-tasks/reading-sources.md` (sibling of this SKILL.md). Parse the sources in listed order with their feed URLs (preferred) and homepage URLs (fallback).
+2. Build the "recently shown" exclusion set: scan the last 7 dated `progress/<date>/todo.md` files and collect all URLs inside their `## 📚 Today's reading` sections. Avoid recommending any URL in that set.
+3. For each source, in order, use `WebFetch` on the feed URL with a prompt like: *"Return the 3 most recent published articles in this feed as a list of (title, full URL, 1-sentence summary of what the article is about). Order by recency."* If the feed errors or returns no usable content, retry with the homepage URL.
+4. From each source's response, pick the most-recent article whose URL is not in the exclusion set. Record (title, url, source-name, 1-sentence hook).
+5. Stop once 3 articles are collected.
+6. If the source pool is exhausted with fewer than 3 collected, cycle back to the first successful source and pick the next-most-recent article from its earlier response (still respecting the exclusion set).
+7. If after a full second pass you still have fewer than 3, write whatever you have plus a one-line note: *"Couldn't reach <comma-separated source names>; only fetched N articles today."* Don't block the slice over article failures.
+
+**Section format** (replace any existing `## 📚 Today's reading` block in today's todo, or insert immediately after the blockquote header / before the first `## Round` heading):
+
+```markdown
+## 📚 Today's reading (<today>)
+
+Three short reads to keep the learning loop alive even when the sprint item is heavy.
+
+1. **[<title>](<url>)** — *<source name>*
+   <1-sentence hook>
+
+2. **[<title>](<url>)** — *<source name>*
+   <1-sentence hook>
+
+3. **[<title>](<url>)** — *<source name>*
+   <1-sentence hook>
+```
+
+**Failure handling.** If `WebFetch` is unavailable (denied by permissions, no network, etc.), write the section with placeholder text: *"Couldn't fetch today's articles (WebFetch unavailable). Sources to check manually: [list each homepage URL]."* Continue with the rest of the run.
+
+### Step 7 — Mark items as in-progress in items.md
 
 For each item that went into today's slice, change its checkbox in `progress/sprints/<sprint-date>/items.md` from `- [ ]` to `- [~]` (in-progress). When the user marks it done in their todo (or answers `yes_more` / `yes_done` on the next /daily-tasks run), the skill updates `[~]` → `[x]`.
 
 This lets the skill distinguish: unstarted (`[ ]`), assigned-but-pending (`[~]`), done (`[x]`).
 
-### Step 7 — Scaffold today's working folder
+### Step 8 — Scaffold today's working folder
 
 Create `progress/<today>/working-folder/<subject>/` for each subject that today's slice touches. (Skip if today's todo already exists — the folders should already be there.)
 
@@ -131,15 +173,16 @@ Scratch space for today's daily slice. See [`../todo.md`](../todo.md) for the it
 Everything in this folder is gitignored EXCEPT this README — that's why the folder shows up in the repo even when you push from a clean session. Subject subfolders (`agentic-workflows/`, `architecture/`, etc.) are scaffolded on demand based on what today's slice touches; their contents are local-only and won't appear on other machines.
 ```
 
-### Step 8 — Report to the user
+### Step 9 — Report to the user
 
 Show:
 - Path to today's todo.
 - Items added this round (id + summary + time).
+- Today's reading list: 3 article titles (or however many were fetched), with sources. Keep this brief — the full links live in the todo file.
 - Sprint progress: "N of M items complete (X% through the sprint)."
 - One-line reminder: "Run `/daily-tasks` again today if you finish, or tomorrow for a new slice."
 
-### Step 9 — Push to remote
+### Step 10 — Push to remote
 
 After reporting to the user, stage and commit any files changed during this run (today's todo, items.md, working-folder README, any state bootstrapping), then push.
 
@@ -167,5 +210,7 @@ If any `progress/<subject>/state.md` is missing, create it from the syllabus's L
 
 - **Don't generate sprint content.** This skill is a slice picker — it pulls from existing sprint content. The sprint content is generated by `/next-sprint`. If a slice item references a sprint section that doesn't exist, surface as a blocker.
 - **Don't advance state.** State advances only when a sprint completes and `/next-sprint` is invoked again. This skill never edits `state.md`.
-- **Don't generate more than 1 item per round.** Even if items are tiny. The sustainability constraint is the point.
-- **Don't overwrite today's todo.** Append rounds; never replace prior content.
+- **Don't generate more than 1 sprint item per round.** Even if items are tiny. The sustainability constraint is the point. (The reading list is separate — always 3 articles per day, not gated by item count.)
+- **Don't overwrite today's todo's existing content.** Append sprint rounds; never replace prior content. The one exception is the `## 📚 Today's reading (<today>)` section, which is rewritten in place if it's missing or dated for a prior day.
+- **Don't recommend articles from outside the source pool.** The pool lives in `reading-sources.md`. If the user wants new sites, they add them there.
+- **Don't fabricate article content.** If `WebFetch` fails or returns nothing usable, write the failure note rather than inventing titles/summaries.
