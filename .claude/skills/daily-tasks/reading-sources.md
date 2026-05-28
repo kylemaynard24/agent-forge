@@ -2,7 +2,9 @@
 
 The `/daily-tasks` skill picks 3 articles per day from this list. Edit freely — add sites, remove sites, or reorder (earlier entries are tried first, so put your favorites at the top).
 
-For each source, the skill prefers the RSS/feed URL (more reliable parsing, gives recency directly). It falls back to the homepage if the feed errors.
+For each source, the skill uses two URLs:
+- **Feed URL** — what the skill fetches from (preferred for parsing). Falls back to homepage if the feed errors.
+- **Homepage URL** — what gets linked as the source name in today's todo and the reading log. This is the doorway to deeper resources — when you click "ByteByteGo" in a daily todo, you land on the full site where you can find many more articles than the single one we surfaced.
 
 ## Sources
 

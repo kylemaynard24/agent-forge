@@ -6,16 +6,31 @@
 
 ## 📚 Today's reading (2026-05-27)
 
-Three short reads to keep the learning loop alive even when the sprint item is heavy.
+Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
-1. **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — *ByteByteGo*
+1. **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/)
    Airtable's vector search system using Milvus with hierarchical partitioning, HNSW indexing, and hot/cold data management to enable semantic search across millions of customer databases.
 
-2. **[Kafka 101](https://highscalability.com/untitled-2/)** — *High Scalability*
+2. **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/)
    A comprehensive guide to Kafka's architecture: how it handles millions of messages per second through optimized log structures, persistence strategies, and KRaft consensus.
 
-3. **[Arc Notes Weekly #106: Arrowhead](https://architecturenotes.co/p/arc-notes-weekly-106-arrowhead)** — *Architecture Notes*
-   Covers Amazon's tightened AI code review policies after outages, the NYT scaling unit test coverage with AI, and the eight levels of agentic engineering from copilot to autonomous agent teams.
+3. **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   How Vercel built Hive, a deployment platform using Firecracker microVMs for adversarial isolation, optimized cold starts, and warm cell pools — cutting build provisioning time by 95% while keeping security guarantees.
+
+## 🧪 Stretch prompt (2026-05-27)
+
+Adjacent-territory research — deliberately unrelated to today's reading and sprint item. ~15–30 min of research, ~300–500 words of your own writing.
+
+**Question:** What is consistent hashing, what specific problem does it solve that plain `hash(key) % N` does not, and how do real systems use it?
+
+**Why this matters:** Consistent hashing is the backbone of how distributed caches, databases, and load balancers spread keys across nodes while keeping rebalancing cheap when a node joins or leaves — a foundational idea you'll keep running into in system design.
+
+**Angles to cover:**
+- Walk through the failure of naive modulo hashing: what happens to cached keys when `N` changes from 4 nodes to 5?
+- Explain the hash ring and how a key maps to a node; then explain virtual nodes (vnodes) and what problem they fix.
+- Name 2–3 real systems that use it (e.g., Amazon Dynamo, Cassandra, memcached clients, CDNs) and one concrete trade-off or limitation.
+
+**Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 
 ## Round 1 (~90 min)
 
