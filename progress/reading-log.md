@@ -2,6 +2,15 @@
 
 Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. The skill uses the most-recent 7 dated sections of this file as the "already shown" exclusion list when picking the next batch.
 
+## 2026-05-28
+
+- **[How CockroachDB Built Vector Indexing at Scale](https://blog.bytebytego.com/p/how-cockroachdb-built-vector-indexing)** — via [ByteByteGo](https://blog.bytebytego.com/)
+  How CockroachDB added vector indexing to a distributed SQL database and worked through the tradeoffs needed to make nearest-neighbor search fit a multi-tenant system.
+- **[Capturing A Billion Emo(j)i-ons](https://highscalability.com/capturing-a-billion-emo-j-i-ons/)** — via [High Scalability](https://highscalability.com/)
+  Hotstar's real-time emoji pipeline: high-throughput ingestion, Kafka-backed async processing, and the design choices that let a fan-engagement feature absorb billions of events.
+- **[EP216: RAGs vs Agents](https://blog.bytebytego.com/p/ep216-rags-vs-agents)** — via [ByteByteGo](https://blog.bytebytego.com/)
+  A concise comparison of when retrieval is enough, when you need a tool-using loop, and what problem shape should push you toward one pattern over the other.
+
 ## 2026-05-27
 
 - **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/)

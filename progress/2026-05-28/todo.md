@@ -1,34 +1,34 @@
-# 2026-05-27 — Today's slice
+# 2026-05-28 — Today's slice
 
 > **Active sprint:** [progress/sprints/2026-04-30/sprint.md](../sprints/2026-04-30/sprint.md)
 > **Sprint progress:** 1 of 13 items complete · 11 remaining after today's slice
-> **Working folder:** `progress/2026-05-27/working-folder/agentic-workflows/` (scaffolded; gitignored)
+> **Working folder:** `progress/2026-05-28/working-folder/agentic-workflows/` (scaffolded; gitignored)
 
-## 📚 Today's reading (2026-05-27)
+## 📚 Today's reading (2026-05-28)
 
 Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
-1. **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   Airtable's vector search system using Milvus with hierarchical partitioning, HNSW indexing, and hot/cold data management to enable semantic search across millions of customer databases.
+1. **[How CockroachDB Built Vector Indexing at Scale](https://blog.bytebytego.com/p/how-cockroachdb-built-vector-indexing)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   How CockroachDB added vector indexing to a distributed SQL database and worked through the tradeoffs needed to make nearest-neighbor search fit a multi-tenant system.
 
-2. **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/)
-   A comprehensive guide to Kafka's architecture: how it handles millions of messages per second through optimized log structures, persistence strategies, and KRaft consensus.
+2. **[Capturing A Billion Emo(j)i-ons](https://highscalability.com/capturing-a-billion-emo-j-i-ons/)** — via [High Scalability](https://highscalability.com/)
+   Hotstar's real-time emoji pipeline: high-throughput ingestion, Kafka-backed async processing, and the design choices that let a fan-engagement feature absorb billions of events.
 
-3. **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   How Vercel built Hive, a deployment platform using Firecracker microVMs for adversarial isolation, optimized cold starts, and warm cell pools — cutting build provisioning time by 95% while keeping security guarantees.
+3. **[EP216: RAGs vs Agents](https://blog.bytebytego.com/p/ep216-rags-vs-agents)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   A concise comparison of when retrieval is enough, when you need a tool-using loop, and what problem shape should push you toward one pattern over the other.
 
-## 🧪 Stretch prompt (2026-05-27)
+## 🧪 Stretch prompt (2026-05-28)
 
 Adjacent-territory research — deliberately unrelated to today's reading and sprint item. ~15–30 min of research, ~300–500 words of your own writing.
 
-**Question:** What is consistent hashing, what specific problem does it solve that plain `hash(key) % N` does not, and how do real systems use it?
+**Question:** When a process memory-maps a file, what work do the OS page cache and page tables each do, and why can `mmap` outperform repeated `read()` calls for some workloads but backfire for others?
 
-**Why this matters:** Consistent hashing is the backbone of how distributed caches, databases, and load balancers spread keys across nodes while keeping rebalancing cheap when a node joins or leaves — a foundational idea you'll keep running into in system design.
+**Why this matters:** This builds intuition for how user-space code meets kernel memory management. That mental model shows up in databases, search engines, build tools, and any system that moves lots of bytes efficiently.
 
 **Angles to cover:**
-- Walk through the failure of naive modulo hashing: what happens to cached keys when `N` changes from 4 nodes to 5?
-- Explain the hash ring and how a key maps to a node; then explain virtual nodes (vnodes) and what problem they fix.
-- Name 2–3 real systems that use it (e.g., Amazon Dynamo, Cassandra, memcached clients, CDNs) and one concrete trade-off or limitation.
+- Explain page cache vs virtual memory vs page tables: what gets set up at `mmap` time, and what only happens on the first page fault.
+- Compare `mmap` with explicit `read()` loops for sequential scans and random access, including syscalls, copies, and lazy loading.
+- Give 1–2 failure modes or trade-offs, such as page-fault storms, tricky writeback behavior, or address-space pressure.
 
 **Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 
@@ -40,7 +40,7 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 
 > Carried forward from the 2026-05-17 slice (originally assigned 2026-05-01). The 252-line `what-is-an-agent` README is the conceptual anchor for this build — S-02 is where you make the four-piece anatomy (LLM + tools + loop + goal) concrete in code.
 
-Build `TinyAgent.cs` in `progress/2026-05-27/working-folder/agentic-workflows/` as a tiny C# version of the four-piece agent anatomy. Include:
+Build `TinyAgent.cs` in `progress/2026-05-28/working-folder/agentic-workflows/` as a tiny C# version of the four-piece agent anatomy. Include:
 - An `ILlm` interface (single method that takes the conversation/context and returns the next action to take).
 - A `StubLlm` implementation that returns canned next actions (no real model call — hardcode the sequence so you can see the loop work end-to-end).
 - One concrete tool: `CountLines(path)` that reads a file and returns its line count.
@@ -51,7 +51,7 @@ Keep it intentionally small — about 50 lines is enough if you focus on the ana
 **Done when:**
 1. `TinyAgent.cs` contains `ILlm`, `StubLlm`, a `CountLines` tool, a goal, and a 3-iteration loop.
 2. Each iteration prints the chosen action and resulting observation or final answer.
-3. The file is saved under `progress/2026-05-27/working-folder/agentic-workflows/`.
+3. The file is saved under `progress/2026-05-28/working-folder/agentic-workflows/`.
 
 - [ ] Mark this item complete here AND in `progress/sprints/2026-04-30/items.md` when finished.
 
