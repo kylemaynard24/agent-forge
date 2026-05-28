@@ -193,6 +193,8 @@ Goal: ensure `progress/<today>/todo.md` has a `## 🧪 Stretch prompt (<today>)`
 2. Read the most recent 14 entries from `progress/stretch-prompt-log.md` (if it exists) to see which themes and questions were used recently. Avoid re-picking a theme used in the last few days, and never repeat a question.
 3. Identify today's "off-limits" subjects: the topics covered by today's reading list (Step 6) and today's sprint item (the subject + what the item is about). The stretch prompt MUST NOT overlap with any of these — the whole point is adjacent breadth, not reinforcement.
 4. Pick a theme not used recently, then generate ONE focused research question within it. The question should be answerable in 300–500 words after 15–30 min of research — concrete, not a textbook chapter, not a one-liner. Write a 1–2 sentence "why this matters" framing and 3 angles to cover.
+5. **Find real external resources on the topic.** Use `WebSearch` (and `WebFetch` to confirm a link if needed) to locate 2–3 authoritative, readable resources on the question's topic — canonical papers, official docs, or well-regarded engineering explainers. Prefer primary/authoritative sources; skip SEO-spam, paywalled-only, and roundup/newsletter pages. For each resource, capture its title, real URL, and a 1-sentence synopsis of what it covers and why it's worth reading. **Never fabricate or guess a URL — every link must come from a real search/fetch result.** If `WebSearch` is unavailable or returns nothing usable, write "_(Couldn't fetch resources today — search the topic above.)_" instead of inventing links.
+6. **Write a short primer in your own words** — 2–3 sentences orienting the user on the topic so they're not starting cold. This is your synopsis; the resources are where the real depth lives.
 
 **Section format** (replace any existing `## 🧪 Stretch prompt` block in today's todo, or insert immediately after the `## 📚 Today's reading` section / before the first `## Round` heading):
 
@@ -205,15 +207,22 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 
 **Why this matters:** <1–2 sentences — what concept this builds and where it shows up in real systems>
 
+**Primer (my quick take):** <2–3 sentence orientation on the topic so you're not starting cold>
+
 **Angles to cover:**
 - <angle 1>
 - <angle 2>
 - <angle 3>
 
+**Resources to read:**
+- [<real resource title>](<real-url>) — <1-sentence synopsis of what it covers>
+- [<real resource title>](<real-url>) — <1-sentence synopsis>
+- [<real resource title>](<real-url>) — <1-sentence synopsis>
+
 **Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 ```
 
-**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing the question, the framing, the angles, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
+**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing the question, the framing, the primer, the angles, the resource links, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
 
 **Append to the log.** Prepend a dated entry to `progress/stretch-prompt-log.md` (most-recent-first). Create the file with a header if missing:
 
@@ -296,3 +305,4 @@ If any `progress/<subject>/state.md` is missing, create it from the syllabus's L
 - **Don't rewrite past entries in `reading-log.md`.** Prepend today's section above the most recent prior section. Past entries are an audit trail — leave them alone even if a URL later 404s.
 - **The stretch prompt must not overlap with today's reading or sprint subject.** Adjacent breadth is the whole point. If the only fresh theme would overlap, pick a different theme.
 - **Don't overwrite a user's `stretch-prompt.md` writeup.** Create the stub only if the file is missing. If it exists (user may have started writing), leave it alone.
+- **Never fabricate resource links.** Every URL in the stretch prompt's "Resources to read" must come from a real `WebSearch`/`WebFetch` result. If you can't find real resources, say so — don't guess a plausible-looking URL.
