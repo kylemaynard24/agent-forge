@@ -10,7 +10,16 @@
       "Bash(echo \"exit: $?\")",
       "PowerShell(git commit *)",
       "Bash(py *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(git rm *)",
+      "WebSearch",
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(echo \"=== exit: $? ===\")",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(git restore *)",
+      "Bash(code /Users/kylemaynard/agent-forge)",
+      "Bash(git fetch *)"
     ]
   }
 }
