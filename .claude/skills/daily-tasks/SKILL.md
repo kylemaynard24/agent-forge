@@ -127,15 +127,17 @@ Goal: ensure `progress/<today>/todo.md` has a `## 📚 Today's reading (<today>)
 
 **Skip condition.** If the file already contains a `## 📚 Today's reading (<today>)` heading (note: the date in the heading must match today), the section is current — do nothing and move to Step 7. Do not re-append to the log; today's entries are already there.
 
-**Fetch flow.**
+**Fetch flow.** The pick is **randomized** — the head of the list should vary day to day, not always lead with the same site.
 
-1. Read source list from `.claude/skills/daily-tasks/reading-sources.md` (sibling of this SKILL.md). For each source, capture BOTH its display name and homepage URL (used as the source link) and its feed URL (used for fetching).
-2. Build the "recently shown" exclusion set: read `progress/reading-log.md` if it exists and collect every article URL from its most recent 7 dated sections. Avoid recommending any URL in that set. (If `reading-log.md` doesn't exist yet, the exclusion set is empty — the next step will create the file.)
-3. For each source, in order, use `WebFetch` on the feed URL with a prompt like: *"Return the 3 most recent published articles in this feed as a list of (title, full URL, 1-sentence summary of what the article is about). Order by recency."* If the feed errors or returns no usable content, retry with the homepage URL.
-4. From each source's response, pick the most-recent article whose URL is not in the exclusion set AND whose title does not look like a newsletter/digest/roundup. Skip titles matching `/weekly|digest|roundup|newsletter|^issue #?\d+|edition|recap/i` — those are curated link lists, not deep articles. The user wants substantive technical deep-dives, not "this week in X" pointers. If every recent article from a source is roundup-shaped, move to the next source rather than dropping the quality bar. Record (title, article-url, source-name, source-homepage-url, 1-sentence hook).
-5. Stop once 3 articles are collected.
-6. If the source pool is exhausted with fewer than 3 collected, cycle back to the first successful source and pick the next-most-recent article from its earlier response (still respecting the exclusion set).
-7. If after a full second pass you still have fewer than 3, write whatever you have plus a one-line note: *"Couldn't reach <comma-separated source names>; only fetched N articles today."* Don't block the slice over article failures.
+1. Read source list from `.claude/skills/daily-tasks/reading-sources.md` (sibling of this SKILL.md). For each source, capture its display name, homepage URL (the source link), and feed URL (for fetching).
+2. Read `progress/reading-log.md` if it exists and build two things from it:
+   - **Show-count map:** article URL → how many times it has already appeared (count of dated entries containing that URL).
+   - **Cooldown set:** every article URL appearing in the most recent **2** dated sections — too fresh to repeat back-to-back.
+   (If `reading-log.md` doesn't exist yet, both are empty.)
+3. **Shuffle the source order**, then for each source use `WebFetch` on the feed URL with a prompt like: *"Return the 5 most recent published articles in this feed as a list of (title, full URL, 1-sentence summary). Order by recency."* If the feed errors or returns nothing usable, retry with the homepage URL.
+4. Build a combined candidate pool from all fetched articles, dropping: (a) anything in the cooldown set, and (b) newsletter/digest/roundup titles matching `/weekly|digest|roundup|newsletter|^issue #?\d+|edition|recap/i` — curated link lists, not deep technical articles. **Former articles outside the cooldown window ARE eligible** — revisiting a strong read is fine and intended; its show-count just increments.
+5. **Randomly pick 3** from the candidate pool. Prefer source diversity (avoid 2 from the same source unless the pool is thin) and lightly favor lower show-counts so the catalog rotates — but keep it genuinely varied; do NOT deterministically take the newest from each source. For each pick, record (title, article-url, source-name, source-homepage-url, 1-sentence hook, and new-show-count = prior count + 1).
+6. If the candidate pool has fewer than 3 (sources failed or everything's in cooldown), relax the cooldown filter and pick from what remains. If still short, write whatever you have plus a one-line note: *"Couldn't reach <comma-separated source names>; only fetched N articles today."* Don't block the slice over article failures.
 
 **Section format** (replace any existing `## 📚 Today's reading` block in today's todo, or insert immediately after the blockquote header / before the first `## Round` heading). Note: the source name is itself a link to the source's homepage — the homepage is intentionally the "more like this" doorway, since it lists many more articles than the one we surfaced.
 
@@ -161,19 +163,19 @@ If `progress/reading-log.md` does NOT exist, create it with this header first:
 ```markdown
 # Reading log
 
-Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. The skill uses the most-recent 7 dated sections of this file as the "already shown" exclusion list when picking the next batch.
+Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. `shown N×` is how many times that article has appeared as of that date. Selection is randomized; former articles can be revisited, but anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
 ```
 
-Then prepend a new dated section above any existing entries (most-recent-first):
+Then prepend a new dated section above any existing entries (most-recent-first). Each entry ends with `· shown <N>×`, where N is the new-show-count from the fetch flow (1 on first appearance, 2+ on a revisit):
 
 ```markdown
 ## <today>
 
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
   <1-sentence hook>
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
   <1-sentence hook>
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
   <1-sentence hook>
 ```
 
@@ -302,7 +304,7 @@ If any `progress/<subject>/state.md` is missing, create it from the syllabus's L
 - **Don't overwrite today's todo's existing content.** Append sprint rounds; never replace prior content. The one exception is the `## 📚 Today's reading (<today>)` section, which is rewritten in place if it's missing or dated for a prior day.
 - **Don't recommend articles from outside the source pool.** The pool lives in `reading-sources.md`. If the user wants new sites, they add them there.
 - **Don't fabricate article content.** If `WebFetch` fails or returns nothing usable, write the failure note rather than inventing titles/summaries. The reading log only records real articles — never log a placeholder.
-- **Don't rewrite past entries in `reading-log.md`.** Prepend today's section above the most recent prior section. Past entries are an audit trail — leave them alone even if a URL later 404s.
+- **Don't rewrite past entries' content in `reading-log.md`.** Prepend today's section above the most recent prior section; don't alter prior links or hooks — they're an audit trail, even if a URL later 404s. The `shown N×` count is set when an entry is written and not back-edited afterward.
 - **The stretch prompt must not overlap with today's reading or sprint subject.** Adjacent breadth is the whole point. If the only fresh theme would overlap, pick a different theme.
 - **Don't overwrite a user's `stretch-prompt.md` writeup.** Create the stub only if the file is missing. If it exists (user may have started writing), leave it alone.
 - **Never fabricate resource links.** Every URL in the stretch prompt's "Resources to read" must come from a real `WebSearch`/`WebFetch` result. If you can't find real resources, say so — don't guess a plausible-looking URL.

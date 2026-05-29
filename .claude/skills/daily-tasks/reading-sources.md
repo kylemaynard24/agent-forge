@@ -26,8 +26,8 @@ For each source, the skill uses two URLs:
 
 ## How sources are picked
 
-- The skill iterates sources in listed order, trying to collect 1 most-recent article from each.
-- It stops once 3 articles are collected.
-- If a source fails (network error, parse failure, empty feed), it's skipped and the skill moves to the next source.
-- If the entire pool is exhausted with fewer than 3 articles collected, the skill cycles back and picks the 2nd-most-recent from earlier successful sources.
-- The skill avoids re-recommending an article whose URL already appears in the last 7 days of `progress/<date>/todo.md` files. If everything in a source's latest items has already been shown recently, the skill moves to the next source.
+- The skill **shuffles** the source order each day, then fetches the recent articles from each source — so the head of the list isn't always the same site.
+- It **randomly picks 3** from the combined pool, preferring source diversity and lightly favoring articles shown fewer times, so the selection varies day to day.
+- Newsletter/digest/roundup-titled posts are skipped — this list is for deep technical articles, not curated link lists.
+- **Former articles can be revisited** — going back to a strong read is fine and intended. The reading log tracks a `shown N×` count per article so repeats are visible. Anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
+- If a source fails (network/parse/empty), it's skipped. If fewer than 3 candidates remain, the skill relaxes the cooldown and takes what it can.
