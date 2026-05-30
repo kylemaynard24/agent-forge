@@ -2,6 +2,10 @@
 
 Every stretch research prompt surfaced by `/daily-tasks`, chronological (most recent first). The skill reads the most recent 14 entries to avoid repeating themes/questions.
 
+## 2026-05-29 — Compilers and language runtimes
+
+How does a generational garbage collector work, and why does the "weak generational hypothesis" make collecting the young generation far cheaper than scanning the whole heap?
+
 ## 2026-05-28 — Operating systems
 
 When a process memory-maps a file, what work do the OS page cache and page tables each do, and why can `mmap` outperform repeated `read()` calls for some workloads but backfire for others?

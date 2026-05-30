@@ -2,6 +2,15 @@
 
 Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. `shown N×` is how many times that article has appeared as of that date. Selection is randomized; former articles can be revisited, but anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
 
+## 2026-05-29
+
+- **[Must-Know Failure Modes in Distributed Systems](https://blog.bytebytego.com/p/must-know-failure-modes-in-distributed)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×
+  A catalog of the recurring ways distributed systems break — servers that look healthy while users see errors — and the standard mitigations for each failure mode.
+- **[Brief History of Scaling Uber](https://highscalability.com/brief-history-of-scaling-uber/)** — via [High Scalability](https://highscalability.com/) · shown 1×
+  Uber's architectural evolution from a LAMP-stack monolith through microservices, database sharding, and dispatch-system rewrites toward cloud infrastructure.
+- **[Behind AWS S3's Massive Scale](https://highscalability.com/behind-aws-s3s-massive-scale/)** — via [High Scalability](https://highscalability.com/) · shown 1×
+  A look inside S3's 300+ microservices, its ShardStore storage fleet, erasure-coding replication, and how it manages IOPS constraints across millions of drives.
+
 ## 2026-05-28
 
 - **[How CockroachDB Built Vector Indexing at Scale](https://blog.bytebytego.com/p/how-cockroachdb-built-vector-indexing)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×
