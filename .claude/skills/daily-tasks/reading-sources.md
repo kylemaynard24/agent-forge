@@ -27,7 +27,8 @@ For each source, the skill uses two URLs:
 ## How sources are picked
 
 - The skill **shuffles** the source order each day, then fetches the recent articles from each source — so the head of the list isn't always the same site.
-- It **randomly picks 3** from the combined pool, preferring source diversity and lightly favoring articles shown fewer times, so the selection varies day to day.
+- It assembles **up to 10 candidates** from the combined pool (preferring source diversity and articles shown fewer times) and **presents them to you to choose from** — nothing is added to the day's todo until you pick (default 3).
 - Newsletter/digest/roundup-titled posts are skipped — this list is for deep technical articles, not curated link lists.
 - **Former articles can be revisited** — going back to a strong read is fine and intended. The reading log tracks a `shown N×` count per article so repeats are visible. Anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
+- **Over-exposure guard:** an article is retired from rotation once it's been shown **3 times**, and any article **2+ shows ahead of the freshest candidates** is set aside in favor of less-seen reads — so no single article dominates the list.
 - If a source fails (network/parse/empty), it's skipped. If fewer than 3 candidates remain, the skill relaxes the cooldown and takes what it can.
