@@ -2,6 +2,15 @@
 
 Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. `shown N×` is how many times that article has appeared as of that date. Selection is randomized; former articles can be revisited, but anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
 
+## 2026-05-30
+
+- **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/) · shown 2×
+  How Kafka pushes millions of messages/sec through an append-only log: persistence strategy, replication, and the move from ZooKeeper to KRaft consensus.
+- **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 2×
+  Airtable's semantic search over millions of isolated customer bases using Milvus, HNSW indexing, hierarchical partitioning, and hot/cold data management.
+- **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 2×
+  Vercel's Hive platform: Firecracker microVMs for adversarial isolation, optimized cold starts, and a warm pool of pre-booted cells for an 18x build speedup.
+
 ## 2026-05-29
 
 - **[Must-Know Failure Modes in Distributed Systems](https://blog.bytebytego.com/p/must-know-failure-modes-in-distributed)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×

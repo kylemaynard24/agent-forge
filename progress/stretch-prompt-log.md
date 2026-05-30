@@ -2,6 +2,10 @@
 
 Every stretch research prompt surfaced by `/daily-tasks`, chronological (most recent first). The skill reads the most recent 14 entries to avoid repeating themes/questions.
 
+## 2026-05-30 — Networking
+
+What is head-of-line blocking, how does it show up at both the TCP layer and the HTTP/2 layer, and why did HTTP/3 move to QUIC over UDP to fix it?
+
 ## 2026-05-29 — Compilers and language runtimes
 
 How does a generational garbage collector work, and why does the "weak generational hypothesis" make collecting the young generation far cheaper than scanning the whole heap?
