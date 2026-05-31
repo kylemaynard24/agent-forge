@@ -35,9 +35,19 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 - Give 1–2 caveats: QUIC still has some HOL within a single stream, plus the cost/tradeoffs of moving reliability + congestion control into user space over UDP.
 
 **Resources to read:**
-- [TCP head-of-line blocking — HTTP/3 explained (haxx.se)](https://http3-explained.haxx.se/en/why-quic/why-tcphol) — From Daniel Stenberg (curl author); the canonical, concise explanation of the TCP-level problem QUIC solves.
-- [Head-of-Line Blocking in QUIC and HTTP/3: The Details — Web Performance Calendar](https://calendar.perfplanet.com/2020/head-of-line-blocking-in-quic-and-http-3-the-details/) — Robin Marx's deep, precise treatment, including where QUIC still has residual HOL blocking.
-- [HTTP/3 vs. HTTP/2: A detailed comparison — Catchpoint](https://www.catchpoint.com/http3-vs-http2) — A readable engineering comparison that grounds the theory in real performance differences.
+- [TCP head-of-line blocking — HTTP/3 explained (haxx.se)](https://http3-explained.haxx.se/en/why-quic/why-tcphol) — From the curl/HTTP-stack world; the canonical, concise explanation of the TCP-level problem. Walks through how HTTP/2 multiplexing over a *single* TCP connection becomes a liability: one lost packet stalls the whole connection (all streams) until retransmission. Memorable practical detail — at ~2% packet loss, HTTP/1 with its multiple connections can actually outperform HTTP/2, because losses are spread across connections instead of blocking one shared pipe. Sets up exactly why QUIC's per-stream independence matters.
+- [Head-of-Line Blocking in QUIC and HTTP/3: The Details — Web Performance Calendar](https://calendar.perfplanet.com/2020/head-of-line-blocking-in-quic-and-http-3-the-details/) — Robin Marx's rigorous, myth-busting deep dive. Traces HOL blocking across all three generations (HTTP/1.1 app-layer → HTTP/2 solves that but exposes TCP transport-layer → QUIC makes streams transport-aware), then makes the contrarian argument that **removing transport HOL blocking "probably won't help all that much"** for real web performance, since optimal resource delivery is often sequential anyway. Read this one for the nuance most explainers skip — including where QUIC *still* has residual HOL blocking.
+- [HTTP/3 vs. HTTP/2: A detailed comparison — Catchpoint](https://www.catchpoint.com/http3-vs-http2) — A breadth-first engineering comparison across seven dimensions: transport (TCP vs QUIC), multiplexing, connection setup, encryption, error recovery, server push, and network mobility. Lighter on the HOL-blocking theory than the other two, but the best for situating HOL blocking among QUIC's *other* wins — faster handshakes, 0-RTT resumption, and connection migration. Includes practical code/implementation notes.
+
+**Terminology to learn:**
+- **Head-of-line (HOL) blocking** — when the first item in a queue stalls everything behind it, even though the later items are ready to go.
+- **Multiplexing** — carrying many independent logical streams (requests/responses) over a single connection at once.
+- **In-order / reliable delivery** — TCP's guarantee that bytes are handed to the app in the exact order sent; the reason a single gap forces TCP to wait.
+- **Packet loss & retransmission** — a dropped packet must be resent; TCP withholds all later bytes until the missing one arrives (the root of transport-layer HOL blocking).
+- **QUIC** — "Quick UDP Internet Connections"; a transport built on UDP that implements its own reliability, ordering, and congestion control, with streams tracked independently.
+- **Stream independence (transport-aware streams)** — QUIC knows which bytes belong to which stream, so a loss in one stream doesn't block delivery of the others.
+- **Round-trip time (RTT) / 0-RTT** — latency of one network round trip; 0-RTT lets a *resumed* QUIC connection send application data in the very first packet, with no handshake wait.
+- **Connection migration** — QUIC's ability to keep a connection alive across a network change (e.g., Wi-Fi → cellular) by identifying it with a connection ID rather than the IP/port 4-tuple.
 
 **Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 
