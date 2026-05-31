@@ -1,5 +1,7 @@
 # Stretch prompt — 2026-05-30 (Networking)
 
+> First surfaced: 2026-05-30
+
 **Question:** What is head-of-line blocking, how does it show up at both the TCP layer and the HTTP/2 layer, and why did HTTP/3 move to QUIC over UDP to fix it?
 
 **Why this matters:** This is the clearest worked example of why "a higher layer can't outrun a limitation baked into the layer below it." HTTP/2 multiplexed requests but still sat on TCP's in-order byte stream — so it couldn't escape transport-level blocking. Understanding this explains real latency cliffs on lossy/mobile networks and why QUIC exists at all.

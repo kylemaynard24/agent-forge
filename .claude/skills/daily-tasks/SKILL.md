@@ -10,10 +10,10 @@ This skill is the **execution** half of the sprint loop. `/next-sprint` is the *
 Real engineers with busy jobs need a floor that's easy to hit. One item per run keeps the habit alive even on hard days — and re-running is always an option when there's more time.
 
 - A **sprint** (made by `/next-sprint`) covers one step (`read`, `demo`, or `implement`) for each of the four subjects, broken into ~10-14 discrete items totaling 10-15 hours. A sprint takes ~1-2 weeks of part-time work.
-- A **daily slice** (made by this skill) is **1 sprint item + a 3-article reading list + a stretch research prompt**. You get one fresh sprint item per `/daily-tasks` call, plus a fresh set of 3 articles and a fresh research prompt every calendar day (refreshed even if yesterday's sprint item carried forward).
+- A **daily slice** (made by this skill) is **1 sprint item + a 3-article reading list + a stretch research prompt**. You get one fresh sprint item per `/daily-tasks` call, plus a fresh set of 3 articles every calendar day (refreshed even if yesterday's sprint item carried forward). The **stretch prompt is different — it persists day to day until you write a response to it.** These prompts are intentionally hard and technical; they're the part that pushes growth, so the skill keeps the same challenge in front of you until you've actually tackled it, then rotates in a new one.
 - The reading list is the floor-of-the-floor: if the sprint item is too heavy for today, you can still learn by reading. As long as you can read, you can learn — even if you can't get the work done.
 - The stretch prompt is *adjacent* territory — a research question deliberately disjoint from today's reading and sprint subject. 15–30 min of research, 300–500 words of writing. Builds breadth alongside the sprint's depth.
-- Re-run on the same day if you finish — the skill asks "did you finish?" and either pulls the next item (yes) or shows you what you already have (no). Articles and stretch prompt are not regenerated mid-day.
+- Re-run on the same day if you finish — the skill asks "did you finish?" and either pulls the next item (yes) or shows you what you already have (no). Articles and the stretch prompt are not regenerated mid-day. The stretch prompt also is not regenerated *across* days until you've written a response to it (see Step 7).
 
 ## Run order
 
@@ -53,7 +53,9 @@ Before deciding whether to generate a new slice, reconcile stale dated folders i
 - Inspect existing `progress/<date>/` directories (date-shaped folders only, excluding `sprints/`, `sessions/`, and subject state folders).
 - Treat a dated folder as **no work completed** when its `todo.md` still has no checked `- [x]` items and the Notes section is still untouched template text, with no meaningful scratch files beyond the scaffolded `working-folder/README.md`.
 - Delete stale dated folders older than yesterday when they meet that "no work completed" test. They are redundant copies of an unfinished slice.
-- If **yesterday's** dated folder exists and also has no work completed, **move it forward to `progress/<today>/` instead of creating a brand-new todo**. Update the moved files so headings, dates, and working-folder references say `<today>`. **Also strip any existing `## 📚 Today's reading (...)` and `## 🧪 Stretch prompt (...)` sections from the moved todo** — Steps 6 and 7 will repopulate them with fresh content dated today. Also delete any prior `stretch-prompt.md` stub in the moved folder. (The reading list and stretch prompt are the parts of the slice that do *not* roll forward: even when the sprint item carries, both are always fresh for today.)
+- If **yesterday's** dated folder exists and also has no work completed, **move it forward to `progress/<today>/` instead of creating a brand-new todo**. Update the moved files so headings, dates, and working-folder references say `<today>`. Then:
+  - **Always strip the existing `## 📚 Today's reading (...)` section** from the moved todo — Step 6 repopulates it with fresh articles dated today. The reading list is the daily floor; it never rolls forward.
+  - **The stretch prompt PERSISTS until answered.** Look at the moved `stretch-prompt.md`'s `## My response` section: if it's still empty/placeholder, **keep both the `## 🧪 Stretch prompt (...)` section in the todo and the `stretch-prompt.md` stub** — the same challenge carries forward (Step 7 just re-dates its heading to today and notes how long it's been open). Only if the user has **written a real response** (the `## My response` section has actual content beyond the placeholder) do you strip the stretch section and delete the `stretch-prompt.md` stub so Step 7 can rotate in a fresh challenge.
 
 If `progress/<today>/todo.md` does NOT exist:
 - If yesterday was carried forward into `progress/<today>/`, read that todo and show it as today's current slice. Do **not** pull a new item.
@@ -193,6 +195,13 @@ Goal: ensure `progress/<today>/todo.md` has a `## 🧪 Stretch prompt (<today>)`
 
 **Skip condition.** If today's todo already contains a `## 🧪 Stretch prompt (<today>)` heading (date matches today), it's current — do nothing and move to Step 8.
 
+**Persist condition (the stretch prompt rolls forward until answered).** Before generating anything, check for a carried-forward stretch prompt: if `progress/<today>/stretch-prompt.md` exists and its `## My response` section is still empty/placeholder (no real writing by the user), **do NOT generate a new prompt.** The same challenge stays in front of the user until they tackle it. Instead:
+- Re-date the `## 🧪 Stretch prompt (...)` heading in today's todo to `(<today>)`, and add/update a one-line note under it: *"⏳ Carried forward since `<first-surfaced date>` — still open. This one stays until you write your response; it's meant to be hard."* (Read `<first-surfaced date>` from the `> First surfaced:` line in `stretch-prompt.md`; if absent, use the prompt's current heading date and stamp the file with that.)
+- Do **NOT** re-append to `progress/stretch-prompt-log.md` or `progress/research-archive.md` — the prompt was logged on its first day; re-logging would duplicate it.
+- Leave the user's `stretch-prompt.md` untouched (never overwrite their in-progress writing), then move to Step 8.
+
+Only run the **Generation flow** below when there is no carried prompt, OR the carried prompt's `## My response` has real content (the user finished it — rotate in a fresh challenge).
+
 **Generation flow.**
 
 1. Read the theme pool from `.claude/skills/daily-tasks/stretch-themes.md` (sibling of this SKILL.md).
@@ -234,7 +243,7 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 **Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 ```
 
-**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing the question, the framing, the primer, the angles, the in-depth resource summaries, the terminology list, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
+**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing a `> First surfaced: <today>` line near the top (the carry-forward logic reads this to show how long the prompt has been open), the question, the framing, the primer, the angles, the in-depth resource summaries, the terminology list, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
 
 **Append to the log.** Prepend a dated entry to `progress/stretch-prompt-log.md` (most-recent-first). Create the file with a header if missing:
 
