@@ -197,8 +197,9 @@ Goal: ensure `progress/<today>/todo.md` has a `## 🧪 Stretch prompt (<today>)`
 2. Read the most recent 14 entries from `progress/stretch-prompt-log.md` (if it exists) to see which themes and questions were used recently. Avoid re-picking a theme used in the last few days, and never repeat a question.
 3. Identify today's "off-limits" subjects: the topics covered by today's reading list (Step 6) and today's sprint item (the subject + what the item is about). The stretch prompt MUST NOT overlap with any of these — the whole point is adjacent breadth, not reinforcement.
 4. Pick a theme not used recently, then generate ONE focused research question within it. The question should be answerable in 300–500 words after 15–30 min of research — concrete, not a textbook chapter, not a one-liner. Write a 1–2 sentence "why this matters" framing and 3 angles to cover.
-5. **Find real external resources on the topic.** Use `WebSearch` (and `WebFetch` to confirm a link if needed) to locate 2–3 authoritative, readable resources on the question's topic — canonical papers, official docs, or well-regarded engineering explainers. Prefer primary/authoritative sources; skip SEO-spam, paywalled-only, and roundup/newsletter pages. For each resource, capture its title, real URL, and a 1-sentence synopsis of what it covers and why it's worth reading. **Never fabricate or guess a URL — every link must come from a real search/fetch result.** If `WebSearch` is unavailable or returns nothing usable, write "_(Couldn't fetch resources today — search the topic above.)_" instead of inventing links.
+5. **Find and analyze real external resources on the topic.** Use `WebSearch` (and `WebFetch` to confirm a link if needed) to locate 2–3 authoritative, readable resources on the question's topic — canonical papers, official docs, or well-regarded engineering explainers. Prefer primary/authoritative sources; skip SEO-spam, paywalled-only, and roundup/newsletter pages. **`WebFetch` each resource you intend to list** and write a **2–4 sentence in-depth summary** of what it actually covers — its specific arguments/sections, the depth/angle it takes, and why it's worth the user's time — not a generic one-liner. Be thorough; the user will read these. **Never fabricate or guess a URL — every link must come from a real search/fetch result.** If a resource won't fetch, keep it only if you're confident of the link from the search result and label its summary "_(from search result; not fully fetched)_". If `WebSearch` is unavailable or returns nothing usable, write "_(Couldn't fetch resources today — search the topic above.)_" instead of inventing links.
 6. **Write a short primer in your own words** — 2–3 sentences orienting the user on the topic so they're not starting cold. This is your synopsis; the resources are where the real depth lives.
+7. **Compile a "Terminology to learn" list.** From the question's topic and what you read in the resources, list **4–8 key terms** the user should know going in, each with a one-line plain-English definition. Include the jargon, acronyms, and named concepts that show up in the resources so the user isn't blindsided by unfamiliar vocabulary while reading. Order roughly from most-fundamental to most-specialized.
 
 **Section format** (replace any existing `## 🧪 Stretch prompt` block in today's todo, or insert immediately after the `## 📚 Today's reading` section / before the first `## Round` heading):
 
@@ -219,14 +220,19 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 - <angle 3>
 
 **Resources to read:**
-- [<real resource title>](<real-url>) — <1-sentence synopsis of what it covers>
-- [<real resource title>](<real-url>) — <1-sentence synopsis>
-- [<real resource title>](<real-url>) — <1-sentence synopsis>
+- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
+- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
+- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
+
+**Terminology to learn:**
+- **<term>** — <one-line plain-English definition>
+- **<term>** — <one-line plain-English definition>
+- _(4–8 terms, fundamental → specialized)_
 
 **Write your response in** [`stretch-prompt.md`](stretch-prompt.md) — it's tracked, so your writeups accumulate into a portfolio of thinking over time.
 ```
 
-**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing the question, the framing, the primer, the angles, the resource links, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
+**Create the writeup stub.** Write `progress/<today>/stretch-prompt.md` (only if it doesn't already exist) containing the question, the framing, the primer, the angles, the in-depth resource summaries, the terminology list, and an empty `## My response` section for the user to fill in. This file is tracked (NOT under working-folder), so writeups persist across machines and build a visible record.
 
 **Append to the log.** Prepend a dated entry to `progress/stretch-prompt-log.md` (most-recent-first). Create the file with a header if missing:
 
