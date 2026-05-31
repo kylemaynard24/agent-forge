@@ -9,13 +9,13 @@
 Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
 1. **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/)
-   How Kafka pushes millions of messages/sec through an append-only log: persistence strategy, replication, and the move from ZooKeeper to KRaft consensus.
+   Traces Kafka from LinkedIn's need for a centralized event-streaming backbone to its modern architecture, built on immutable append-only logs with O(1) access and leader-based replication. The throughput trick is that Kafka writes everything to disk and leans on OS-level pagecache, read-ahead, and write-behind batching — turning sequential disk I/O into a feature rather than a bottleneck. It also covers the recent shift from ZooKeeper to KRaft (Kafka's own Raft consensus) for metadata, plus tiered storage. Worth reading for the clearest mental model of *why* Kafka's design choices win at scale.
 
 2. **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   Airtable's semantic search over millions of isolated customer bases using Milvus, HNSW indexing, hierarchical partitioning, and hot/cold data management.
+   A case study in how real usage patterns — not generic optimization — should drive your architecture. Airtable runs semantic search on Milvus with aggressive hierarchical partitioning (≈400 collections × 1,000 partitions per cluster) and HNSW indexing for the latency/recall tradeoff. The key insight: since only ~25% of customer bases are touched in a given week, memory-hungry HNSW only becomes viable through cold-data offloading and tiering. Read it for the "match the system to the workload" lesson made concrete.
 
 3. **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   Vercel's Hive platform: Firecracker microVMs for adversarial isolation, optimized cold starts, and a warm pool of pre-booted cells for an 18x build speedup.
+   Vercel's "Hive" platform cut build provisioning from 90s to 5s by running each build in an ephemeral Firecracker microVM (wrapping a Docker container) for VM-level isolation at near-container speed. The 18x win compounds three things: faster cold boots via image caching + snapshotting, a warm pool of pre-booted idle cells, and Firecracker's ~125ms boot time. The deeper lesson is treating hostile multi-tenancy as a *foundational* constraint rather than bolting security on later — which unlocked both performance and product capabilities. Worth reading if you care about isolation-vs-speed tradeoffs.
 
 _Thin fetch today: Quastor 403'd, Dev Interrupted only had eng-leadership posts (not deep technical), and Architecture Notes returned only weekly roundups. So today's three are catalog revisits from the 2026-05-27 list — all strong reads worth a second pass._
 

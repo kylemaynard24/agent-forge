@@ -5,11 +5,11 @@ Every article surfaced by `/daily-tasks`, chronological. Most recent entries at 
 ## 2026-05-30
 
 - **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/) · shown 2×
-  How Kafka pushes millions of messages/sec through an append-only log: persistence strategy, replication, and the move from ZooKeeper to KRaft consensus.
+  Traces Kafka from LinkedIn's event-streaming need to its modern design: immutable append-only logs with O(1) access, leader-based replication, and disk-first throughput via OS pagecache/read-ahead/write-behind. Also covers the ZooKeeper→KRaft consensus shift and tiered storage. The clearest mental model for why Kafka's design wins at scale.
 - **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 2×
-  Airtable's semantic search over millions of isolated customer bases using Milvus, HNSW indexing, hierarchical partitioning, and hot/cold data management.
+  How usage patterns drive architecture: semantic search on Milvus with hierarchical partitioning (~400 collections × 1,000 partitions) and HNSW indexing, made viable by offloading cold data since only ~25% of bases are touched weekly. A concrete "match the system to the workload" lesson.
 - **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 2×
-  Vercel's Hive platform: Firecracker microVMs for adversarial isolation, optimized cold starts, and a warm pool of pre-booted cells for an 18x build speedup.
+  Vercel's Hive cut build provisioning 90s→5s with ephemeral Firecracker microVMs (wrapping Docker) for VM-level isolation at container speed. The 18x win compounds image caching/snapshotting, a warm pool of pre-booted cells, and ~125ms Firecracker boots — treating hostile multi-tenancy as a foundational constraint.
 
 ## 2026-05-29
 
