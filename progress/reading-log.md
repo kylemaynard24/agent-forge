@@ -2,6 +2,15 @@
 
 Every article surfaced by `/daily-tasks`, chronological. Most recent entries at the top. `shown N×` is how many times that article has appeared as of that date. Selection is randomized; former articles can be revisited, but anything shown in the last 2 days is on cooldown to avoid back-to-back repeats.
 
+## 2026-05-31
+
+- **[How DoorDash Built a Testing System to Evaluate LLMs](https://blog.bytebytego.com/p/how-doordash-built-a-testing-system)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×
+  An automated "simulation and evaluation flywheel" that compresses LLM-agent testing from weeks to hours: an LLM customer-simulator replays historical transcripts into multi-turn conversations, and a calibrated LLM judge grades against policy criteria. Cut hallucinations 90%, with simulation gains transferring to production. A blueprint for testing non-deterministic systems.
+- **[How Netflix is Using Multimodal AI to Power Video Search](https://blog.bytebytego.com/p/how-netflix-is-using-multimodal-ai)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×
+  A three-stage pipeline orchestrating specialized models (character recognition, scene classification, dialogue transcription); raw annotations in Cassandra, offline temporal bucketing into one-second intervals, then Elasticsearch for hybrid keyword+vector search. The hard part is the fusion layer, and it trades real-time freshness for throughput.
+- **[How Snapchat Serves a Billion Predictions Per Second](https://blog.bytebytego.com/p/how-snapchat-serves-a-billion-predictions)** — via [ByteByteGo](https://blog.bytebytego.com/) · shown 1×
+  Snapchat's "Bento" platform: each request fans out to hundreds of candidates, split into cheap retrieval (millions→thousands) then expensive ranking within a ~100ms budget. The "boring machinery" of serialization/feature handling dominates cost, and latency — not prediction volume — drives the architecture.
+
 ## 2026-05-30
 
 - **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/) · shown 2×

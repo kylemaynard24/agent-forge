@@ -1,25 +1,25 @@
-# 2026-05-30 — Today's slice
+# 2026-05-31 — Today's slice
 
 > **Active sprint:** [progress/sprints/2026-04-30/sprint.md](../sprints/2026-04-30/sprint.md)
 > **Sprint progress:** 1 of 13 items complete · 11 remaining after today's slice
-> **Working folder:** `progress/2026-05-30/working-folder/agentic-workflows/` (scaffolded; gitignored)
+> **Working folder:** `progress/2026-05-31/working-folder/agentic-workflows/` (scaffolded; gitignored)
 
-## 📚 Today's reading (2026-05-30)
+## 📚 Today's reading (2026-05-31)
 
 Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
-1. **[Kafka 101](https://highscalability.com/untitled-2/)** — via [High Scalability](https://highscalability.com/)
-   Traces Kafka from LinkedIn's need for a centralized event-streaming backbone to its modern architecture, built on immutable append-only logs with O(1) access and leader-based replication. The throughput trick is that Kafka writes everything to disk and leans on OS-level pagecache, read-ahead, and write-behind batching — turning sequential disk I/O into a feature rather than a bottleneck. It also covers the recent shift from ZooKeeper to KRaft (Kafka's own Raft consensus) for metadata, plus tiered storage. Worth reading for the clearest mental model of *why* Kafka's design choices win at scale.
+1. **[How DoorDash Built a Testing System to Evaluate LLMs](https://blog.bytebytego.com/p/how-doordash-built-a-testing-system)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   DoorDash tackles the problem of safely iterating on an LLM support agent when deterministic testing is impossible, by building an automated "simulation and evaluation flywheel" that compresses test cycles from weeks to hours. It replays historical transcripts through an LLM-powered *customer simulator* to generate realistic multi-turn conversations, then uses a second LLM as a *calibrated judge* to grade the agent against explicit policy criteria. The payoff was concrete — a 90% reduction in hallucinations — and, crucially, gains made in simulation transferred reliably to production. Worth reading as a blueprint for testing non-deterministic systems.
 
-2. **[How Airtable Built the Search Layer Behind Their AI Features](https://blog.bytebytego.com/p/how-airtable-built-the-search-layer)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   A case study in how real usage patterns — not generic optimization — should drive your architecture. Airtable runs semantic search on Milvus with aggressive hierarchical partitioning (≈400 collections × 1,000 partitions per cluster) and HNSW indexing for the latency/recall tradeoff. The key insight: since only ~25% of customer bases are touched in a given week, memory-hungry HNSW only becomes viable through cold-data offloading and tiering. Read it for the "match the system to the workload" lesson made concrete.
+2. **[How Netflix is Using Multimodal AI to Power Video Search](https://blog.bytebytego.com/p/how-netflix-is-using-multimodal-ai)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   Netflix makes a huge video archive searchable with a three-stage pipeline that orchestrates specialized models (character recognition, scene classification, dialogue transcription) whose outputs arrive in different formats and time resolutions. Raw annotations land in Cassandra; an offline *temporal bucketing* step fuses the multimodal signals into one-second intervals; the enriched buckets are indexed in Elasticsearch for hybrid keyword-and-vector search. The real lesson: the hardest engineering is in the *fusion layer*, not the models — and the design deliberately trades real-time freshness for throughput.
 
-3. **[How Vercel Cut Build Wait Times From 90 Seconds To 5](https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from)** — via [ByteByteGo](https://blog.bytebytego.com/)
-   Vercel's "Hive" platform cut build provisioning from 90s to 5s by running each build in an ephemeral Firecracker microVM (wrapping a Docker container) for VM-level isolation at near-container speed. The 18x win compounds three things: faster cold boots via image caching + snapshotting, a warm pool of pre-booted idle cells, and Firecracker's ~125ms boot time. The deeper lesson is treating hostile multi-tenancy as a *foundational* constraint rather than bolting security on later — which unlocked both performance and product capabilities. Worth reading if you care about isolation-vs-speed tradeoffs.
+3. **[How Snapchat Serves a Billion Predictions Per Second](https://blog.bytebytego.com/p/how-snapchat-serves-a-billion-predictions)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   Snapchat's "Bento" platform is built around one core asymmetry: a single user request fans out into hundreds of candidate evaluations before collapsing back into a ranked feed. It splits work into two stages — cheap *retrieval* trims millions of candidates to thousands, then expensive *ranking* models score those within a hard ~100ms latency budget. The standout insight is that the "boring machinery" of serialization and feature handling often dominates cost more than the model math, and that *latency*, not raw prediction volume, drives the deepest architectural choices at scale.
 
-_Thin fetch today: Quastor 403'd, Dev Interrupted only had eng-leadership posts (not deep technical), and Architecture Notes returned only weekly roundups. So today's three are catalog revisits from the 2026-05-27 list — all strong reads worth a second pass._
+## 🧪 Stretch prompt (2026-05-31)
 
-## 🧪 Stretch prompt (2026-05-30)
+⏳ Carried forward since `2026-05-30` — still open. This one stays until you write your response; it's meant to be hard.
 
 Adjacent-territory research — deliberately unrelated to today's reading and sprint item. ~15–30 min of research, ~300–500 words of your own writing.
 
@@ -57,9 +57,9 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 
 **Time:** ~90 min · **Subject:** Agentic workflows · **Sprint section:** "Agentic workflows" in [sprint.md](../sprints/2026-04-30/sprint.md)
 
-> Carried forward from the 2026-05-29 slice (originally assigned 2026-05-01). The 252-line `what-is-an-agent` README is the conceptual anchor for this build — S-02 is where you make the four-piece anatomy (LLM + tools + loop + goal) concrete in code.
+> Carried forward (originally assigned 2026-05-01; most recently from the 2026-05-30 slice). The 252-line `what-is-an-agent` README is the conceptual anchor for this build — S-02 is where you make the four-piece anatomy (LLM + tools + loop + goal) concrete in code.
 
-Build `TinyAgent.cs` in `progress/2026-05-30/working-folder/agentic-workflows/` as a tiny C# version of the four-piece agent anatomy. Include:
+Build `TinyAgent.cs` in `progress/2026-05-31/working-folder/agentic-workflows/` as a tiny C# version of the four-piece agent anatomy. Include:
 - An `ILlm` interface (single method that takes the conversation/context and returns the next action to take).
 - A `StubLlm` implementation that returns canned next actions (no real model call — hardcode the sequence so you can see the loop work end-to-end).
 - One concrete tool: `CountLines(path)` that reads a file and returns its line count.
@@ -70,7 +70,7 @@ Keep it intentionally small — about 50 lines is enough if you focus on the ana
 **Done when:**
 1. `TinyAgent.cs` contains `ILlm`, `StubLlm`, a `CountLines` tool, a goal, and a 3-iteration loop.
 2. Each iteration prints the chosen action and resulting observation or final answer.
-3. The file is saved under `progress/2026-05-30/working-folder/agentic-workflows/`.
+3. The file is saved under `progress/2026-05-31/working-folder/agentic-workflows/`.
 
 - [ ] Mark this item complete here AND in `progress/sprints/2026-04-30/items.md` when finished.
 

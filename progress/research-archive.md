@@ -6,6 +6,23 @@ The durable, human-facing record of every piece of technical reading surfaced by
 
 ---
 
+## 2026-05-31
+
+### 📚 Reading
+
+1. **[How DoorDash Built a Testing System to Evaluate LLMs](https://blog.bytebytego.com/p/how-doordash-built-a-testing-system)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   DoorDash tackles the problem of safely iterating on an LLM support agent when deterministic testing is impossible, by building an automated "simulation and evaluation flywheel" that compresses test cycles from weeks to hours. It replays historical transcripts through an LLM-powered *customer simulator* to generate realistic multi-turn conversations, then uses a second LLM as a *calibrated judge* to grade the agent against explicit policy criteria. The payoff was concrete — a 90% reduction in hallucinations — and gains made in simulation transferred reliably to production. A blueprint for testing non-deterministic systems.
+
+2. **[How Netflix is Using Multimodal AI to Power Video Search](https://blog.bytebytego.com/p/how-netflix-is-using-multimodal-ai)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   Netflix makes a huge video archive searchable with a three-stage pipeline that orchestrates specialized models (character recognition, scene classification, dialogue transcription) whose outputs arrive in different formats and time resolutions. Raw annotations land in Cassandra; an offline *temporal bucketing* step fuses the multimodal signals into one-second intervals; the enriched buckets are indexed in Elasticsearch for hybrid keyword-and-vector search. The real lesson: the hardest engineering is in the *fusion layer*, not the models — and the design deliberately trades real-time freshness for throughput.
+
+3. **[How Snapchat Serves a Billion Predictions Per Second](https://blog.bytebytego.com/p/how-snapchat-serves-a-billion-predictions)** — via [ByteByteGo](https://blog.bytebytego.com/)
+   Snapchat's "Bento" platform is built around one core asymmetry: a single user request fans out into hundreds of candidate evaluations before collapsing back into a ranked feed. It splits work into two stages — cheap *retrieval* trims millions of candidates to thousands, then expensive *ranking* models score those within a hard ~100ms latency budget. The standout insight: the "boring machinery" of serialization and feature handling often dominates cost more than the model math, and *latency*, not raw prediction volume, drives the deepest architectural choices at scale.
+
+_Stretch prompt: the 2026-05-30 Networking prompt (head-of-line blocking / QUIC) is still open and carried forward — see its entry under 2026-05-30 below._
+
+---
+
 ## 2026-05-30
 
 ### 📚 Reading
