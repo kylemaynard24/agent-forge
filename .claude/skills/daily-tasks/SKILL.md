@@ -138,7 +138,8 @@ Goal: ensure `progress/<today>/todo.md` has a `## 📚 Today's reading (<today>)
 4. Build a combined candidate pool from all fetched articles, dropping: (a) anything in the cooldown set, (b) newsletter/digest/roundup titles matching `/weekly|digest|roundup|newsletter|^issue #?\d+|edition|recap/i` — curated link lists, not deep technical articles, and (c) **any article whose show-count is already 3 or more** — it has been surfaced enough times; retire it from rotation and find other ones. **Former articles outside the cooldown window and under the 3× cap ARE eligible** — revisiting a strong read is fine and intended; its show-count just increments.
 5. **Over-exposure guard.** Within the surviving pool, also set aside any article whose show-count is **2 or more higher than the lowest show-count present in the pool** — go find fresher/less-seen articles instead of leaning on one that keeps reappearing. Only fall back to a set-aside article if, without it, the candidate list in the next step would have fewer than 10 entries. Together with the 3× hard cap in (c), this keeps any single article from dominating the rotation.
 6. **Present a candidate list of up to 10 — do NOT auto-add to today's todo.** Assemble up to 10 candidates from the surviving pool, preferring source diversity (don't let one source dominate unless the pool is thin) and lower show-counts, but keep it genuinely varied — do NOT deterministically take the newest from each source. Show the candidates to the user as a numbered markdown list, one per line: `**<title>** — via <source name> · <1-sentence hook> · shown <prior-count>×`. Then ask the user which ones they want for today (default 3). **Wait for the user's reply before writing anything** — only the articles the user picks go into today's todo and the reading log. (Use a plain numbered list + free-text reply, not `AskUserQuestion`, since that tool caps at 4 options and we're offering up to 10.) For each chosen article, record (title, article-url, source-name, source-homepage-url, 1-sentence hook, and new-show-count = prior count + 1).
-7. **Thin-pool fallback.** If fewer than 10 candidates survive, present whatever you have (still let the user pick). If the user's pick yields fewer than 3 — or sources failed / everything's in cooldown — write whatever was chosen plus a one-line note: *"Couldn't reach <comma-separated source names>; only fetched N articles today."* Don't block the slice over article failures.
+7. **Analyze & summarize each chosen article.** Once the user has picked (and ONLY for the picked articles — not all 10), `WebFetch` each chosen article's own URL and write a **brief summary of 2–4 sentences** analyzing what the piece actually covers: its core thesis, the key mechanism/approach it explains, and why it's worth a read. This is a genuine read of the article, not a restatement of the feed blurb. If a chosen article won't fetch (paywall, error, redirect that doesn't resolve), fall back to its feed hook and append "_(summary from feed; full article didn't fetch)_". Use these summaries in both the todo's reading section and the reading log below.
+8. **Thin-pool fallback.** If fewer than 10 candidates survive, present whatever you have (still let the user pick). If the user's pick yields fewer than 3 — or sources failed / everything's in cooldown — write whatever was chosen plus a one-line note: *"Couldn't reach <comma-separated source names>; only fetched N articles today."* Don't block the slice over article failures.
 
 **Section format** (replace any existing `## 📚 Today's reading` block in today's todo, or insert immediately after the blockquote header / before the first `## Round` heading). Note: the source name is itself a link to the source's homepage — the homepage is intentionally the "more like this" doorway, since it lists many more articles than the one we surfaced.
 
@@ -148,13 +149,13 @@ Goal: ensure `progress/<today>/todo.md` has a `## 📚 Today's reading (<today>)
 Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
 1. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
-   <1-sentence hook>
+   <2–4 sentence summary from analyzing the article itself>
 
 2. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
-   <1-sentence hook>
+   <2–4 sentence summary from analyzing the article itself>
 
 3. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
-   <1-sentence hook>
+   <2–4 sentence summary from analyzing the article itself>
 ```
 
 **Append to the running reading log.** After writing the section above into today's todo, append the same 3 (or N) articles to `progress/reading-log.md`. This file is the long-term record of every article surfaced — useful as both an exclusion source for future days and as a learning trail the user can re-read later.
@@ -173,11 +174,11 @@ Then prepend a new dated section above any existing entries (most-recent-first).
 ## <today>
 
 - **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
-  <1-sentence hook>
+  <2–4 sentence summary from analyzing the article itself>
 - **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
-  <1-sentence hook>
+  <2–4 sentence summary from analyzing the article itself>
 - **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
-  <1-sentence hook>
+  <2–4 sentence summary from analyzing the article itself>
 ```
 
 (If fewer than 3 articles were fetched, log whatever you got — do not invent entries.)
