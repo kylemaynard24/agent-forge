@@ -150,13 +150,13 @@ Goal: ensure `progress/<today>/todo.md` has a `## 📚 Today's reading (<today>)
 
 Three short reads to keep the learning loop alive even when the sprint item is heavy. The source link goes to the site's archive — click it if you want deeper resources beyond the single article we picked today.
 
-1. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+1. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>)
    <2–4 sentence summary from analyzing the article itself>
 
-2. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+2. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>)
    <2–4 sentence summary from analyzing the article itself>
 
-3. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>)
+3. **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>)
    <2–4 sentence summary from analyzing the article itself>
 ```
 
@@ -175,17 +175,17 @@ Then prepend a new dated section above any existing entries (most-recent-first).
 ```markdown
 ## <today>
 
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>) · shown <N>×
   <2–4 sentence summary from analyzing the article itself>
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>) · shown <N>×
   <2–4 sentence summary from analyzing the article itself>
-- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · shown <N>×
+- **[<title>](<article-url>)** — via [<source name>](<source-homepage-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-article-url>&title=<encoded-title>) · shown <N>×
   <2–4 sentence summary from analyzing the article itself>
 ```
 
 (If fewer than 3 articles were fetched, log whatever you got — do not invent entries.)
 
-**Also append to the durable research archive.** Add the same chosen articles (title, link, source, and the full 2–4 sentence analyzed summary) to the `### 📚 Reading` block of today's section in `progress/research-archive.md` — see Step 7 for how that day-section is created/shared with the stretch prompt. This is the permanent, human-facing portfolio of technical reading; it keeps content even after ephemeral daily files roll over.
+**Also append to the durable research archive.** Add the same chosen articles (title, original link, Agent Forge Reader link, source, and the full 2–4 sentence analyzed summary) to the `### 📚 Reading` block of today's section in `progress/research-archive.md` — see Step 7 for how that day-section is created/shared with the stretch prompt. This is the permanent, human-facing portfolio of technical reading; it keeps content even after ephemeral daily files roll over.
 
 **Failure handling.** If `WebFetch` is unavailable (denied by permissions, no network, etc.), write the section in today's todo with placeholder text: *"Couldn't fetch today's articles (WebFetch unavailable). Sources to check manually: [list each homepage URL]."* Do NOT append anything to `reading-log.md` or `research-archive.md` in this case — they only record real articles. Continue with the rest of the run.
 
@@ -231,9 +231,9 @@ Adjacent-territory research — deliberately unrelated to today's reading and sp
 - <angle 3>
 
 **Resources to read:**
-- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
-- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
-- [<real resource title>](<real-url>) — <2–4 sentence in-depth summary from analyzing the resource>
+- [<real resource title>](<real-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-real-url>&title=<encoded-title>) — <2–4 sentence in-depth summary from analyzing the resource>
+- [<real resource title>](<real-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-real-url>&title=<encoded-title>) — <2–4 sentence in-depth summary from analyzing the resource>
+- [<real resource title>](<real-url>) · [Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-real-url>&title=<encoded-title>) — <2–4 sentence in-depth summary from analyzing the resource>
 
 **Terminology to learn:**
 - **<term>** — <one-line plain-English definition>
@@ -265,7 +265,7 @@ Every stretch research prompt surfaced by `/daily-tasks`, chronological (most re
 The durable, human-facing record of every piece of technical reading surfaced by `/daily-tasks` — both the daily blog reading list and the daily stretch-prompt resources — together with the summaries and terminology generated for each. Newest day first. The skill still uses `reading-log.md` and `stretch-prompt-log.md` for de-duplication and recency; this file is the portfolio to revisit.
 ```
 
-Then ensure a `## <today>` section exists at the top (most-recent-first), holding a `### 📚 Reading` block (filled by Step 6) and a `### 🧪 Stretch prompt — <theme>` block (filled here). Both steps write into the **same** day-section — whichever runs first creates it; the other appends its block. Per-resource format mirrors what's in the todo: the linked title followed by the 2–4 sentence summary, then a **Terminology:** list. Never rewrite prior days' archive entries — append only.
+Then ensure a `## <today>` section exists at the top (most-recent-first), holding a `### 📚 Reading` block (filled by Step 6) and a `### 🧪 Stretch prompt — <theme>` block (filled here). Both steps write into the **same** day-section — whichever runs first creates it; the other appends its block. Per-resource format mirrors what's in the todo: the linked title, the Agent Forge Reader link, the 2–4 sentence summary, then a **Terminology:** list. Never rewrite prior days' archive entries — append only.
 
 **Failure handling.** This step needs no network for the question itself — it's generated from the theme pool. If the theme pool file is missing, fall back to a sensible default theme (distributed systems fundamentals) and note it. If resource `WebFetch`/`WebSearch` fails, archive the question + whatever resources you confirmed (never fabricated links). Never block the slice.
 

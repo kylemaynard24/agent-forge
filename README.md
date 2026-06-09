@@ -192,6 +192,14 @@ It currently includes:
   - `pr-desc.md`
   - `review-crew.md`
 - `.claude/skills/`
+  - `adr/SKILL.md`
+  - `capstone-review/SKILL.md`
+  - `daily-tasks/SKILL.md`
+  - `deep-dive/SKILL.md`
+  - `design-doc/SKILL.md`
+  - `kindle-reader-app/SKILL.md`
+  - `next-sprint/SKILL.md`
+  - `save-session/SKILL.md`
   - `test-first/SKILL.md`
 
 If you launch Claude Code in this repo, these are the project-scoped helpers that become available.

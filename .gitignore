@@ -15,6 +15,7 @@ Thumbs.db
 
 # Build output
 /bin/
+.claude/skills/kindle-reader-app/app/dist/
 
 # Salesforce
 .sfdx/

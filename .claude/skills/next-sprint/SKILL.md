@@ -65,7 +65,7 @@ Write `progress/sprints/<today>/sprint.md` with the full content the previous `/
   - Step task brief
   - Apply task brief (broken into 1-3 sub-items in the items list)
   - Prove-it questions (full text + model answers + how-to-approach explanations at the bottom)
-  - Extra credit (papers/talks)
+  - Extra credit (papers/talks). For every blog, white paper, research paper, or paper-like resource URL, include both the original link and a local reader link in this form: `[Read in Agent Forge Reader](http://localhost:5174/?url=<encoded-resource-url>&title=<encoded-title>)`. Keep the original source link too, because some sites block local fetches or embedding.
   - C# extra credit (for the three subjects whose apply tasks are C#)
 - **Sprint items list** (at the bottom of sprint.md, also written separately as items.md): every discrete item, ordered, with estimated time and pointer to which sprint section to read for full context.
 
