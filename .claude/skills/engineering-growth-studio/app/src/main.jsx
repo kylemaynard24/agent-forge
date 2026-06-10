@@ -1331,9 +1331,12 @@ function searchableDemoProjectText(project) {
     project.difficulty,
     project.topic,
     project.timeframe,
+    demoProjectContext(project),
     project.build,
     project.analystAngle,
     project.stretch,
+    ...demoProjectDeliverables(project),
+    ...demoProjectAcceptanceCriteria(project),
     reactUiPlanForDemoProject(project),
     reactStarterCodeForProject(project),
     verboseDemoProjectPrompt(project),
@@ -1342,16 +1345,189 @@ function searchableDemoProjectText(project) {
 }
 
 function verboseDemoProjectPrompt(project) {
+  const primaryDeliverables = demoProjectDeliverables(project).slice(0, 3).join(' ');
+
   return [
-    `Build a portfolio-ready project called "${project.title}" at the ${labelForDemoProjectDifficulty(project.difficulty)} level.`,
-    `Topic: ${labelForDemoProjectTopic(project.topic)}. Expected timeframe: ${project.timeframe}.`,
-    `Your core build goal is: ${project.build}`,
-    `Before coding, act like a software analyst: ${project.analystAngle} Produce the requirements, workflow states, assumptions, acceptance criteria, and edge cases that would let another engineer validate the work.`,
-    `Always include a React UI practice slice: ${reactUiPlanForDemoProject(project)} Start from the provided component idea, then evolve it into accessible, tested, reusable UI.`,
-    `Then act like an engineer: choose a simple technology stack, define the data model or contracts, build a working vertical slice, add tests around the highest-risk behavior, and document how to run the demo locally.`,
-    `To push toward senior and principal-level thinking: ${project.stretch} Include an architecture note that explains tradeoffs, risks, observability, security, maintainability, rollout concerns, and what you would do differently at production scale.`,
-    'Finish with a short demo script, screenshots or sample requests, a decision log, and a backlog of follow-up improvements.',
+    `Build "${project.title}" as a ${labelForDemoProjectDifficulty(project.difficulty).toLowerCase()} ${labelForDemoProjectTopic(project.topic).toLowerCase()} demo.`,
+    `Focus on this outcome: ${project.build}`,
+    `React UI requirement: ${reactUiPlanForDemoProject(project)}`,
+    `Most important deliverables: ${primaryDeliverables}`,
+    `Stretch goal: ${project.stretch}`,
   ].join(' ');
+}
+
+function demoProjectContext(project) {
+  const topicContexts = {
+    'ui-react': {
+      domain:
+        'You are building the front end for an internal engineering enablement portal used by analysts, developers, and tech leads to plan work and review delivery readiness.',
+      users:
+        'Primary users are a software analyst refining requirements, an engineer implementing a slice, and a lead reviewing accessibility, usability, and component reuse.',
+      data:
+        'Use fixture data for work items, statuses, owners, risks, comments, and review decisions before connecting to an API.',
+    },
+    'full-stack': {
+      domain:
+        'You are building a small delivery-readiness product for a team that needs one place to track requirements, API work, data checks, security review, deployment health, and operational follow-up.',
+      users:
+        'Primary users are a product analyst, full-stack engineer, security reviewer, and delivery lead preparing a feature for release.',
+      data:
+        'Use a local database or seeded JSON for projects, requirements, API checks, data-quality results, risk items, release events, and audit history.',
+    },
+    'web-api': {
+      domain:
+        'You are building an API-backed workflow for a service team that owns a request intake and fulfillment process used by multiple internal consumers.',
+      users:
+        'Primary users are an API consumer developer, service owner, analyst validating requirements, and support engineer investigating failed requests.',
+      data:
+        'Model requests, customers or teams, statuses, comments, validation failures, pagination, and immutable audit events.',
+    },
+    data: {
+      domain:
+        'You are building a data-quality and reporting workflow for operations teams reconciling records from two source systems before metrics are trusted.',
+      users:
+        'Primary users are a data analyst, operations reviewer, engineer owning ingestion, and leader checking KPI confidence.',
+      data:
+        'Model source files, import runs, reconciliation exceptions, metric definitions, data-quality rules, approvals, and lineage notes.',
+    },
+    security: {
+      domain:
+        'You are building a security review workflow for an application team that must prove access, audit, and risk controls before launch.',
+      users:
+        'Primary users are an engineer, security reviewer, risk owner, and support lead who need clear evidence rather than vague security claims.',
+      data:
+        'Model users, roles, protected actions, policy decisions, audit events, findings, mitigations, and exception approvals.',
+    },
+    cloud: {
+      domain:
+        'You are building a deployment and operations workflow for a small cloud-hosted service that needs repeatable releases and visible health.',
+      users:
+        'Primary users are an engineer deploying changes, an operator responding to incidents, and a delivery lead checking release readiness.',
+      data:
+        'Model environments, releases, health checks, configuration values, incidents, rollback decisions, cost notes, and runbook tasks.',
+    },
+    ai: {
+      domain:
+        'You are building an AI-assisted feature review workflow where users need evidence, evaluation results, and human approval before trusting generated output.',
+      users:
+        'Primary users are an analyst preparing prompts, an engineer wiring retrieval or tools, and a reviewer judging quality, safety, and usefulness.',
+      data:
+        'Model prompts, input documents, generated answers, citations, evaluation cases, reviewer decisions, failure labels, and cost/latency observations.',
+    },
+    architecture: {
+      domain:
+        'You are building an architecture decision workspace for a modernization effort where teams need traceable decisions and visible tradeoffs.',
+      users:
+        'Primary users are a tech lead, architect, product partner, platform owner, and delivery team planning phased change.',
+      data:
+        'Model capabilities, system boundaries, dependencies, ADRs, risks, quality attributes, migration waves, and ownership decisions.',
+    },
+  };
+  const sequenceContexts = {
+    1: 'This first demo should make the problem understandable: define the actors, workflow, current pain, decision points, and what a successful first slice proves.',
+    2: 'This second demo should turn the problem into a working implementation with explicit validation, realistic sample data, and a small but complete user journey.',
+    3: 'This third demo should focus on workflow depth: state transitions, exceptions, review loops, comments, auditability, and how users recover from mistakes.',
+    4: 'This fourth demo should harden the solution: permissions, reliability, performance, observability, edge cases, and production-style failure handling.',
+    5: 'This fifth demo should package the work for reuse or leadership review: standards, templates, roadmap, operating model, adoption plan, and decision narrative.',
+  };
+  const difficultyContexts = {
+    analyst:
+      'Keep the implementation lightweight; the main artifact is clarity that lets an engineer build without another discovery meeting.',
+    'software-engineer':
+      'Build a runnable vertical slice with enough real behavior that a reviewer can use the UI and inspect the underlying contracts or data.',
+    'senior-engineer':
+      'Treat the feature as something that could break in production; emphasize failure modes, operations, risk, and maintainable evolution.',
+    'principal-engineer':
+      'Treat the demo as a reusable direction for multiple teams; emphasize standards, adoption, governance, and strategic tradeoffs.',
+  };
+  const context = topicContexts[project.topic] ?? topicContexts['full-stack'];
+
+  return [
+    context.domain,
+    context.users,
+    context.data,
+    sequenceContexts[project.sequence],
+    difficultyContexts[project.difficulty],
+  ].join(' ');
+}
+
+function demoProjectDeliverables(project) {
+  const sharedDeliverables = [
+    'A one-page requirements brief with personas, workflow states, acceptance criteria, assumptions, and out-of-scope items.',
+    'A React UI with dashboard/list, detail, create-or-update, loading, empty, validation, and error states.',
+    'A README with setup steps, demo script, sample data, tradeoffs, and follow-up backlog.',
+  ];
+  const topicDeliverables = {
+    'ui-react': [
+      'A component inventory with props, states, keyboard behavior, responsive breakpoints, and reusable styling decisions.',
+      'Interaction tests for the highest-value component behavior using Testing Library.',
+    ],
+    'full-stack': [
+      'A React client, API contract, persistence model, seeded data, authentication or role assumptions, and health/diagnostic view.',
+      'At least one end-to-end workflow that crosses UI, API, validation, storage, and observable operational behavior.',
+    ],
+    'web-api': [
+      'An OpenAPI-style endpoint contract with request/response examples, validation rules, pagination or filtering, and problem-detail errors.',
+      'A React API consumer screen that exercises happy path, validation failure, empty state, and retryable failure.',
+    ],
+    data: [
+      'A seeded dataset, import or transform path, metric definitions, data-quality checks, and a reconciliation or KPI dashboard.',
+      'A data dictionary that explains grain, ownership, freshness, and known limitations.',
+    ],
+    security: [
+      'A misuse-case list, threat model, policy decisions, audit events, and security test cases tied to user roles.',
+      'A React security review screen that makes permissions, audit history, or control status visible.',
+    ],
+    cloud: [
+      'Environment configuration, deployment steps, health checks, rollback notes, cost assumptions, and operational runbook.',
+      'A React operations panel showing release status, service health, incidents, or configuration drift.',
+    ],
+    ai: [
+      'Prompt or retrieval design, evaluation dataset, quality metrics, safety checks, and human-review workflow.',
+      'A React evaluation console showing inputs, outputs, confidence, citations or evidence, and review decisions.',
+    ],
+    architecture: [
+      'Context diagram, key ADRs, quality attributes, dependency map, rollout plan, and architecture risk register.',
+      'A React architecture explorer that lets a reviewer move between capabilities, decisions, risks, and roadmap items.',
+    ],
+  };
+
+  return [
+    ...sharedDeliverables,
+    ...(topicDeliverables[project.topic] ?? []),
+    ...difficultyDeliverables(project.difficulty),
+  ];
+}
+
+function difficultyDeliverables(difficulty) {
+  const deliverablesByDifficulty = {
+    analyst: [
+      'A developer-ready handoff package; implementation can be a clickable React prototype backed by fixture data.',
+    ],
+    'software-engineer': [
+      'A working vertical slice with realistic data, validation, tests, and local run instructions.',
+    ],
+    'senior-engineer': [
+      'Failure-mode tests, observability notes, risk register, rollout/rollback plan, and production-readiness checklist.',
+    ],
+    'principal-engineer': [
+      'Reference architecture, paved-road template or standards, adoption roadmap, operating model, and executive narrative.',
+    ],
+  };
+
+  return deliverablesByDifficulty[difficulty] ?? [];
+}
+
+function demoProjectAcceptanceCriteria(project) {
+  const topicLabel = labelForDemoProjectTopic(project.topic).toLowerCase();
+  const difficultyLabel = labelForDemoProjectDifficulty(project.difficulty).toLowerCase();
+
+  return [
+    `A reviewer can run or inspect the ${topicLabel} demo locally in under 10 minutes using the README.`,
+    'The React UI demonstrates at least one happy path, one empty state, one validation error, and one recoverable error.',
+    `The solution includes tests or review checks appropriate for a ${difficultyLabel} project, with each check mapped back to an acceptance criterion.`,
+    'The final notes explain tradeoffs, what was intentionally deferred, and what would change before production use.',
+  ];
 }
 
 function reactUiPlanForDemoProject(project) {
@@ -2531,6 +2707,10 @@ function DemoProjectsView({ progressByProjectId, projects, onToggleMilestone, on
                 {progress.updatedAt ? ` · Updated ${new Date(progress.updatedAt).toLocaleString()}` : ''}
               </p>
             </header>
+            <section className="demo-project-context">
+              <strong>Scenario context</strong>
+              <p>{demoProjectContext(project)}</p>
+            </section>
             <section className="demo-project-progress">
               <label>
                 Development status
@@ -2550,8 +2730,24 @@ function DemoProjectsView({ progressByProjectId, projects, onToggleMilestone, on
               </progress>
             </section>
             <section>
-              <strong>Verbose build prompt</strong>
+              <strong>Build brief</strong>
               <p className="demo-project-prompt">{verboseDemoProjectPrompt(project)}</p>
+            </section>
+            <section className="demo-project-specifics">
+              <strong>Concrete deliverables</strong>
+              <ul>
+                {demoProjectDeliverables(project).map((deliverable) => (
+                  <li key={deliverable}>{deliverable}</li>
+                ))}
+              </ul>
+            </section>
+            <section className="demo-project-specifics">
+              <strong>Definition of done</strong>
+              <ul>
+                {demoProjectAcceptanceCriteria(project).map((criterion) => (
+                  <li key={criterion}>{criterion}</li>
+                ))}
+              </ul>
             </section>
             <section className="demo-project-ui">
               <strong>React UI practice</strong>

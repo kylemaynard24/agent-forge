@@ -80,7 +80,7 @@ button:disabled {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 360px minmax(0, 1fr);
+  grid-template-columns: clamp(280px, 24vw, 380px) minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -88,7 +88,10 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
+  min-width: 0;
+  max-height: 100vh;
+  overflow: auto;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
   background: var(--panel-bg);
   border-right: 1px solid var(--border);
 }
@@ -112,8 +115,10 @@ h1 {
   margin-bottom: 0;
   color: var(--accent-strong);
   font-family: Georgia, serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  line-height: 0.95;
+  font-size: clamp(1.6rem, 2.25vw, 2.35rem);
+  line-height: 1.05;
+  overflow-wrap: normal;
+  text-wrap: balance;
 }
 
 .lede,
@@ -182,7 +187,8 @@ h1 {
 
 .reader-panel {
   min-width: 0;
-  padding: 2rem;
+  min-height: 100vh;
+  padding: clamp(1rem, 2vw, 2rem);
   background: var(--reader-page);
 }
 
@@ -193,8 +199,8 @@ h1 {
 .epub-viewer,
 .pdf-viewer,
 .html-viewer {
-  width: min(100%, 980px);
-  height: calc(100vh - 4rem);
+  width: 100%;
+  height: calc(100dvh - clamp(2rem, 4vw, 4rem));
   margin: 0 auto;
   border: 1px solid var(--border);
   border-radius: 1.25rem;
@@ -224,7 +230,7 @@ h1 {
 .paper-catalog,
 .paper-reader {
   overflow: auto;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1rem, 2.5vw, 2.5rem);
 }
 
 .catalog-header {
@@ -465,6 +471,21 @@ h1 {
   background: color-mix(in srgb, var(--reader-page) 78%, transparent);
 }
 
+.demo-project-context,
+.demo-project-specifics {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--panel-bg) 72%, transparent);
+}
+
+.demo-project-specifics ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
 .demo-project-ui {
   padding: 1rem;
   border: 1px solid var(--border);
@@ -616,18 +637,41 @@ h1 {
   white-space: pre-wrap;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .app-shell {
     grid-template-columns: 1fr;
   }
 
   .sidebar {
+    max-height: none;
     border-right: 0;
     border-bottom: 1px solid var(--border);
   }
 
+  .sidebar h1 {
+    max-width: 18rem;
+  }
+
   .reader-panel {
     padding: 1rem;
+  }
+
+  .empty-state,
+  .paper-catalog,
+  .paper-reader,
+  .text-reader,
+  .epub-viewer,
+  .pdf-viewer,
+  .html-viewer {
+    height: auto;
+    min-height: calc(100dvh - 2rem);
+  }
+}
+
+@media (max-width: 860px) {
+  .controls,
+  .demo-project-progress {
+    grid-template-columns: 1fr;
   }
 
   .research-search-controls {
@@ -638,13 +682,26 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .empty-state,
-  .paper-catalog,
-  .paper-reader,
-  .text-reader,
-  .epub-viewer,
-  .pdf-viewer,
-  .html-viewer {
-    height: 70vh;
+  .paper-reader-toolbar {
+    display: grid;
+  }
+}
+
+@media (max-width: 560px) {
+  .sidebar,
+  .reader-panel {
+    padding: 0.75rem;
+  }
+
+  .catalog-tabs,
+  .subject-tabs,
+  .paper-actions {
+    display: grid;
+  }
+
+  button,
+  .button-link,
+  .file-picker {
+    width: 100%;
   }
 }
